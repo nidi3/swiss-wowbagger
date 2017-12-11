@@ -1,3 +1,9 @@
+package guru.nidi.wowbagger
+
+import guru.nidi.wowbagger.Wowbagger.trimLines
+
+object Names {
+    val list = """
 m Ädu
 f Andle
 m Ändu
@@ -94,3 +100,5 @@ m Werni
 f Vane
 m Vidu
 f Vrene
+""".trimLines().map { Gendered(it) }
+}

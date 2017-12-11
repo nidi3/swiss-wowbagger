@@ -1,3 +1,9 @@
+package guru.nidi.wowbagger
+
+import guru.nidi.wowbagger.Wowbagger.trimLines
+
+object Interjections {
+    val list = """
 gopfertami
 heitere Fahne
 hueresiech
@@ -16,3 +22,5 @@ heilandtonner
 Pfiffetechu
 Hafechäs
 Chutzemischt
+""".trimLines()
+}

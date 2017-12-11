@@ -1,3 +1,9 @@
+package guru.nidi.wowbagger
+
+import guru.nidi.wowbagger.Wowbagger.trimLines
+
+object Adjectives {
+    val list = """
 abegmechet
 arrogant
 blöd
@@ -39,3 +45,5 @@ verreckt
 versiechet
 vervoglet
 vom Aff bissen
+""".trimLines().map { Adjective(it) }
+}

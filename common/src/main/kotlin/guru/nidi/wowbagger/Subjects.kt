@@ -1,3 +1,8 @@
+package guru.nidi.wowbagger
+import guru.nidi.wowbagger.Wowbagger.trimLines
+
+object Subjects {
+    val list = """
 m Aargouer Outofahrer
 m Aff
 m Arschchäfer
@@ -181,3 +186,5 @@ f auti Hafehuer
 m genetische Müuhuufe
 m Äschebächer
 m Ätti mit Huet
+""".trimLines().map { Gendered(it) }
+}

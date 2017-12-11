@@ -1,3 +1,9 @@
+package guru.nidi.wowbagger
+
+import guru.nidi.wowbagger.Wowbagger.trimLines
+
+object Actions {
+    val list = """
 geit's eigentlech no?
 bisch nid ganz bache?
 hesch en Egge ab?
@@ -21,3 +27,5 @@ schlift's?
 haut s'Gfräs!
 du hesch so ne längi Leitig!
 hesch z'heiss badet?
+""".trimLines()
+}

@@ -1,0 +1,21 @@
+apply plugin: 'kotlin-platform-common'
+
+archivesBaseName = 'swiss-wowbagger-common'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile libraries.kotlin_stdlib_common
+    testCompile libraries.kotlin_test_common
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.kotlin
+}
+
+artifacts {
+    archives sourcesJar
+}
