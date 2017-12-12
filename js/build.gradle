@@ -3,14 +3,14 @@ apply plugin: 'kotlin2js'
 
 archivesBaseName = 'swiss-wowbagger-js'
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     expectedBy project(':common')
     compile libraries.kotlin_stdlib_js
     testCompile libraries.kotlin_test_js
+}
+
+[compileKotlin2Js, compileTestKotlin2Js]*.configure {
+    kotlinOptions.moduleKind = "plain"
 }
 
 task sourcesJar(type: Jar) {

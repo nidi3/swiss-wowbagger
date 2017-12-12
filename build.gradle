@@ -7,10 +7,19 @@ buildscript {
     ext.kotlinVersion = '1.2.0'
 
     repositories {
+        mavenLocal()
         mavenCentral()
     }
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+subprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
     }
 }
 
