@@ -1,8 +1,7 @@
-target/
 .idea/
 *.iml
 build/
 .gradle/
-web/
+js/web/*
 !js/web/kotlin.js
 !js/web/swiss-wowbagger-js.js
