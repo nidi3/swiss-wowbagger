@@ -30,6 +30,7 @@ m Fränzu
 m Fredu
 m Fritzli
 m Godi
+m Gusti
 f Heidle
 m Hene
 m Housi

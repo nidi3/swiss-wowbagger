@@ -11,6 +11,7 @@ n Arschkantefilet
 m Aschi
 n Aupechaub
 f Baabe
+m Batzechlemmer
 m Bisibueb
 m Bisitrinker
 m Blickläser
@@ -22,11 +23,14 @@ m Bäse
 m Bääggisiech
 f Bire
 m Birewixer
+m Bhouptisiech
+m Bööggefrässer
 m Büffu
 m Bünzli
 m Bürokolleg
 m Chafler
 m Chaflicheib
+m Chatzestrecker
 m Cheib
 f Chleechue
 m Chnorzi
@@ -37,12 +41,16 @@ m Chrüppuhung
 n Chuderluuri
 n Chuefüdle
 m Chutzemischt
+m Chüttenechotzer
+m Chuttlefrässer
 m Dräcksack
+n Eiterbibeli
 m Figgfähler
 m Frässhung
 m Fuschti
 m Futz
 m Futzbuur
+m Füdlibürger
 f Färlimore
 m Fötzu
 m Fötzucheib
@@ -52,11 +60,15 @@ m Gartefeschtplouderi
 f Gibe
 m Gigu
 m Gigusiech
+m Gitzgnäpper
+n Gjätt
 m Globivogu
 m Glögglifrösch
 m Glünggi
+m Glüschteler
 m Gnieti
 m Gorilla Blauarsch
+m Grittibänz
 m Groggermooslaferi
 m Gränni
 m Grüsu
@@ -76,6 +88,7 @@ m Hagu
 m Heilandtonner
 m Hornochs
 m Hudilump
+n Hundshammli
 f Hundsniere
 m Hueresiech
 m Höseler
@@ -111,12 +124,14 @@ m Plouderi
 m Pflock
 m Pflotsch
 m Pfoschte
+m PHP-Programmierer
 m Pralaaggi
 m Praschaueri
 f Pumpi
 m Püntu
 m Püüru
 m Quadratspüntu
+n Ranggifüdle
 n Rääf
 f Rosshode
 m Rosspigger
@@ -126,6 +141,7 @@ m Schafsecku
 m Schiissigurgler
 m Schiissiputzer
 m Schissgring
+m Schlarpisiech
 m Schlimschisser
 m Schminggu
 m Schnuddergoof
@@ -135,6 +151,7 @@ m Schnäbichätscher
 m Schnäbischpienzler
 f Schnädere
 m Schwanzlurch
+m Schwauderi
 m Schwüppu
 m Schöggeler
 m Secku
@@ -160,10 +177,13 @@ m Traliwatsch
 m Troschtpris
 f Träne
 m Tröunagu
+m Tschaupisiech
 m Tschirpegigu
+m Tschugger
 m Tschumppuhung
 m Tschumpu
 m Tubu
+n Tüpfi
 n Tussi
 m Töfflibueb
 m Tüpflischisser
@@ -175,6 +195,7 @@ m Weichschnäbeler
 f Wixbire
 f Wurzle
 m Wäbstübeler
+m Zablisiech
 m Ziegu
 m Zirpegigu
 m Zwick

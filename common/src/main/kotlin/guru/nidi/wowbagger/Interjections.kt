@@ -22,5 +22,13 @@ heilandtonner
 Pfiffetechu
 Hafechäs
 Chutzemischt
+bigoscht
+vou chrüüsch
+mitz id Chuchi
+dumms Glööl
+Hawasch
+Eichuzyste
+huere Moorerei do
+oha lätz
 """.trimLines()
 }
