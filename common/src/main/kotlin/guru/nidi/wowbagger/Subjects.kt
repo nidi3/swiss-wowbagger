@@ -32,6 +32,7 @@ m Chafler
 m Chaflicheib
 m Chatzestrecker
 m Cheib
+m Chiubi-Gigu
 f Chleechue
 m Chnorzi
 m Chotzchübu
@@ -46,11 +47,13 @@ m Chuttlefrässer
 m Dräcksack
 n Eiterbibeli
 m Figgfähler
+n Finöggeli
 m Frässhung
 m Fuschti
 m Futz
 m Futzbuur
 m Füdlibürger
+n Fägnäscht
 f Färlimore
 m Fötzu
 m Fötzucheib
@@ -60,6 +63,7 @@ m Gartefeschtplouderi
 f Gibe
 m Gigu
 m Gigusiech
+m Gitzeler
 m Gitzgnäpper
 n Gjätt
 m Globivogu
@@ -91,6 +95,8 @@ m Hudilump
 n Hundshammli
 f Hundsniere
 m Hueresiech
+m Hurli-Gwaag
+m Hurrlibueb
 m Höseler
 m Höuzu
 m Im-Kreisu-Links-Blinker
@@ -107,12 +113,15 @@ m Lyribänz
 m Lümu
 f Memme
 n Miuchmubi
+n Mischtschwibeli
 m Mongo
 m Mongobilly
 f Moore
 m Motzi
 m Mulaff
 m Muggigring
+m Märebrätscher
+m Möögigring
 m Möngu
 m Möff
 m Mürggu
@@ -138,6 +147,7 @@ m Rosspigger
 n Rybise
 f Schabe
 m Schafsecku
+m Schibützu
 m Schiissigurgler
 m Schiissiputzer
 m Schissgring
@@ -150,10 +160,12 @@ m Schnäbizägg
 m Schnäbichätscher
 m Schnäbischpienzler
 f Schnädere
+m Schwafler
 m Schwanzlurch
 m Schwauderi
 m Schwüppu
 m Schöggeler
+m Schönwätterschlöfler
 m Secku
 m Seckupeter
 m Siech
@@ -166,6 +178,7 @@ m Spränzu
 m Stürmi
 m Stärnesiech
 m Stürmisiech
+m Söiferludi
 m Söiniggu
 m Süchu
 m Süffu
@@ -176,6 +189,7 @@ m Totsch
 m Traliwatsch
 m Troschtpris
 f Träne
+m Tröchni
 m Tröunagu
 m Tschaupisiech
 m Tschirpegigu

@@ -85,5 +85,33 @@ tue mou richtig wärche!
 i gib der mit der Wedele!
 hör uf zaagge!
 i nimm di am Grännihaar!
+gang go z'Acher fahre!
+tue mer am Gätzi rätsche!
+bisch am Haag a?
+rum di Göppu dänne!
+i treichle der öpis!
+was hesch gänggelet?
+heschs Gschtäutli verlore?
+i poliere der s'Gröibschi
+bisch ir Gäggelischuel blibe hocke?
+bisch mit em Gertu usgrütscht?
+i bring di auf d'Gnagihoschtet!
+hesch e stumpfe Hegu?
+tuesch hurti öpis härejufle?
+hesch nüm aui Lätsche ar Lismete?
+i tue der ds Gurli fiegge!
+bisch ir Spinnhumbbele blibe stecke?
+i säg der au Gott Schand!
+i erminggle dir s'Bätzi dass d'Osterpföteler ghörsch zawanggle!
+wärsch froh hättisch en einzige nuesige Schiggeler uf em Lugipfupf!
+schnäggelisch grad ziemlech us dr Gosche!
+schmöcksch wie bschüttigs Chrützimähl!
+chunsch grad usem Chätschäbertrog?
+was isch mit dim Hosegschingg?
+i zeih der d'Gängeretalpli läng!
+i zwurgle di mit dem Gürchu!
+guuggets der im Schissächerli?
+i vermöckle der de Schtirps mit em Flarzise!
+du chasch nid mou s'Gräppli im Hotschmägli bleike!
 """.trimLines()
 }

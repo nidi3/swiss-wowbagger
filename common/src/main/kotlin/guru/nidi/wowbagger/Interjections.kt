@@ -30,5 +30,15 @@ Hawasch
 Eichuzyste
 huere Moorerei do
 oha lätz
+äuä scho
+äuä nid
+jo was chätzers
+Gschmöis
+weiss der Gugger
+henusode
+z'Gotts Bäri
+im Fau
+Färegschäderli und Möuchgröötzi
+z'eis Dapf
 """.trimLines()
 }
