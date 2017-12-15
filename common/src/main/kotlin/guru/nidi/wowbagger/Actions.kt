@@ -27,5 +27,6 @@ schlift's?
 haut s'Gfräs!
 du hesch so ne längi Leitig!
 hesch z'heiss badet?
+hesch e Knick ir Fichte?
 """.trimLines()
 }

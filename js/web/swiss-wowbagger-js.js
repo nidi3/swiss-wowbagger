@@ -17,7 +17,7 @@ this['swiss-wowbagger-js'] = function (_, Kotlin) {
   Gender.prototype.constructor = Gender;
   function Actions() {
     Actions_instance = this;
-    this.list = Wowbagger_getInstance().trimLines_7efafi$("\ngeit's eigentlech no?\nbisch nid ganz bache?\nhesch en Egge ab?\naber s\xFCsch bisch no gsung?\nhesch es warms Joghurt im Sack?\nhet's dr i Weize gschneit?\nbisch bisse?\nhesch e Flick furt?\nhet's dr is Hirni geschisse?\nbisch nid ganz hundert?\nhesch M\xE4hl am Ermu?\naber s\xFCsch geit's?\nverreis!\nhaut der Latz!\nfahr ab!\nschieb ne!\nhou's!\nputz di furt!\nh\xE4b doch mau d'Schnure!\nschlift's?\nhaut s'Gfr\xE4s!\ndu hesch so ne l\xE4ngi Leitig!\nhesch z'heiss badet?\n");
+    this.list = Wowbagger_getInstance().trimLines_7efafi$("\ngeit's eigentlech no?\nbisch nid ganz bache?\nhesch en Egge ab?\naber s\xFCsch bisch no gsung?\nhesch es warms Joghurt im Sack?\nhet's dr i Weize gschneit?\nbisch bisse?\nhesch e Flick furt?\nhet's dr is Hirni geschisse?\nbisch nid ganz hundert?\nhesch M\xE4hl am Ermu?\naber s\xFCsch geit's?\nverreis!\nhaut der Latz!\nfahr ab!\nschieb ne!\nhou's!\nputz di furt!\nh\xE4b doch mau d'Schnure!\nschlift's?\nhaut s'Gfr\xE4s!\ndu hesch so ne l\xE4ngi Leitig!\nhesch z'heiss badet?\nhesch e Knick ir Fichte?\n");
   }
   Actions.$metadata$ = {
     kind: Kind_OBJECT,
