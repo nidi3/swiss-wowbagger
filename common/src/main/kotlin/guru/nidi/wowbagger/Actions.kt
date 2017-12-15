@@ -52,7 +52,7 @@ i gib der mit em Teppichchlopfer!
 hör uf liire!
 hesch de Gluggsi?
 gump doch ine Glungge!
-hesch e Gnusch im Fadechörbli?
+hesch es Gnusch im Fadechörbli?
 i gorbse der i Gring!
 muess me di früsch griene?
 wird der gschmuech?
