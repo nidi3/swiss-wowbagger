@@ -40,5 +40,8 @@ z'Gotts Bäri
 im Fau
 Färegschäderli und Möuchgröötzi
 z'eis Dapf
+potztusig
+Schnuder in Telefon
+Schissdräck am Loufmeter
 """.trimLines()
 }

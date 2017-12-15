@@ -24,17 +24,20 @@ fausch glismet
 feiss
 futzdumm
 füdleblutt
+gagugälb
 gibuhaarig
 gnietig
 grusig
 gopfertecku(//)
 gopferdammt
+gruebegrässlech
 gschiferlig
 gschläfzig
 gschniglet
 gstabig
 gääj
 halbbatzig
+himutrurig
 hingereglitzt
 hingerfotzig
 hingerbiggelig
@@ -50,6 +53,7 @@ kuurlig
 lamaschig
 läufig
 lützl
+mies(e/es/i)
 miggerig
 muderig
 nüütratzig
@@ -64,6 +68,7 @@ schitter
 schnarchnasig
 schnäderfräsig
 schwauderig
+steihässlech
 strub
 süderig
 tunggig
@@ -75,6 +80,7 @@ ulidig
 ugantlig
 uschaflig
 verbibäbbelet
+verbrunzet
 verdammt
 verfigget
 verhudlet

@@ -1,7 +1,9 @@
 # swiss-wowbagger
 Let yourself be insulted in swiss german.
 
-Inspired by kthxbye's [figgdi](http://figgdi.kthxbye.ch/) and Franz Hohler's [Totemügerli](https://www.youtube.com/watch?v=DQi0lsUs8J4).
+Inspired by kthxbye's [figgdi](http://figgdi.kthxbye.ch/).
+Thanks to Franz Hohler's [Totemügerli](https://www.youtube.com/watch?v=DQi0lsUs8J4),
+Stiller Has' [grusig](https://www.youtube.com/watch?v=dfL_IRXVLtQ).
 
 This is also a [kotlin multiplatform](https://blog.jetbrains.com/kotlin/2017/11/kotlin-1-2-released/) project, so the same code is used to produce both .class files and javascript.
 

@@ -113,5 +113,13 @@ i zwurgle di mit dem Gürchu!
 guuggets der im Schissächerli?
 i vermöckle der de Schtirps mit em Flarzise!
 du chasch nid mou s'Gräppli im Hotschmägli bleike!
+grunz nid so grusig!
+schnorsch grusig wiene Moore!
+bohr nid i de Ohre!
+schläck nid a de Böögge!
+chotz nid so!
+furz nid so i der Chile!
+friss nid us der Chatzechischte!
+chunnt de Wurschtsalat zrügg?
 """.trimLines()
 }
