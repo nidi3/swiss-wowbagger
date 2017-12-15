@@ -28,7 +28,7 @@ haut s'Gfräs!
 du hesch so ne längi Leitig!
 hesch z'heiss badet?
 hesch e Knick ir Fichte?
-i zeig'dr wo de Bartli de Most hout!
+i zeig dr wo de Bartli de Most hout!
 adiemerssi!
 gang doch go bääbele!
 hesch z'vüu Bätziwasser gha?
@@ -102,7 +102,7 @@ hesch nüm aui Lätsche ar Lismete?
 i tue der ds Gurli fiegge!
 bisch ir Spinnhumbbele blibe stecke?
 i säg der au Gott Schand!
-i erminggle dir s'Bätzi dass d'Osterpföteler ghörsch zawanggle!
+i verminggle dir s'Bätzi dass d'Osterpföteler ghörsch zawanggle!
 wärsch froh hättisch en einzige nuesige Schiggeler uf em Lugipfupf!
 schnäggelisch grad ziemlech us dr Gosche!
 schmöcksch wie bschüttigs Chrützimähl!
