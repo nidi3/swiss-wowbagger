@@ -6,4 +6,4 @@ This is also a [kotlin multiplatform](https://blog.jetbrains.com/kotlin/2017/11/
 
 And it's a gradle project that publishes to maven central. (Why is this so hard?)
 
-<span font-size="200%">[Huere Siech, säg mou öppis!](demo.html)</span>
+**[Huere Siech, säg mou öppis!](demo.html)**
