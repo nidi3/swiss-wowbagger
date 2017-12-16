@@ -54,7 +54,7 @@
 </div>
 
 <div style="position:absolute; bottom: 50px; left: 50px;">
-    <a class="twitter-share-button" id="twitter"></a>
+    <span id="twitter"> </span>
     <a style="background-image: url(fb.png); background-size: contain; width: 59px; height: 20px; display: inline-block;"
        id="facebook" onclick="share()"></a>
 </div>
@@ -70,7 +70,13 @@
         var wowbagger = window['swiss-wowbagger-js'].guru.nidi.wowbagger;
         theInsult = wowbagger.insult();
         document.getElementById('text').textContent = theInsult;
-        document.getElementById('twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(theInsult);
+        var t=document.getElementById('twitter');
+        t.removeChild(t.firstChild);
+        var a=document.createElement('a');
+        a.className='twitter-share-button';
+        a.href='https://twitter.com/intent/tweet?text=' + encodeURIComponent(theInsult);
+        t.appendChild(a);
+        twttr.widgets.load();
     }
 
     function share() {
