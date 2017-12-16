@@ -64,20 +64,20 @@
 </a>
 
 <script>
-    var insult;
+    var theInsult;
 
     function insult() {
         var wowbagger = window['swiss-wowbagger-js'].guru.nidi.wowbagger;
-        insult = wowbagger.insult();
-        document.getElementById('text').textContent = insult;
-        document.getElementById('twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(insult);
+        theInsult = wowbagger.insult();
+        document.getElementById('text').textContent = theInsult;
+        document.getElementById('twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(theInsult);
     }
 
     function share() {
         FB.ui({
                 method: 'share',
                 href: 'https://nidi3.github.io/swiss-wowbagger/',
-                quote: insult
+                quote: theInsult
             },
             function (response) {
             }
