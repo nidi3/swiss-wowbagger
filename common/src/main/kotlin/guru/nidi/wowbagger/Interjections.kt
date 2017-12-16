@@ -41,7 +41,10 @@ im Fau
 Färegschäderli und Möuchgröötzi
 z'eis Dapf
 potztusig
-Schnuder in Telefon
+Schnuder im Telefon
 Schissdräck am Loufmeter
+Hammersack
+Donnerschiess
+Potz Holzöpfel und Zipfelchappe
 """.trimLines()
 }
