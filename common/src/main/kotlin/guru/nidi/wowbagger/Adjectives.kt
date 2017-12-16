@@ -5,11 +5,26 @@ import guru.nidi.wowbagger.Wowbagger.trimLines
 object Adjectives {
     val list = """
 aarig
+aabrönt
+aabislet
+aagchaflet
+aagchätschet
+aagfigget
 abegmechet
+abgfigget
+abgnaget
+abgsärblet
+abgschiffet
+abverheit
 aghotschet
 agnöttelet
+agschissen
 arrogant
 blöd
+bireweich
+bockstössig
+breitarschig
+böckelig
 bünzlig
 cheibedoof
 choderpflotschig

@@ -4,22 +4,37 @@ import guru.nidi.wowbagger.Wowbagger.trimLines
 object Subjects {
     val list = """
 m Aargouer Outofahrer
+f Achermähre
+n Alpechalb
 m Aff
+m Angschthas
 m Arschchäfer
+f Arschgige
 m Arschgigu
 n Arschkantefilet
 m Aschi
 n Aupechaub
 f Baabe
+f Bagglimoore
+n Baslerbebbi
 m Batzechlemmer
+m Bettseicher
+n Bipperlisi
 m Bisibueb
+n Bisibääbi
 m Bisitrinker
 m Blickläser
+m Blödian
 m Blöffsack
 n Bohneross
+f Bohnestange
+m Braschti
+m Brämeständer
 m Bschishung
+f Bännesou
 f Bärgänte
 m Bäse
+f Bäserääf
 m Bääggisiech
 f Bire
 m Birewixer

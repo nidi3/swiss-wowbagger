@@ -91,6 +91,8 @@ was machsch für ne Lätsch?
 wärsch froh hättisch en einzige nuesige Schiggeler uf em Lugipfupf!
 wird der gschmuech?
 was chnüblisch do?
+wenn i dis Gsicht aluege, bin i mit mim Füdle ganz z'fride.
+verzeu vo dim Umfall.
 mues me di dängele?
 gang dänne!
 dir muess me s'Füdle fäge!
@@ -123,5 +125,34 @@ schnäggelisch grad ziemlech us dr Gosche!
 schmöcksch wie bschüttigs Chrützimähl!
 schnorsch grusig wiene Moore!
 schläck nid a de Böögge!
+sug a!
+dampf ab!
+i tue der eini abewäsche!
+bisch wieder abghaset?
+mach nid s'Chaub!
+tue nid soublöd!
+i passe der ab!
+i verschwarte di!
+was tuesch wieder absüdere?
+di muess me abtue!
+i schrisse di übers Näscht ab!
+tue nid so affig!
+chasch mer am Ranze hange!
+das geit bachab mit dir!
+lah ne la bambele!
+bisch go blüemele?
+strich der das ads Bei!
+i paniere der eis!
+hesch öppis gseit, oder nume ds Bis gwächslet?
+bruchsch e Bisiblätz?
+red ke Bläch!
+blos mer id Schueh!
+hesch es blutts Näll?
+hüt geisch z'Bode!
+hesch de Bröcklihueschte?
+i bole der eis!
+do hesch es Foto fürs Böögenalbum!
+was bosgisch wieder?
+hesch e Bränte glade?
 """.trimLines()
 }

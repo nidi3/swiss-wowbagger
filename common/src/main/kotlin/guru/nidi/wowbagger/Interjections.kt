@@ -4,7 +4,12 @@ import guru.nidi.wowbagger.Wowbagger.trimLines
 
 object Interjections {
     val list = """
+alemarsch
+apropo
 bigoscht
+bissoguet
+blasius
+Bockmischt
 Chutzemischt
 Donnerschiess
 Donnerwätter
@@ -44,6 +49,7 @@ Pfiffetechu
 potz Himurieme
 potz Holzöpfel und Zipfelchappe
 potztusig
+schiss ad Wang
 Schissdräck am Loufmeter
 Schnuder im Telefon
 stäcketööri
@@ -58,6 +64,7 @@ z'Gotts Bäri
 Zeiechäs
 äuä nid
 äuä scho
+ätsch
 üüüble Sache
 """.trimLines()
 }
