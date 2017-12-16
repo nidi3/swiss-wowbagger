@@ -4,47 +4,60 @@ import guru.nidi.wowbagger.Wowbagger.trimLines
 
 object Interjections {
     val list = """
-gopfertami
-heitere Fahne
-hueresiech
-putz Himurieme
-gopfrid Stutz
-herrgott Stärne
-gopfertecku nomou
-heilige Beck
-stäcketööri
-goppeletti
-heilandsack
-tamisiech
-himuplütter
-gopfertoori
-heilandtonner
-Pfiffetechu
-Hafechäs
-Chutzemischt
 bigoscht
-vou chrüüsch
-mitz id Chuchi
-dumms Glööl
-Hawasch
-Eichuzyste
-huere Moorerei do
-oha lätz
-äuä scho
-äuä nid
-jo was chätzers
-Gschmöis
-weiss der Gugger
-henusode
-z'Gotts Bäri
-im Fau
-Färegschäderli und Möuchgröötzi
-z'eis Dapf
-potztusig
-Schnuder im Telefon
-Schissdräck am Loufmeter
-Hammersack
+Chutzemischt
 Donnerschiess
-Potz Holzöpfel und Zipfelchappe
+Donnerwätter
+dumms Glööl
+dumms Züg
+E du verruckt
+Eichuzyste
+Färegschäderli und Möuchgröötzi
+gopfertami
+gopfertecku nomou
+gopfertoori
+gopfrid Stutz
+goppeletti
+Gschmöis
+Hafechäs
+Hammersack
+Hawasch
+heilandsack
+heilandtonner
+heilige Beck
+heitere Fahne
+henusode
+herrgott Stärne
+himuplütter
+huere Moorerei do
+hueresiech
+i Gotts Name
+i mache es Chrütz ad Tili
+im Fau
+jo was chätzers
+leidi Sach
+läck
+mi Gotts Türi
+mitz id Chuchi
+oha lätz
+Pfiffetechu
+potz Himurieme
+potz Holzöpfel und Zipfelchappe
+potztusig
+Schissdräck am Loufmeter
+Schnuder im Telefon
+stäcketööri
+Stärneföifi
+tamisiech
+verdammt
+verfluecht
+vou chrüüsch
+weiss der Gugger
+z'eis Dapf
+z'Gotts Bäri
+Zeiechäs
+äuä nid
+äuä scho
+üüüble Sache
 """.trimLines()
 }

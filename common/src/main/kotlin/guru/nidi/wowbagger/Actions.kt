@@ -69,6 +69,8 @@ i bring di auf d'Gnagihoschtet!
 i treichle der öpis!
 i gib der eis uf'd Rösti!
 i zeig dr wo de Bartli de Most hout!
+läck mi am Arsch!
+mach kes Gschiss!
 putz di furt!
 schieb ne!
 schlift's?
