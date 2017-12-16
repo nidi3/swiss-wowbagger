@@ -12,6 +12,40 @@
 </head>
 
 <body>
+<script>window.twttr = (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function (f) {
+        t._e.push(f);
+    };
+
+    return t;
+}(document, "script", "twitter-wjs"));</script>
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({version: 'v2.11', appId: '1682061575171528', xfbml: true});
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
 
 <div style="font-size: 400%; font-family: sans-serif; height: 100%; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center">
     <div id="text"></div>
@@ -19,14 +53,34 @@
     <button onclick="insult()" style="font-size: 100%">&#x27f3;</button>
 </div>
 
+<div style="position:absolute; bottom: 50px; left: 50px;">
+    <a class="twitter-share-button" id="twitter"></a>
+    <a class="fb-share-button" data-layout="button" id="facebook" onclick="share()"></a>
+</div>
+
 <a href="https://github.com/nidi3/swiss-wowbagger" style="position: absolute; bottom: 50px; right: 50px">
     Wosch meh wüsse?
 </a>
 
 <script>
+    var insult;
+
     function insult() {
         var wowbagger = window['swiss-wowbagger-js'].guru.nidi.wowbagger;
-        document.getElementById('text').textContent = wowbagger.insult();
+        insult = wowbagger.insult();
+        document.getElementById('text').textContent = insult;
+        document.getElementById('twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(insult);
+    }
+
+    function share() {
+        FB.ui({
+                method: 'share',
+                href: 'https://nidi3.github.io/swiss-wowbagger/',
+                quote: insult
+            },
+            function (response) {
+            }
+        );
     }
 
     insult();
