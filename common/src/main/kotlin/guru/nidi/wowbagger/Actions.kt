@@ -179,5 +179,13 @@ hesch id Hose gmacht?
 du bisch dschuld!
 häb ke Dummi!
 zieh Fäde!
+hesch e Fädilätsch im Hirni?
+fäut's der?
+fertig schnätz!
+fertig luschtig jetz!
+figg di!
+chunsch de flach use!
+hesch es Fröideli?
+mach kes Gabaree!
 """.trimLines()
 }

@@ -75,7 +75,12 @@ m Dräcksack
 m Düppugring
 n Eiterbibeli
 m Figgfähler
+f Filzluus
 n Finöggeli
+m Fleischvogu
+n Flöigehirni
+m Fotzucheib
+m Fridhofjödeler
 m Frässhung
 m Fuschti
 m Futz
@@ -84,6 +89,7 @@ m Futzgring
 m Füdlibürger
 n Fägnäscht
 f Färlimore
+m Fätze
 m Fötzu
 m Fötzucheib
 m Fötzusiech
@@ -112,6 +118,7 @@ f Gumsle
 m Gäderhächu
 n Gäderiwyb
 n Gäderimanndli
+m Gäägerehubu
 n Güezi
 m Haagge
 n Haaghuuri
@@ -155,6 +162,7 @@ m Möngu
 m Möff
 m Mürggu
 m Nasepööggu
+m Niddörfisiech
 m Närvsack
 m Pajass
 f Panne
@@ -201,6 +209,7 @@ m Siech
 m Solothurner
 m Soucheib
 m Souhung
+f Soumätz
 f Soumoore
 m Sousiech
 m Spränzu

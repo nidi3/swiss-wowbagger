@@ -29,6 +29,7 @@ bünzlig
 charesaubig
 cheib
 cheibedoof
+chlin
 chlinghüselet
 chnütschblau
 choderpflotschig
@@ -44,12 +45,15 @@ dumm
 düregheit
 eländ
 eländ(e/s/i) huere(//)
-fausch glismet
+fautsch
+fautsch glismet
 feiss
+ful
 futzdumm
 füdleblutt
 gagugälb
 gchäppelet
+gfräsig
 gibuhaarig
 gnietig
 grusig
@@ -118,5 +122,6 @@ vervoglet
 vom Aff bissen
 wältsch(e/es/i)
 wüescht
+zämegflickt
 """.trimLines().map { Adjective(it) }
 }
