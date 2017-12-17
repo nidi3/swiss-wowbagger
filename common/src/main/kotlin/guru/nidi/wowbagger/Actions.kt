@@ -154,5 +154,30 @@ i bole der eis!
 do hesch es Foto fürs Böögenalbum!
 was bosgisch wieder?
 hesch e Bränte glade?
+du böckelisch!
+bisch blind uf de Ouge?
+das git Lämpe!
+i schutte der eis i Arsch!
+gang doch anes Chäferfescht!
+i schisse der id Chappe!
+wäm bisch wieder a Chare gfahre?
+was lisisch für nes Chäsblatt?
+i drück der d'Chäspedau i Gring!
+chätsch nid so grusig!
+hesch e Fige wie ne gchläpfte Aff!
+jetz fählsch de grad!
+chlemm ab!
+wäsch der d'Chlööpe!
+i pängle der e Chnebu zwüsche d'Bei!
+i packe di am Chrage!
+du chunsch nie id Chränz!
+du chunsch nid usem Schider!
+dis Chrutzli legi der zäme!
+hesch e Churze ide Hose?
+jetz git's aufs Dach!
+hesch id Hose gmacht?
+du bisch dschuld!
+häb ke Dummi!
+zieh Fäde!
 """.trimLines()
 }

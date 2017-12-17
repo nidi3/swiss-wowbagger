@@ -19,8 +19,10 @@ m Brünu
 m Chlöisu
 m Chrigu
 f Chrige
+m Chäschpu
 m Dänu
 m Dävu
+m Dölf
 m Fäbu
 m Fige
 m Fippu

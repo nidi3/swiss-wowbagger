@@ -11,6 +11,11 @@ bissoguet
 blasius
 Bockmischt
 Chutzemischt
+Chabis
+Chnebuschissi
+Chrückemünz
+Chueplätter
+Donnergueg
 Donnerschiess
 Donnerwätter
 dumms Glööl
@@ -18,20 +23,24 @@ dumms Züg
 E du verruckt
 Eichuzyste
 Färegschäderli und Möuchgröötzi
+Figugegl
 gopfertami
 gopfertecku nomou
 gopfertoori
 gopfrid Stutz
 goppeletti
 Gschmöis
+gschtoche Bock
 Hafechäs
 Hammersack
 Hawasch
+heimatland
 heilandsack
 heilandtonner
 heilige Beck
 heitere Fahne
 henusode
+herrgotttonnerwätter
 herrgott Stärne
 himuplütter
 huere Moorerei do

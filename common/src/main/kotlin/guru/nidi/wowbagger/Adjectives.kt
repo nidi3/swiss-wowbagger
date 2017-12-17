@@ -26,13 +26,22 @@ bockstössig
 breitarschig
 böckelig
 bünzlig
+charesaubig
+cheib
 cheibedoof
+chlinghüselet
+chnütschblau
 choderpflotschig
 chotzbrockemässig
 chotzpängglig
+chäferfüdletroch
+chäsig
 degoutant
 doof
+doppuchinig
+drischaagget
 dumm
+düregheit
 eländ
 eländ(e/s/i) huere(//)
 fausch glismet
@@ -40,6 +49,7 @@ feiss
 futzdumm
 füdleblutt
 gagugälb
+gchäppelet
 gibuhaarig
 gnietig
 grusig
@@ -96,6 +106,8 @@ ugantlig
 uschaflig
 verbibäbbelet
 verbrunzet
+verchiset
+verchoderet
 verdammt
 verfigget
 verhudlet
