@@ -6,9 +6,12 @@ object Interjections {
     val list = """
 alemarsch
 apropo
+aues Grümpu
 bigoscht
 bissoguet
 blasius
+blöds Gmöögg
+blöds Gschnur
 Bockmischt
 Chutzemischt
 Chabis
@@ -19,18 +22,27 @@ Donnergueg
 Donnerschiess
 Donnerwätter
 dumms Glööl
+dumms Gschmöis
+dumme Seich
 dumms Züg
 E du verruckt
 Eichuzyste
 Färegschäderli und Möuchgröötzi
 Figugegl
+ghoue oder gstoche
+Globivogu
+gloubs der Gugger
+gopf
+gopferteli
 gopfertami
 gopfertecku nomou
 gopfertoori
+gopfertooria
 gopfrid Stutz
 goppeletti
 Gschmöis
 gschtoche Bock
+guet Nacht am Sächsi
 Hafechäs
 Hammersack
 Hawasch
@@ -43,11 +55,13 @@ henusode
 herrgotttonnerwätter
 herrgott Stärne
 himuplütter
+dasch es huere Glauer
 huere Moorerei do
 hueresiech
 i Gotts Name
 i mache es Chrütz ad Tili
 im Fau
+jetz isch gnue Höi dunge
 jo was chätzers
 leidi Sach
 läck

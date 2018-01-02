@@ -65,7 +65,7 @@ i verminggle dir s'Bätzi dass d'Osterpföteler ghörsch zawanggle!
 i zeih der d'Gängeretalpli läng!
 i vermöckle der de Schtirps mit em Flarzise!
 i zwurgle di mit dem Gürchu!
-i bring di auf d'Gnagihoschtet!
+i bring di uf d'Gnagihoschtet!
 i treichle der öpis!
 i gib der eis uf'd Rösti!
 i zeig dr wo de Bartli de Most hout!
@@ -187,5 +187,13 @@ figg di!
 chunsch de flach use!
 hesch es Fröideli?
 mach kes Gabaree!
+mach kes Ghöi!
+was holeiisch wieder?
+gib ihm chli!
+hesch de Glöggeler nid agha?
+du bisch zum göögge!
+i gschweigge di grad!
+geisch uf d'Gsüchtihoschtet?
+du bisch zum Haaröuseiche!
 """.trimLines()
 }

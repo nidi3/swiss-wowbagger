@@ -55,14 +55,19 @@ gagugälb
 gchäppelet
 gfräsig
 gibuhaarig
+giechtig
+giggerig
 gnietig
 grusig
 gopfertecku(//)
 gopferdammt
+grossgchotzet
 gruebegrässlech
 gschiferlig
+gschliferig
 gschläfzig
 gschniglet
+gschämig
 gstabig
 gääj
 halbbatzig
@@ -85,6 +90,7 @@ lützl
 mies(e/es/i)
 miggerig
 muderig
+nüütmerkig
 nüütratzig
 nüütwärchig
 obergruusig
@@ -123,5 +129,6 @@ vom Aff bissen
 wältsch(e/es/i)
 wüescht
 zämegflickt
+überegheit
 """.trimLines().map { Adjective(it) }
 }

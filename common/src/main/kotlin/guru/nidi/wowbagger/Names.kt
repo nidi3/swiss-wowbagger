@@ -30,9 +30,11 @@ m Fixu
 m Flöru
 m Fränzu
 m Fredu
-m Fritzli
+m Fridu
+m Fritzu
 m Godi
 m Gusti
+m Gödu
 f Heidle
 m Hene
 m Housi
@@ -68,9 +70,10 @@ m Retölu
 m Role
 m Rölu
 m Röschu
-m Rüfe
 m Röifu
 m Römu
+m Rüfe
+m Rüedu
 f Sabe
 m Sämu
 m Sändu
