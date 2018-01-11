@@ -4,7 +4,7 @@ allprojects {
 }
 
 buildscript {
-    ext.kotlinVersion = '1.2.0'
+    ext.kotlinVersion = '1.2.10'
 
     repositories {
         mavenLocal()
@@ -27,6 +27,7 @@ ext {
     libraries = [
             junit               : "junit:junit:4.12",
             kotlin_stdlib       : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            kotlin_stdlib_jre7  : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion",
             kotlin_stdlib_common: "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlinVersion",
             kotlin_stdlib_js    : "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion",
             kotlin_test         : "org.jetbrains.kotlin:kotlin-test:$kotlinVersion",

@@ -10,16 +10,28 @@ object Wowbagger {
     fun action() = Actions.list.choose()
     fun interjection() = Interjections.list.choose()
 
-
     internal fun String.trimLines() = lines().filter { it.isNotBlank() }
 
-    private fun <T> List<T>.choose() = this[random(size)]
+    private fun <T> List<T>.choose() = this[random(this.size)]
 
-    private fun List<Gendered>.with(gender: Gender?) = filter { gender == null || gender == it.gender }
+    private fun List<Entry<Gendered>>.with(gender: Gender?) = filter { gender == null || gender == it.entry.gender }
 }
 
 enum class Gender {
     M, F, N
+}
+
+class Entry<out T>(val entry: T, val phonemes: String) {
+    override fun toString() = entry.toString()
+
+    companion object {
+        fun phonemes(phonemes: String) = of("|" + phonemes) { it }
+        fun <T> of(line: String, converter: (String) -> T): Entry<T> {
+            val pos = line.indexOf('|')
+            return if (pos < 0) Entry(converter(line), "")
+            else Entry(converter(line.substring(0, pos).trim()), line.substring(pos + 1))
+        }
+    }
 }
 
 data class Gendered(val name: String, val gender: Gender) {
@@ -28,17 +40,25 @@ data class Gendered(val name: String, val gender: Gender) {
     override fun toString() = name
 }
 
-data class Adjective(private val name: String) {
-    fun with(gender: Gender) = if (name.contains("("))
-        name.replace(Regex("\\((.*?)/(.*?)/(.*?)\\)"), when (gender) {
-            M -> "$1"
-            N -> "$2"
-            F -> "$3"
-        })
-    else
-        name + when (gender) {
-            M -> "e"
-            N -> "s"
-            F -> "i"
-        }
-}
+data class Adjective(val name: String)
+
+fun Entry<Adjective>.with(gender: Gender) = if (entry.name.contains("("))
+    Entry(replaceParens(entry.name, gender), replaceParens(phonemes, gender))
+else
+    Entry(entry.name + when (gender) {
+        M -> "e"
+        N -> "s"
+        F -> "i"
+    }, phonemes + when (gender) {
+        M -> " @"
+        N -> " s 200"
+        F -> " i"
+    })
+
+private fun replaceParens(s: String, gender: Gender) = replaceParens(s, when (gender) {
+    M -> 1
+    N -> 2
+    F -> 3
+})
+
+private fun replaceParens(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)/(.*?)\\)"), "$" + index)

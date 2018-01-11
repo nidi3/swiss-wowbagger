@@ -5,9 +5,18 @@ apply plugin: 'maven-publish'
 dependencies {
     expectedBy project(':common')
     compile libraries.kotlin_stdlib
+    compile libraries.kotlin_stdlib_jre7
+    compile "guru.nidi:mbrola-jvm:0.0.1-SNAPSHOT"
     testCompile libraries.junit
     testCompile libraries.kotlin_test
 }
+
+// this is needed because intellij does not include build/resources/main in the classpath
+task copyResources(type: Copy) {
+    from "${projectDir}/src/main/resources"
+    into "${buildDir}/classes/main"
+}
+processResources.dependsOn copyResources
 
 task sourcesJar(type: Jar) {
     classifier = 'sources'
@@ -26,7 +35,7 @@ artifacts {
     archives javadocJar
 }
 
-signing{
+signing {
     sign configurations.archives
 }
 
@@ -43,9 +52,9 @@ publishing {
     repositories {
         maven {
             url "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            credentials{
-                username= ''
-                password =''
+            credentials {
+                username = ''
+                password = ''
             }
         }
     }
