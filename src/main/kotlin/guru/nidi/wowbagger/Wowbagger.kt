@@ -17,8 +17,6 @@ object Wowbagger {
     private fun List<Entry<Gendered>>.with(gender: Gender?) = filter { gender == null || gender == it.entry.gender }
 }
 
-fun random(range: Int) = (Math.random() * range).toInt()
-
 enum class Gender {
     M, F, N;
 
@@ -91,3 +89,5 @@ private fun replaceParens(s: String, gender: Gender) = replaceParens3(s, when (g
 
 private fun replaceParens2(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)\\)"), "$" + index)
 private fun replaceParens3(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)/(.*?)\\)"), "$" + index)
+
+fun random(range: Int) = (Math.random() * range).toInt()
