@@ -10,7 +10,7 @@ import guru.nidi.wowbagger.Wowbagger.subject
 fun main(args: Array<String>) {
     val int = interjection()
     val gender = Gender.random()
-    val names = (0..Environment.random(3)).map { name(gender) }
+    val names = (0..random(3)).map { name(gender) }
     val number = Number.of(names.size)
     val adj1 = adjective(gender, number)
     val adj2 = adjective(gender, number)

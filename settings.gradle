@@ -1,5 +1,0 @@
-rootProject.name='swiss-wowbagger'
-
-include ':common'
-include ':jvm'
-include ':js'

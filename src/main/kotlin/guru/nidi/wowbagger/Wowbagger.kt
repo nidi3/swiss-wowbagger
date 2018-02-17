@@ -1,6 +1,5 @@
 package guru.nidi.wowbagger
 
-import guru.nidi.wowbagger.Environment.random
 import guru.nidi.wowbagger.Gender.*
 import guru.nidi.wowbagger.Number.SINGULAR
 
@@ -8,7 +7,7 @@ object Wowbagger {
     fun adjective(gender: Gender, number: Number) = Adjectives.list.choose().with(gender, number)
     fun subject(gender: Gender? = null, number: Number) = Subjects.list.with(gender).choose().with(number)
     fun name(gender: Gender? = null) = Names.list.with(gender).choose().with(SINGULAR)
-    fun action(number:Number) = Actions.list.choose().with(number)
+    fun action(number: Number) = Actions.list.choose().with(number)
     fun interjection() = Interjections.list.choose()
 
     internal fun String.trimLines() = lines().filter { it.isNotBlank() }
@@ -18,11 +17,13 @@ object Wowbagger {
     private fun List<Entry<Gendered>>.with(gender: Gender?) = filter { gender == null || gender == it.entry.gender }
 }
 
+fun random(range: Int) = (Math.random() * range).toInt()
+
 enum class Gender {
     M, F, N;
 
     companion object {
-        fun random() = if (Environment.random(1) == 0) M else F
+        fun random() = if (random(1) == 0) M else F
     }
 }
 
