@@ -15,8 +15,10 @@
  */
 package guru.nidi.wowbagger
 
+import guru.nidi.mbrola.*
 import guru.nidi.wowbagger.Gender.*
 import guru.nidi.wowbagger.Number.SINGULAR
+import java.util.*
 
 object Wowbagger {
     fun adjective(gender: Gender, number: Number) = Adjectives.list.choose().with(gender, number)
@@ -30,6 +32,16 @@ object Wowbagger {
     private fun <T> List<T>.choose() = this[random(this.size)]
 
     private fun List<Entry<Gendered>>.with(gender: Gender?) = filter { gender == null || gender == it.entry.gender }
+
+    fun enumerate(es: List<Entry<String>>): List<Entry<String>> = when (es.size) {
+        0 -> listOf()
+        1 -> listOf(es[0])
+        else -> es.subList(0, es.size - 1) + Entry("und", "_ u n d") + es.last()
+    }
+
+    fun say(phonemes: String, format: Format = Format.WAV) =
+            Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("nl2/nl2"), format).time(.8).run()
+
 }
 
 enum class Gender {
@@ -105,4 +117,6 @@ private fun replaceParens(s: String, gender: Gender) = replaceParens3(s, when (g
 private fun replaceParens2(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)\\)"), "$" + index)
 private fun replaceParens3(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)/(.*?)\\)"), "$" + index)
 
-fun random(range: Int) = (Math.random() * range).toInt()
+private val rnd = Random()
+fun randomSeed(seed: Long) = rnd.setSeed(seed)
+fun random(range: Int) = (rnd.nextDouble() * range).toInt()
