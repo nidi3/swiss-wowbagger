@@ -26,7 +26,7 @@ import java.util.concurrent.Executors
 
 
 fun main(args: Array<String>) {
-    val httpPort = 7125
+    val httpPort = 7126
     val log = PrintWriter(System.out)
     try {
         HttpServer.create(InetSocketAddress(httpPort), 0).apply {
@@ -51,13 +51,13 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                         .replace(Regex(" ([,.!?])"), "$1")
                         .capitalize()
                 val query = query(exchange.requestURI)
-                val res = when (query["format"]) {
+                val data = when (query["format"]) {
                     "json" -> {
                         exchange.responseHeaders.add("Content-Type", "application/json")
                         """{"id":$seed, "text":"$text"}""".toByteArray()
                     }
                     "wav" -> {
-                        exchange.responseHeaders.add("Content-Type", "audio/wav")
+                        exchange.responseHeaders.add("Content-Type", "audio/x-wav")
                         Wowbagger.say(entries.joinToString(" ") { it.phonemes }).use {
                             it.file.readBytes()
                         }
@@ -67,8 +67,13 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                         text.toByteArray()
                     }
                 }
+
+                val range = exchange.requestHeaders["Range"]?.first()
+                val res = if (range == "bytes=0-1") data.sliceArray(0..1) else data
+
+                exchange.responseHeaders.add("Content-Range", "bytes 0-${res.size - 1}/${data.size}")
                 exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
-                exchange.sendResponseHeaders(200, res.size.toLong())
+                exchange.sendResponseHeaders(if (res.size != data.size) 206 else 200, res.size.toLong())
                 it.write(res)
                 it.flush()
             } catch (e: Exception) {
