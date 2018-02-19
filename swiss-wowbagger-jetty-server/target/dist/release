@@ -1,2 +1,0 @@
-JAVA_VERSION="9.0.4"
-MODULES="java.base java.xml java.prefs javax.servlet.api java.logging java.security.sasl java.datatransfer java.naming java.desktop java.sql jetty.util jetty.io jetty.http java.management jetty.server kotlin.stdlib kotlin.stdlib.jdk7 kotlin.stdlib.jdk8 mbrola.jvm.common mbrola.jvm.linux swiss.wowbagger swiss.wowbagger.server"

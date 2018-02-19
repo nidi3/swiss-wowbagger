@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<project name="maven-antrun-" default="main"  >
-<target name="main">
-  <copy file="/Users/nidi/idea/swiss-wowbagger/swiss-wowbagger-server/target/swiss-wowbagger-server-0.0.1-SNAPSHOT.jar" todir="/Users/nidi/idea/swiss-wowbagger/swiss-wowbagger-server/target/modules"/>
-</target>
-</project>
