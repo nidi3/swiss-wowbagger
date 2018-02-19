@@ -4,3 +4,4 @@ target/
 js/web/*
 !js/web/kotlin.js
 !js/web/swiss-wowbagger-js.js
+.DS_Store
