@@ -23,11 +23,12 @@ import guru.nidi.wowbagger.Number
 import java.io.PrintWriter
 import java.net.*
 import java.util.concurrent.Executors
+import java.util.regex.Pattern
 
 
 fun main(args: Array<String>) {
-    val httpPort = 7126
-    val log = PrintWriter(System.out)
+    val httpPort = 7125
+    val log = PrintWriter(System.out, true)
     try {
         HttpServer.create(InetSocketAddress(httpPort), 0).apply {
             createContext("/", RootHandler(log))
@@ -68,13 +69,24 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                     }
                 }
 
-                val range = exchange.requestHeaders["Range"]?.first()
-                val res = if (range == "bytes=0-1") data.sliceArray(0..1) else data
-
-                exchange.responseHeaders.add("Content-Range", "bytes 0-${res.size - 1}/${data.size}")
                 exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
-                exchange.sendResponseHeaders(if (res.size != data.size) 206 else 200, res.size.toLong())
-                it.write(res)
+                val range = exchange.requestHeaders["Range"]?.first()
+                if (range != null) {
+                    val matcher = Pattern.compile("bytes=(\\d+)-(\\d+)").matcher(range)
+                    val (from, to, res) = if (!matcher.matches()) {
+                        Triple(0, data.size - 1, data)
+                    } else {
+                        val from = matcher.group(1).toInt()
+                        val to = matcher.group(2).toInt()
+                        Triple(from, to, data.sliceArray(from..to))
+                    }
+                    exchange.responseHeaders.add("Content-Range", "bytes $from-$to/${data.size}")
+                    exchange.sendResponseHeaders(206, res.size.toLong())
+                    it.write(res)
+                } else {
+                    exchange.sendResponseHeaders(200, data.size.toLong())
+                    it.write(data)
+                }
                 it.flush()
             } catch (e: Exception) {
                 e.printStackTrace(log)

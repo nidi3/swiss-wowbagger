@@ -66,14 +66,13 @@
 <script>
     var theInsult;
     var url = 'https://wowbagger.schaltstelle.ch/';
-    // var url = 'http://localhost:7126/';
+    // var url = 'http://localhost:7125/';
 
     function insult(hash) {
         var id = hash ? location.hash.substring(1) : '';
         fetch(url + id + '?format=json').then(function (res) {
             return res.json();
         }).then(function (json) {
-
             theInsult = json;
             location.hash = '#' + json.id;
             document.getElementById('text').textContent = json.text;
@@ -83,9 +82,7 @@
 
     function play() {
         var wav = new Audio(url + theInsult.id + '?format=wav');
-        wav.play().catch(function (x, y) {
-            console.log(x, y)
-        });
+        wav.play();
     }
 
     function reloadTwitter() {

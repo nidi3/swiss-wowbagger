@@ -26,10 +26,10 @@ import javax.servlet.http.HttpServletResponse
 
 
 fun main(args: Array<String>) {
-    val httpPort = 7123
+    val httpPort = 7125
     PrintWriter(OutputStreamWriter(FileOutputStream(File("log.txt")))).use { log ->
         Thread {
-            val ss = ServerSocket(7124)
+            val ss = ServerSocket(7126)
             while (true) {
                 try {
                     val s = ss.accept()
