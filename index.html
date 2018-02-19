@@ -66,7 +66,7 @@
 
     function insult(hash) {
         var id = hash ? location.hash.substring(1) : '';
-        var url = 'http://165.227.130.178:7125/';
+        var url = 'https://wowbagger.schaltstelle.ch/';
         fetch(url + id + '?format=json').then(function (res) {
             return res.json();
         }).then(function (json) {

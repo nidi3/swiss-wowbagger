@@ -20,14 +20,14 @@ package guru.nidi.wowbagger.server
 import com.sun.net.httpserver.*
 import guru.nidi.wowbagger.*
 import guru.nidi.wowbagger.Number
-import java.io.*
+import java.io.PrintWriter
 import java.net.*
 import java.util.concurrent.Executors
 
 
 fun main(args: Array<String>) {
     val httpPort = 7125
-    val log = PrintWriter(OutputStreamWriter(FileOutputStream(File("log.txt"))), true)
+    val log = PrintWriter(System.out)
     try {
         HttpServer.create(InetSocketAddress(httpPort), 0).apply {
             createContext("/", RootHandler(log))
