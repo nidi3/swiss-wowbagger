@@ -40,7 +40,7 @@ object Wowbagger {
     }
 
     fun say(phonemes: String, format: Format = Format.WAV) =
-            Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("nl2/nl2"), format).time(.8).run()
+            Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(.8).run()
 
 }
 
@@ -48,7 +48,7 @@ enum class Gender {
     M, F, N;
 
     companion object {
-        fun random() = if (random(1) == 0) M else F
+        fun random() = if (random(2) == 0) M else F
     }
 }
 

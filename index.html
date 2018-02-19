@@ -7,8 +7,6 @@
     <meta property="og:url" content="https://nidi3.github.io/swiss-wowbagger/"/>
     <meta property="og:image" content="https://nidi3.github.io/swiss-wowbagger/bear.jpg"/>
     <link rel="icon" href="favicon.png">
-    <script src="js/web/kotlin.js" type="text/javascript"></script>
-    <script src="js/web/swiss-wowbagger-js.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -56,7 +54,7 @@
 <div style="position:absolute; bottom: 50px; left: 50px;">
     <span id="twitter"> </span>
     <a style="background-image: url(fb.png); background-size: contain; width: 59px; height: 20px; display: inline-block;"
-       id="facebook" onclick="share()"></a>
+       id="facebook" onclick="fbShare()"></a>
 </div>
 
 <a href="https://github.com/nidi3/swiss-wowbagger" style="position: absolute; bottom: 50px; right: 50px">
@@ -66,31 +64,44 @@
 <script>
     var theInsult;
 
-    function insult() {
-        var wowbagger = window['swiss-wowbagger-js'].guru.nidi.wowbagger;
-        theInsult = wowbagger.insult();
-        document.getElementById('text').textContent = theInsult;
+    function insult(hash) {
+        var id = hash ? location.hash.substring(1) : '';
+        var url = 'http://165.227.130.178:7125/';
+        fetch(url + id + '?format=json').then(function (res) {
+            return res.json();
+        }).then(function (json) {
+            var wav = new Audio(url + json.id + '?format=wav');
+            wav.play();
+
+            theInsult = json;
+            location.hash = '#' + json.id;
+            document.getElementById('text').textContent = json.text;
+            reloadTwitter();
+        });
+    }
+
+    function reloadTwitter() {
         var t = document.getElementById('twitter');
         t.removeChild(t.firstChild);
         var a = document.createElement('a');
         a.className = 'twitter-share-button';
-        a.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(theInsult);
+        a.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(theInsult.text);
         t.appendChild(a);
         twttr.widgets.load();
     }
 
-    function share() {
+    function fbShare() {
         FB.ui({
                 method: 'share',
-                href: 'https://nidi3.github.io/swiss-wowbagger/',
-                quote: theInsult
+                href: 'https://nidi3.github.io/swiss-wowbagger/#' + theInsult.id,
+                quote: theInsult.text
             },
             function (response) {
             }
         );
     }
 
-    insult();
+    insult(true);
 </script>
 
 </body>

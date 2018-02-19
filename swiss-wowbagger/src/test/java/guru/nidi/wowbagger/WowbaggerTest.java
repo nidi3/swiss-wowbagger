@@ -23,7 +23,7 @@ class WowbaggerTest {
     void simple() {
         final Entry<String> name = Wowbagger.INSTANCE.action(Number.SINGULAR);
         System.out.println(name.getEntry());
-        try (final Waveform wave = new Mbrola(Phonemes.fromString(name.getPhonemes() + " _ 50"), Voice.fromClasspath("nl2/nl2"), Format.WAV).time(.8).run()) {
+        try (final Waveform wave = new Mbrola(Phonemes.fromString(name.getPhonemes() + " _ 50"), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), Format.WAV).time(.8).run()) {
             wave.play(true);
         }
     }

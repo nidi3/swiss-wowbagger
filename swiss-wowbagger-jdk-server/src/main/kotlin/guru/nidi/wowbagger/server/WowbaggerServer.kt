@@ -26,7 +26,7 @@ import java.util.concurrent.Executors
 
 
 fun main(args: Array<String>) {
-    val httpPort = 7124
+    val httpPort = 7125
     val log = PrintWriter(OutputStreamWriter(FileOutputStream(File("log.txt"))), true)
     try {
         HttpServer.create(InetSocketAddress(httpPort), 0).apply {
@@ -47,6 +47,9 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                         ?: System.currentTimeMillis()
                 val entries = compose(seed)
                 val text = entries.joinToString(" ") { it.entry }
+                        .replace(Regex("\\s+"), " ")
+                        .replace(Regex(" ([,.!?])"), "$1")
+                        .capitalize()
                 val query = query(exchange.requestURI)
                 val res = when (query["format"]) {
                     "json" -> {
@@ -64,6 +67,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                         text.toByteArray()
                     }
                 }
+                exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
                 exchange.sendResponseHeaders(200, res.size.toLong())
                 it.write(res)
                 it.flush()
