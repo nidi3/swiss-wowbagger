@@ -41,57 +41,56 @@ fun main(args: Array<String>) {
 }
 
 class RootHandler(private val log: PrintWriter) : HttpHandler {
-    override fun handle(exchange: HttpExchange) {
-        exchange.responseBody.use {
-            try {
-                val seed = exchange.requestURI.path?.substring(1)?.toLongOrNull()
-                        ?: System.currentTimeMillis()
-                val entries = compose(seed)
-                val text = entries.joinToString(" ") { it.entry }
-                        .replace(Regex("\\s+"), " ")
-                        .replace(Regex(" ([,.!?])"), "$1")
-                        .capitalize()
-                val query = query(exchange.requestURI)
-                val data = when (query["format"]) {
-                    "json" -> {
-                        exchange.responseHeaders.add("Content-Type", "application/json")
-                        """{"id":$seed, "text":"$text"}""".toByteArray()
-                    }
-                    "wav" -> {
-                        exchange.responseHeaders.add("Content-Type", "audio/x-wav")
-                        Wowbagger.say(entries.joinToString(" ") { it.phonemes }).use {
-                            it.file.readBytes()
-                        }
-                    }
-                    else -> {
-                        exchange.responseHeaders.add("Content-Type", "text/plain;charset=utf-8")
-                        text.toByteArray()
+    override fun handle(exchange: HttpExchange) = exchange.responseBody.use { response ->
+        try {
+            val query = query(exchange.requestURI)
+            val seed = exchange.requestURI.path?.trim('/')?.let {
+                if (it.isEmpty()) null else it.toLongOrNull()
+            } ?: System.currentTimeMillis()
+            val entries = compose(seed, query["names"]?.split(' ', '+')?.toList() ?: listOf())
+            val text = entries.joinToString(" ") { it.entry }
+                    .replace(Regex("\\s+"), " ")
+                    .replace(Regex(" ([,.!?])"), "$1")
+                    .capitalize()
+            val data = when (query["format"]) {
+                "json" -> {
+                    exchange.responseHeaders.add("Content-Type", "application/json")
+                    """{"id":$seed, "text":"$text"}""".toByteArray()
+                }
+                "wav" -> {
+                    exchange.responseHeaders.add("Content-Type", "audio/x-wav")
+                    Wowbagger.say(entries.joinToString(" ") { it.phonemes }).use {
+                        it.file.readBytes()
                     }
                 }
-
-                exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
-                val range = exchange.requestHeaders["Range"]?.first()
-                if (range != null) {
-                    val matcher = Pattern.compile("bytes=(\\d+)-(\\d+)").matcher(range)
-                    val (from, to, res) = if (!matcher.matches()) {
-                        Triple(0, data.size - 1, data)
-                    } else {
-                        val from = matcher.group(1).toInt()
-                        val to = matcher.group(2).toInt()
-                        Triple(from, to, data.sliceArray(from..to))
-                    }
-                    exchange.responseHeaders.add("Content-Range", "bytes $from-$to/${data.size}")
-                    exchange.sendResponseHeaders(206, res.size.toLong())
-                    it.write(res)
-                } else {
-                    exchange.sendResponseHeaders(200, data.size.toLong())
-                    it.write(data)
+                else -> {
+                    exchange.responseHeaders.add("Content-Type", "text/plain;charset=utf-8")
+                    text.toByteArray()
                 }
-                it.flush()
-            } catch (e: Exception) {
-                e.printStackTrace(log)
-                exchange.sendResponseHeaders(500, 0)
             }
+
+            exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
+            val range = exchange.requestHeaders["Range"]?.first()
+            if (range != null) {
+                val matcher = Pattern.compile("bytes=(\\d+)-(\\d+)").matcher(range)
+                val (from, to, res) = if (!matcher.matches()) {
+                    Triple(0, data.size - 1, data)
+                } else {
+                    val from = matcher.group(1).toInt()
+                    val to = matcher.group(2).toInt()
+                    Triple(from, to, data.sliceArray(from..to))
+                }
+                exchange.responseHeaders.add("Content-Range", "bytes $from-$to/${data.size}")
+                exchange.sendResponseHeaders(206, res.size.toLong())
+                response.write(res)
+            } else {
+                exchange.sendResponseHeaders(200, data.size.toLong())
+                response.write(data)
+            }
+            response.flush()
+        } catch (e: Exception) {
+            e.printStackTrace(log)
+            exchange.sendResponseHeaders(500, 0)
         }
     }
 
@@ -105,17 +104,22 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
             ?.toMap()
             ?: mapOf()
 
-    private fun compose(seed: Long): List<Entry<String>> {
+    private fun compose(seed: Long, names: List<String>): List<Entry<String>> {
         randomSeed(seed)
         val int = Wowbagger.interjection()
-        val gender = Gender.random()
-        val names = (0..random(3)).map { Wowbagger.name(gender) }
+        val (effNames, gender) = if (names.isEmpty()) {
+            val gender = Gender.random()
+            Pair((0..random(3)).map { Wowbagger.name(gender) }, gender)
+        } else {
+            //TODO phonemes for names
+            Pair(names.map { Entry(it, "f r i d u") }, Gender.M)
+        }
         val number = Number.of(names.size)
         val adj1 = Wowbagger.adjective(gender, number)
         val adj2 = Wowbagger.adjective(gender, number)
         val subject = Wowbagger.subject(gender, number)
         val action = Wowbagger.action(number)
-        val ns = Wowbagger.enumerate(names).let {
+        val ns = Wowbagger.enumerate(effNames).let {
             it + if (it.size == 1) Entry(", du", "_ 100 d u 200")
             else Entry(", dir", "_ 100 d I r")
         }

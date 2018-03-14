@@ -23,7 +23,7 @@ m Aargouer Outofahrer | A 200 r g o u @ r _ 50 o u t o f A 200 r @ r 200
 f Achermähre(/ne) | A x 200 @ r m a 200 r @ (/n @ 150)
 m Aff(/e) | A f 300 (/@ 150)
 m Angschthas(/e) | A N S t h A 200 s (/@ 150)
-m Armlüchter
+m Armlüchter | A 200 r m l y 200 x t @ r
 m Arschchäfer(/e) | A 200 r S x a f @ r (/@ 150)
 f Arschgige(/ne) | A 200 r S g i 200 g @ (/n @ 150)
 m Arschgig(u/le) | A 200 r S g I g (u 150/l @ 150)
@@ -73,7 +73,7 @@ m Chnorzi(/ne) | x n O r t s i (/n @ 150)
 m Chnüblisiech(/e) | x n y 200 b l i s i e x (/@ 150)
 m Chotzchüb(u/le) | x o t s x Y b (u/l @ 150)
 m Choderi(/ne) | x o d @ r i (/n @ 150)
-m Chodermoore(/ne)
+m Chodermoore(/ne) | x o d @ r m o 200 r @ (/n @ 150)
 m Choles(ack/eck) | x O l @ s (A k 200 h 50/e k 200 h 50)
 m Chouderi(/ne) | x O u d @ r i (/n @ 150)
 m Chrüppucheib(/e) | x r Y p 200 u x e i b (/@ 150)
@@ -160,7 +160,7 @@ m Habasch(/e) | h A 50 b A S 200 (/@ 150)
 f Hafehuer(/e) | h A f @ h u @ r (/@ 150)
 m Hag(u/le) | h A g (u/l @ 150)
 m Heilandtonner | h e i l A n d t o n 200 @ r
-m Hodegemschi(/s)
+m Hodegemschi(/s) | h o d @ g e m 200 S i 150 (/s 200)
 m Hornochs(/e) | h O r n O x s (/@ 150)
 m Hudilump(/e) | h u d i l u m p (/@ 150)
 n Hundshammli | h u n d s h A m 200 l i
@@ -230,7 +230,7 @@ m Schnudergoof(/e) | S n u d @ r g O 200 f 200 (/@ 150)
 m Schnuderi(/ne) | S n u d @ r i (/n @ 150)
 m Schnäbizägg(/e) | S n a b i t s a k 200 (/@ 150)
 m Schnäbichätscher | S n a b i x a t S @ r
-m Schnäbifächter
+m Schnäbifächter | S n a b i f a 150 x t @ r
 m Schnäbischpienzler | S n a b i S p i @ n t s l @ r
 f Schnädere | S n a d @ r @
 m Schwafler | S w A f l @ r
@@ -265,7 +265,7 @@ m Traliwatsch(/e) | t r A l i w A t S (/@ 150)
 m Troschtpris(/e) | t r O 200 S t 200 p r i 200 s (/@ 150)
 f Träne(/ne) | t r a 200 n @ (/n @ 150)
 m Tröchni(/ne) | t r 2 x 200 n i (/n @ 150)
-m Tropech(opf/öpf)
+m Tropech(opf/öpf) | t r O 200 p 150 @ x (O p f 150/2 p f 150)
 m Tröun(agu/egu) | t r 2 200 u n (A g u/e g u)
 m Tschaupisiech(/e) | t S A u p i s i e x (/@ 150)
 m Tschirpegig(u/le) | t S I r p @ k I k (u/l @ 150)

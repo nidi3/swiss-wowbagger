@@ -48,7 +48,9 @@ class Runner {
         say(phs.joinToString(" ") { it.phonemes }).use {
             it.play(true)
         }
-//  say(Actions.list[190].with(Number.PLURAL).phonemes)
+//  say(Subjects.list[246].with(Number.SINGULAR).phonemes).use{
+//      it.play(true)
+//  }
     }
 
 
