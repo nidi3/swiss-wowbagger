@@ -146,5 +146,5 @@ wältsch(e/es/i) | w a l t S (@/@ s/i)
 wüescht | w y @ S t
 zämegflickt | t s a m @ g f l I k h 50 t 200
 überegheit | y b @ r @ k h 50 @ 50 i t 200
-""".trimLines().map { Entry.of(it) { Adjective(it) } }
+""".trimLines().map { line -> Entry.of(line) { Adjective(it) } }
 }

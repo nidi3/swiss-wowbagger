@@ -94,6 +94,13 @@
                                 <module>
                                     <artifact>
                                         <groupId>org.jetbrains.kotlin</groupId>
+                                        <artifactId>kotlin-stdlib-common</artifactId>
+                                        <version>${kotlin.version}</version>
+                                    </artifact>
+                                </module>
+                                <module>
+                                    <artifact>
+                                        <groupId>org.jetbrains.kotlin</groupId>
                                         <artifactId>kotlin-stdlib</artifactId>
                                         <version>${kotlin.version}</version>
                                     </artifact>
@@ -132,6 +139,14 @@
                                         <version>13.0</version>
                                     </artifact>
                                     <moduleInfoFile>${gen.module.infos}/annotations/module-info.java</moduleInfoFile>
+                                </module>
+                                <module>
+                                    <artifact>
+                                        <groupId>org.jetbrains.kotlin</groupId>
+                                        <artifactId>kotlin-stdlib-common</artifactId>
+                                        <version>${kotlin.version}</version>
+                                    </artifact>
+                                    <moduleInfoFile>${my.module.infos}/kotlin.stdlib.common/module-info.java</moduleInfoFile>
                                 </module>
                                 <module>
                                     <artifact>

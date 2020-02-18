@@ -297,5 +297,5 @@ f aut(i/e) Hafehuer(/e) | A u t 200 (i/@) h A f @ h u @ r (/@ 150)
 m genetische Müuh(uufe/üüfe) | g e n e 200 t h 50 i S @ m Y u h (u 200 f 200 @/y 200 f 200 @)
 m Äschebächer | a S 200 @ b a x 200 @ r
 m Ätti(/ne) mit Huet | a t 200 i (/n @ 150) _ 20 m I t h u @ t
-""".trimLines().map { Entry.of(it) { Gendered(it) } }
+""".trimLines().map { line -> Entry.of(line) { Gendered(it) } }
 }

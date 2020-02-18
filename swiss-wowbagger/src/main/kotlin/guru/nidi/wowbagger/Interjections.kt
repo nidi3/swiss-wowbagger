@@ -104,5 +104,5 @@ Zeiechäs | t s e 200 i @ x a 200 s
 äuä scho | a u a S O 200
 ätsch | a 200 t S
 üüüble Sache | y 500 b l @ s A x @
-""".trimLines().map { Entry.of(it) { it } }
+""".trimLines().map { line -> Entry.of(line) { it } }
 }

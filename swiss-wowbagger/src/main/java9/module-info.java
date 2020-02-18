@@ -5,6 +5,7 @@ module swiss.wowbagger {
     requires transitive mbrola.jvm.linux;
 
     exports guru.nidi.wowbagger;
+    opens guru.nidi.wowbagger;
 
     opens guru.nidi.wowbagger.nl2;
 }

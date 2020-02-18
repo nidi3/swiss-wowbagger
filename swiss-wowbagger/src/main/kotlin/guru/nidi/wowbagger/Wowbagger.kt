@@ -40,7 +40,7 @@ object Wowbagger {
     }
 
     fun say(phonemes: String, format: Format = Format.WAV) =
-            Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(.8).run()
+            Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(.7).run()
 
 }
 
@@ -64,7 +64,7 @@ class Entry<out T>(val entry: T, val phonemes: String) {
     override fun toString() = entry.toString()
 
     companion object {
-        fun phonemes(phonemes: String) = of("|" + phonemes) { it }
+        fun phonemes(phonemes: String) = of("|$phonemes") { it }
         fun <T> of(line: String, converter: (String) -> T): Entry<T> {
             val pos = line.indexOf('|')
             return if (pos < 0) Entry(converter(line), "")
@@ -83,7 +83,7 @@ fun Entry<Numbered>.with(number: Number): Entry<String> {
 }
 
 data class Gendered(override val name: String, val gender: Gender) : Numbered {
-    constructor(s: String) : this(s.substring(2), Gender.valueOf(s.substring(0, 1).toUpperCase()))
+    constructor(s: String) : this(s.substring(2), valueOf(s.substring(0, 1).toUpperCase()))
 
     override fun toString() = name
 }
@@ -114,8 +114,8 @@ private fun replaceParens(s: String, gender: Gender) = replaceParens3(s, when (g
     F -> 3
 })
 
-private fun replaceParens2(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)\\)"), "$" + index)
-private fun replaceParens3(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)/(.*?)\\)"), "$" + index)
+private fun replaceParens2(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)\\)"), "$$index")
+private fun replaceParens3(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)/(.*?)\\)"), "$$index")
 
 private val rnd = Random()
 fun randomSeed(seed: Long) = rnd.setSeed(seed)

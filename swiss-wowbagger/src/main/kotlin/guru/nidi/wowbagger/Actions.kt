@@ -210,5 +210,5 @@ was isch mit (dim/öiem) Hosegschingg? | w A s I S m I t (d i m/2 i @ m) h O s @
 wenn i (dis/öies) Gsicht aluege, bin i mit mim Füdle ganz z'fride. | w e n I 200 (d i s/2 i @ s) g s I x t A l u @ g @ b I n I m I t m i m f Y d l @ 50 g A n t s _ 20 t s f r I d @ _ 20
 wird (der/nech) gschmuech? | w I r (t 200 @ r/t n @ x) g S m u @ x
 wäm (bisch/sit der) wieder a Chare gfahre? | w a m (b I S/s i t 200 @ r) w I d @ r A x A r @ g f A 200 r @ _ 20
-""".trimLines().map { Entry.of(it) { Action(it) } }
+""".trimLines().map { line -> Entry.of(line) { Action(it) } }
 }

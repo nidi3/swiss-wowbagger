@@ -121,5 +121,5 @@ m Werni | w e r n i
 f Vane | w A n @
 m Vidu | w i d u
 f Vrene | f r e n @
-""".trimLines().map { Entry.of(it) { Gendered(it) } }
+""".trimLines().map { line -> Entry.of(line) { Gendered(it) } }
 }

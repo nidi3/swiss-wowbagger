@@ -5,7 +5,7 @@
     <parent>
         <groupId>guru.nidi</groupId>
         <artifactId>guru-nidi-parent-pom</artifactId>
-        <version>1.1.12</version>
+        <version>1.1.29</version>
         <relativePath />
     </parent>
 
@@ -27,6 +27,7 @@
     <properties>
         <!--<kotlin.compiler.incremental>true</kotlin.compiler.incremental>-->
         <java.version>1.8</java.version>
+        <kotlin.version>1.3.11</kotlin.version>
         <dependency-check.fail-on-error>false</dependency-check.fail-on-error>
     </properties>
 

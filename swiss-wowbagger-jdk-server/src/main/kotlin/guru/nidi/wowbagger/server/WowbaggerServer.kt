@@ -25,8 +25,7 @@ import java.net.*
 import java.util.concurrent.Executors
 import java.util.regex.Pattern
 
-
-fun main(args: Array<String>) {
+fun main() {
     val httpPort = 7125
     val log = PrintWriter(System.out, true)
     try {
@@ -114,7 +113,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
             //TODO phonemes for names
             Pair(names.map { Entry(it, "f r i d u") }, Gender.M)
         }
-        val number = Number.of(names.size)
+        val number = Number.of(effNames.size)
         val adj1 = Wowbagger.adjective(gender, number)
         val adj2 = Wowbagger.adjective(gender, number)
         val subject = Wowbagger.subject(gender, number)
