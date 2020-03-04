@@ -24,6 +24,8 @@ import java.io.PrintWriter
 import java.net.*
 import java.util.concurrent.Executors
 import java.util.regex.Pattern
+import kotlin.math.max
+import kotlin.math.min
 
 fun main() {
     val httpPort = 7125
@@ -46,7 +48,9 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
             val seed = exchange.requestURI.path?.trim('/')?.let {
                 if (it.isEmpty()) null else it.toLongOrNull()
             } ?: System.currentTimeMillis()
-            val entries = compose(seed, query["names"]?.split(' ', '+')?.toList() ?: listOf())
+            val names = query["names"]?.let { if (it.isBlank()) null else it }
+            val entries = compose(seed, names?.split(' ', '+', ',')?.toList() ?: listOf())
+            val speed = 2 - min(100, max(0, (query["v"]?.toIntOrNull()) ?: 80)) / 100.0 * 1.7
             val text = entries.joinToString(" ") { it.entry }
                     .replace(Regex("\\s+"), " ")
                     .replace(Regex(" ([,.!?])"), "$1")
@@ -58,7 +62,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                 }
                 "wav" -> {
                     exchange.responseHeaders.add("Content-Type", "audio/x-wav")
-                    Wowbagger.say(entries.joinToString(" ") { it.phonemes }).use {
+                    Wowbagger.say(entries.joinToString(" ") { it.phonemes }, speed = speed).use {
                         it.file.readBytes()
                     }
                 }
@@ -110,8 +114,11 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
             val gender = Gender.random()
             Pair((0..random(3)).map { Wowbagger.name(gender) }, gender)
         } else {
-            //TODO phonemes for names
-            Pair(names.map { Entry(it, "f r i d u") }, Gender.M)
+            names.map { Wowbagger.name(it) }.let { genderedNames ->
+                val nameEntry = genderedNames.map { it.with(Number.SINGULAR) }
+                val gender = if (genderedNames.any { it.entry.gender == Gender.M }) Gender.M else Gender.F
+                Pair(nameEntry, gender)
+            }
         }
         val number = Number.of(effNames.size)
         val adj1 = Wowbagger.adjective(gender, number)

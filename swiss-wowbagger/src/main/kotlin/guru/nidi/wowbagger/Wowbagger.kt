@@ -19,11 +19,14 @@ import guru.nidi.mbrola.*
 import guru.nidi.wowbagger.Gender.*
 import guru.nidi.wowbagger.Number.SINGULAR
 import java.util.*
+import java.util.Locale.ENGLISH
+import kotlin.math.min
 
 object Wowbagger {
     fun adjective(gender: Gender, number: Number) = Adjectives.list.choose().with(gender, number)
     fun subject(gender: Gender? = null, number: Number) = Subjects.list.with(gender).choose().with(number)
     fun name(gender: Gender? = null) = Names.list.with(gender).choose().with(SINGULAR)
+    fun name(target: String) = Names.list.minBy { s -> similar(target.toLowerCase(ENGLISH), s.entry.name.toLowerCase(ENGLISH)) }!!
     fun action(number: Number) = Actions.list.choose().with(number)
     fun interjection() = Interjections.list.choose()
 
@@ -39,8 +42,8 @@ object Wowbagger {
         else -> es.subList(0, es.size - 1) + Entry("und", "_ u n d") + es.last()
     }
 
-    fun say(phonemes: String, format: Format = Format.WAV) =
-            Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(.7).run()
+    fun say(phonemes: String, format: Format = Format.WAV, speed: Double = .7) =
+            Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(speed).run()
 
 }
 
@@ -120,3 +123,23 @@ private fun replaceParens3(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.
 private val rnd = Random()
 fun randomSeed(seed: Long) = rnd.setSeed(seed)
 fun random(range: Int) = (rnd.nextDouble() * range).toInt()
+
+private fun similar(s1: String, s2: String): Int {
+    return levenshtein(s1, s2) - (if (s1.first() == s2.first()) 1 else 0)
+}
+
+private fun levenshtein(s1: String, s2: String): Int {
+    val edits = Array(s1.length + 1) { IntArray(s2.length + 1) }
+    for (i in 0..s1.length) edits[i][0] = i
+    for (i in 1..s2.length) edits[0][i] = i
+    for (i in 1..s1.length) {
+        for (j in 1..s2.length) {
+            val u = if (s1[i - 1] == s2[j - 1]) 0 else 1
+            edits[i][j] = min(
+                    edits[i - 1][j] + 1,
+                    min(edits[i][j - 1] + 1, edits[i - 1][j - 1] + u)
+            )
+        }
+    }
+    return edits[s1.length][s2.length]
+}
