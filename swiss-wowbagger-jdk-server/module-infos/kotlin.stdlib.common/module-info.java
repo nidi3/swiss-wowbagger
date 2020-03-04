@@ -1,3 +1,0 @@
-
-module kotlin.stdlib.common {
-}

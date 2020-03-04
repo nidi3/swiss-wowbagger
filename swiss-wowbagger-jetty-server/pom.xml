@@ -6,7 +6,7 @@
     <parent>
         <groupId>guru.nidi</groupId>
         <artifactId>swiss-wowbagger-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>swiss-wowbagger-jetty-server</artifactId>
@@ -15,6 +15,7 @@
     <properties>
         <gen.module.infos>${project.build.directory}/generated-module-infos</gen.module.infos>
         <my.module.infos>module-infos</my.module.infos>
+        <jetty.version>9.4.27.v20200227</jetty.version>
     </properties>
 
     <dependencies>
@@ -26,18 +27,15 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.4.8.v20171121</version>
-            <!--<version>9.2.24.v20180105</version>-->
+            <version>${jetty.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.16</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
         </dependency>
     </dependencies>
 
@@ -85,7 +83,7 @@
                                     <artifact>
                                         <groupId>org.slf4j</groupId>
                                         <artifactId>slf4j-api</artifactId>
-                                        <version>1.7.16</version>
+                                        <version>1.7.26</version>
                                     </artifact>
                                     <additionalDependencies>
                                         <dependency>
@@ -99,41 +97,41 @@
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-http</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                 </module>
                                 <module>
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-http</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                 </module>
                                 <module>
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-util</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                 </module>
                                 <module>
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-io</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                 </module>
                                 <module>
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-server</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                     <additionalDependencies>
                                         <dependency>
                                             <groupId>org.eclipse.jetty</groupId>
                                             <artifactId>jetty-util</artifactId>
-                                            <version>9.4.8.v20171121</version>
+                                            <version>${jetty.version}</version>
                                         </dependency>
                                     </additionalDependencies>
                                 </module>
@@ -200,7 +198,7 @@
                                     <artifact>
                                         <groupId>org.slf4j</groupId>
                                         <artifactId>slf4j-api</artifactId>
-                                        <version>1.7.16</version>
+                                        <version>1.7.27</version>
                                     </artifact>
                                     <moduleInfoFile>${gen.module.infos}/slf4j.api/module-info.java</moduleInfoFile>
                                 </module>
@@ -208,7 +206,7 @@
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-util</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                     <moduleInfoFile>${gen.module.infos}/jetty.util/module-info.java</moduleInfoFile>
                                 </module>
@@ -216,7 +214,7 @@
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-http</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                     <moduleInfoFile>${gen.module.infos}/jetty.http/module-info.java</moduleInfoFile>
                                 </module>
@@ -224,7 +222,7 @@
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-io</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                     <moduleInfoFile>${gen.module.infos}/jetty.io/module-info.java</moduleInfoFile>
                                 </module>
@@ -232,7 +230,7 @@
                                     <artifact>
                                         <groupId>org.eclipse.jetty</groupId>
                                         <artifactId>jetty-server</artifactId>
-                                        <version>9.4.8.v20171121</version>
+                                        <version>${jetty.version}</version>
                                     </artifact>
                                     <moduleInfoFile>${my.module.infos}/jetty.server/module-info.java</moduleInfoFile>
                                 </module>

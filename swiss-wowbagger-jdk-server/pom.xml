@@ -65,116 +65,36 @@
                         <configuration>
                             <includeScope>compile</includeScope>
                             <excludeTransitive>false</excludeTransitive>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.moditect</groupId>
-                <artifactId>moditect-maven-plugin</artifactId>
-                <version>1.0.0.Alpha2</version>
-                <executions>
-                    <execution>
-                        <id>generate-module-infos</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>generate-module-info</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${gen.module.infos}</outputDirectory>
-                            <modules>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains</groupId>
-                                        <artifactId>annotations</artifactId>
-                                        <version>13.0</version>
-                                    </artifact>
-                                </module>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains.kotlin</groupId>
-                                        <artifactId>kotlin-stdlib-common</artifactId>
-                                        <version>${kotlin.version}</version>
-                                    </artifact>
-                                </module>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains.kotlin</groupId>
-                                        <artifactId>kotlin-stdlib</artifactId>
-                                        <version>${kotlin.version}</version>
-                                    </artifact>
-                                </module>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains.kotlin</groupId>
-                                        <artifactId>kotlin-stdlib-jdk7</artifactId>
-                                        <version>${kotlin.version}</version>
-                                    </artifact>
-                                </module>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains.kotlin</groupId>
-                                        <artifactId>kotlin-stdlib-jdk8</artifactId>
-                                        <version>${kotlin.version}</version>
-                                    </artifact>
-                                </module>
-                            </modules>
+                            <excludeGroupIds>org.jetbrains.kotlin</excludeGroupIds>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>add-module-infos</id>
-                        <phase>generate-resources</phase>
+                        <id>copy kotlin-modular</id>
                         <goals>
-                            <goal>add-module-info</goal>
+                            <goal>copy</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/modules</outputDirectory>
-                            <overwriteExistingFiles>true</overwriteExistingFiles>
-                            <modules>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains</groupId>
-                                        <artifactId>annotations</artifactId>
-                                        <version>13.0</version>
-                                    </artifact>
-                                    <moduleInfoFile>${gen.module.infos}/annotations/module-info.java</moduleInfoFile>
-                                </module>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains.kotlin</groupId>
-                                        <artifactId>kotlin-stdlib-common</artifactId>
-                                        <version>${kotlin.version}</version>
-                                    </artifact>
-                                    <moduleInfoFile>${my.module.infos}/kotlin.stdlib.common/module-info.java</moduleInfoFile>
-                                </module>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains.kotlin</groupId>
-                                        <artifactId>kotlin-stdlib</artifactId>
-                                        <version>${kotlin.version}</version>
-                                    </artifact>
-                                    <moduleInfoFile>${my.module.infos}/kotlin.stdlib/module-info.java</moduleInfoFile>
-                                </module>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains.kotlin</groupId>
-                                        <artifactId>kotlin-stdlib-jdk7</artifactId>
-                                        <version>${kotlin.version}</version>
-                                    </artifact>
-                                    <moduleInfoFile>${gen.module.infos}/kotlin.stdlib.jdk7/module-info.java
-                                    </moduleInfoFile>
-                                </module>
-                                <module>
-                                    <artifact>
-                                        <groupId>org.jetbrains.kotlin</groupId>
-                                        <artifactId>kotlin-stdlib-jdk8</artifactId>
-                                        <version>${kotlin.version}</version>
-                                    </artifact>
-                                    <moduleInfoFile>${gen.module.infos}/kotlin.stdlib.jdk8/module-info.java
-                                    </moduleInfoFile>
-                                </module>
-                            </modules>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.jetbrains.kotlin</groupId>
+                                    <artifactId>kotlin-stdlib</artifactId>
+                                    <classifier>modular</classifier>
+                                    <version>${kotlin.version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jetbrains.kotlin</groupId>
+                                    <artifactId>kotlin-stdlib-jdk7</artifactId>
+                                    <classifier>modular</classifier>
+                                    <version>${kotlin.version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jetbrains.kotlin</groupId>
+                                    <artifactId>kotlin-stdlib-jdk8</artifactId>
+                                    <classifier>modular</classifier>
+                                    <version>${kotlin.version}</version>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
