@@ -19,10 +19,11 @@ import guru.nidi.wowbagger.Wowbagger.trimLines
 
 object Subjects {
     val list = """
-m Aargouer Outofahrer | A 200 r g o u @ r _ 50 o u t o f A 200 r @ r 200
+m aargouer Outofahrer | A 200 r g o u @ r _ 50 o u t o f A 200 r @ r 200
 f Achermähre(/ne) | A x 200 @ r m a 200 r @ (/n @ 150)
 m Aff(/e) | A f 300 (/@ 150)
 m Angschthas(/e) | A N S t h A 200 s (/@ 150)
+m arrogant(e/i) Zürcher | A r o g A n t (@/i) _ 50 t s Y r x @ r
 m Armlüchter | A 200 r m l y 200 x t @ r
 m Arschchäfer(/e) | A 200 r S x a f @ r (/@ 150)
 f Arschgige(/ne) | A 200 r S g i 200 g @ (/n @ 150)
@@ -32,7 +33,7 @@ m Aschi | A 150 S i
 n Aupech(aub/äuber) | A u p @ x (A u b 200/a u b @ r)
 f Baabe(/ne) | b A 200 p @ (/n @ 150)
 f Bagglimoore(/ne) | b A g 200 l i m O 200 r @ (/n @ 150)
-n Baslerbebbi(/s) | b A s l @ r b e b 200 i (/s 150)
+n Baslerbebbi(/s) | b A 300 s l @ x b e b 300 i (/s 150)
 m Batzechlemmer | b A t s @ x l e m 200 @ r
 m Bettseicher | b e t s e i x @ r
 n Bipperlisi(/s) | b I p 200 @ r l i s i (/s 150)
@@ -69,6 +70,7 @@ m Chiubi-Gig(u/le) | x i u b i k I k (u/l @ 150)
 f Chleech(ue/üe) | x l e 200 x (u @/y @)
 f Chlefe(/ne) | x l e f @ (/n @ 150)
 n Chlepfschit(/ter) | x l e p f S i t 200 h 50 (/@ r)
+m chlin(e/i) Appizäuer | x l i 200 n (@/i) _ A p 200 i t s a 200 u @ r
 m Chnorzi(/ne) | x n O r t s i (/n @ 150)
 m Chnüblisiech(/e) | x n y 200 b l i s i e x (/@ 150)
 m Chotzchüb(u/le) | x o t s x Y b (u/l @ 150)
@@ -136,6 +138,7 @@ n Grillehirni | g r I l 200 @ h I r n i
 m Grittibänz(/e) | g r I t 200 i b a n t s (/@ 150)
 m Groggermooslaferi(/ne) | g r O g 200 @ r m O 200 s l A f @ r i (/n @ 150)
 m Gränni(/ne) | g r a n 200 i (/n @ 150)
+f Grännibäbi | g r a n 200 i b a 200 b i
 m Grümscheler | g r Y m S @ l @ r
 m Grüs(u/le) | g r y 200 s (u/l @ 150)
 m Gschtabi(/ne) | k S t A b i (/n @ 150)
@@ -162,6 +165,7 @@ m Hag(u/le) | h A g (u/l @ 150)
 m Heilandtonner | h e i l A n d t o n 200 @ r
 m Hodegemschi(/s) | h o d @ g e m 200 S i 150 (/s 200)
 m Hornochs(/e) | h O r n O x s (/@ 150)
+m Höseler | h 2 s @ l @ r
 m Hudilump(/e) | h u d i l u m p (/@ 150)
 n Hundshammli | h u n d s h A m 200 l i
 f Hundsniere(/ne) | h u n d s n i @ r @ (/n @ 150)
@@ -251,6 +255,7 @@ m Sousiech(/e) | s O u s i e x (/@ 150)
 m Spränz(u/le) | S p r a n t s (u/l @ 150)
 m Stürmi(/ne) | S t y r m i (/n @ 150)
 m Stärnesiech(/e) | S t a 200 r n @ s i e x (/@ 150)
+m stinkig(e/i) Friburger | S t I N k 200 i g (@/i) _ f r i b u r g @ r
 m Stürmisiech(/e) | S t y r m i s i e x (/@ 150)
 m Sufludi(/ne) | s u f l u d i (/n @ 150)
 m Söiferludi(/ne) | s 2 i f 200 @ r l u d i (/n @ 150)
@@ -281,7 +286,9 @@ m Uh(ung/üng) | u u h (u 200 N g/Y 200 N g)
 m Vagant(/e) | f A g A 200 n t 200 (/@ 150)
 m Voupf(oschte/öschte) | f O u p f (O S 150 t @/2 S 150 t @)
 m Vout(otsch/ötsch) | f O u t 200 (O t S 200/2 t S 200)
+m Wäuschwalliser | w a u S w A l 200 i s 200 @ r
 m Weichschnäbeler | w e i x S n a b @ l @ r
+f Wyb(/er) | w i 200 (b 200/b @ r)
 f Wixbire(/ne) | w I g s b I r @ (/n @ 150)
 f Wurzle(/ne) | w u r t s l @ (/n @ 150)
 m Wäbstübeler | w a b S t Y b @ l @ r

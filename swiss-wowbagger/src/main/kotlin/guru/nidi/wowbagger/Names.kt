@@ -25,12 +25,14 @@ m Ändu | a n d u
 f Ännele | a n 200 @ l @
 f Annebäbi | A n 200 @ b a 200 b i
 m Aschi | A S i
+m Bänz | b a n t s
 f Beetli | b e 200 t 150 l i
 m Beätu | b e a 200 t 200 u
 m Bidu | b i d u
 m Beni | b e n i
 m Bänz | b a n t s
 m Brünu | b r y n u
+f Cärmle | k a 200 r m l @
 m Chlöisu | x l 2 i s u
 m Chrigu | x r I g u
 f Chrige | x r I g @
@@ -50,10 +52,12 @@ m Fritzu | f r I t s u
 m Godi | k O d i
 m Gusti | g u S t i
 m Gödu | g 2 d u
+m Hämpu | h a m p u
 f Heidle | h e i d l @
 m Hene | h e 50 n @
 m Housi | h o u s i
 m Jänu | i a 200 n u
+f Jasme | i A s m @
 f Jole | i o l @
 m Jüre | i y r @
 m Köbu | k h 50 2 b u
@@ -74,12 +78,14 @@ m Michu | m i x 200 u
 f Möne | m 2 n @
 m Niku | n i k 200 h 50 u
 f Nigge | n i k 200 @
+f Nuke | n u 200 k 200 @
 m Ölu | 2 l u
 m Päscu | p a s g u
 m Pädu | p h 50 a d u
 m Pöilu | p h 50 2 i l u
 m Pesche | p e S @
 m Räffu | r a f 200 u
+f Rebe | r e b @
 m Res | r e 200 s
 m Retölu | r e 200 t 200 2 200 l 50 u
 m Role | r O l @
@@ -92,7 +98,9 @@ m Rüedu | r y @ d u
 f Sabe | s A b @
 m Sämu | s a m u
 m Sändu | s a n d u
+f Särele | s a 200 r @ l @
 m Säschu | s a S 200 u
+m Schöggu | S 2 g 200 u
 m Sebu | s e b u
 f Sile | s I l @
 m Simu | s i m u

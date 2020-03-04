@@ -125,7 +125,9 @@ fun randomSeed(seed: Long) = rnd.setSeed(seed)
 fun random(range: Int) = (rnd.nextDouble() * range).toInt()
 
 private fun similar(s1: String, s2: String): Int {
-    return levenshtein(s1, s2) - (if (s1.first() == s2.first()) 1 else 0)
+    val first = s1.first() == s2.first()
+    val second = s1.length >= 2 && s2.length >= 2 && s1[1] == s2[1]
+    return levenshtein(s1, s2) - (if (first) 2 else 0) - (if (second) 1 else 0)
 }
 
 private fun levenshtein(s1: String, s2: String): Int {
