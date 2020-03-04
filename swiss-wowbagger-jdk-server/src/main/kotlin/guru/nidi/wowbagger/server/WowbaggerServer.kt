@@ -49,7 +49,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                 if (it.isEmpty()) null else it.toLongOrNull()
             } ?: System.currentTimeMillis()
             val names = query["names"]?.let { if (it.isBlank()) null else it }
-            val entries = compose(seed, names?.split(' ', '+', ',')?.toList() ?: listOf())
+            val entries = compose(seed, names?.split(Regex("[ +,]+"))?.toList() ?: listOf())
             val speed = 2 - min(100, max(0, (query["v"]?.toIntOrNull()) ?: 80)) / 100.0 * 1.7
             val text = entries.joinToString(" ") { it.entry }
                     .replace(Regex("\\s+"), " ")
