@@ -19,9 +19,9 @@ import guru.nidi.wowbagger.Wowbagger.trimLines
 
 object Adjectives {
     val list = """
-aarig | A 300 r i g
+aarig | A 300 r I g
 aabrönt | A 200 b r 2 n t 200
-aabislet | A 200 b i s l @ t 200
+aabyslet | A 200 b i s l @ t 200
 aagchaflet | A 200 g x A f l @ t 200
 aagchätschet | A 200 g x a t S @ t 200
 aagfigget | A 200 g f I g 200 @ t 200
@@ -30,28 +30,28 @@ abgfigget | A b 100 g f I g 200 @ t 200
 abgnaget | A b g n A 200 g @ t 200
 abgsärblet | A b g s a r b l @ t 200
 abgschiffet | A b g S I f 200 @ t 200
-abverheit | A b f e r h e i t 200
+abverheit | A b f @ r h e i t 200
 aghotschet | A 200 g h O 200 t S @ t 200
 agnöttelet | A 200 g n 2 t 200 @ l @ t 200
 agschissen | A 200 g S I s 200 @ n
 arrogant | A r 200 O g A n t 200
 blöd | b l 2 200 d
 bireweich | b I r @ w e i x
-bockstössig | b O k S t 2 200 s 200 i g
-breitarschig | b r e i t _ 30 A r S 200 i g
-böckelig | b 2 k h 50 @ l i g
-bünzlig | b y n t s l i g
-charesaubig | x A r @ s A u b i g
+bockstössig | b O k S t 2 200 s 200 I g
+breitarschig | b r e i t _ 30 A r S 200 I g
+böckelig | b 2 k h 50 @ l I g
+bünzlig | b y n t s l I g
+charesaubig | x A r @ s A u b I g
 cheib | x e i b
 cheibedoof | x e i b @ d O 200 f
-chlin | x l i 200 n
-chlinghüselet | x l i n _ 50 g 200 h y s l @ t 200
+chlyn | x l i 200 n
+chlynghüslet | x l i n _ 50 g 200 h y s l @ t 200
 chnütschblau | x n y 50 t S b l A 200 u
-choderpflotschig | x O d @ r p f l O t S i g
-chotzbrockemässig | x O t s b r O k 200 h 50 @ m a 200 s 200 i g
+choderpflotschig | x O d @ r p f l O t S I g
+chotzbrockemässig | x O t s b r O k 200 h 50 @ m a 200 s 200 I g
 chotzpängglig | x O t s p a N _ 10 g 200 l I g
 chäferfüdletroch | x a f @ r 50 f 2 d l @ t r O x 200
-chäsig | x a s i g
+chäsig | x a s I g
 degoutant | d e g u t A n t 200
 doof | d O 200 f
 doppuchinig | d O p 200 u x I n i g
@@ -75,7 +75,7 @@ giggerig | g 200 i g 250 @ r i g
 gnietig | g 200 n i e t 200 i g
 grusig | g r u 200 s i g
 gopfertecku(//) | g 200 O p f @ r t e k h 50 u (//)
-gopferdammt | g 200 O p f @ r d a m 250 t 200
+gopferdammt | g 200 O p f @ r d A m 250 t 200
 grossgchotzet | g 200 r O 200 s g x O t s @ t 200
 gruebegrässlech | g r u @ b @ g r a s 200 l @ x
 gschiferlig | g S I f @ 10 r l i g
@@ -110,7 +110,7 @@ nüütmerkig | n y 200 t m e r k h 50 i 50 g
 nüütratzig | n y 200 t r A t s i 50 g
 nüütwärchig | n y 200 t w a r x i 50 g
 obergruusig | O b @ 50 r g r u 200 s i 50 g
-pseudogschiid | p s 2 i d O g S i 200 d
+pseudogschyyd | p s 2 i d O g S i 200 d
 pägguhaarig | p a k 200 u h A 200 r i g
 quergvoglet | k 200 w e r g f O g l @ t 200
 ranzig | r A n t s i g
@@ -127,7 +127,7 @@ tüfusüchtig | t y 200 f u s y x t i g
 umegschläberlet | u m @ g S l a b @ r l @ t 200
 unerchannt | u n @ r x A n 200 t 200
 ungerbeliechtet | u N @ 50 r b e l i @ x 50 t @ t 200
-ulidig | u l i 200 d i g
+ulydig | u l i 200 d i g
 ugantlig | u g A n t l I 50 g
 uschaflig | u S A f l I 50 g
 verbibäbbelet | f @ r b i b a 250 p 200 @ 50 l @ t 200
