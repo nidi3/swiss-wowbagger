@@ -1,3 +1,4 @@
+import de.sciss.jump3r.Main
 import guru.nidi.wowbagger.*
 import guru.nidi.wowbagger.Number
 import org.telegram.telegrambots.ApiContextInitializer
@@ -7,8 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Update
-import kotlin.math.max
-import kotlin.math.min
+import java.io.File
 
 fun main() {
     ApiContextInitializer.init()
@@ -22,37 +22,64 @@ class Bot : TelegramLongPollingBot() {
     override fun getBotUsername() = System.getenv("WOWBAGGER_BOT_USER") ?: System.getenv("USER")
 
     override fun onUpdateReceived(update: Update) {
-        System.setProperty("os.name","linux")
         if (update.message?.text != null) {
             val text = update.message.text.toLowerCase()
             println(text)
             val chatId = update.message.chatId
 
             fun send(text: String) = execute(SendMessage(chatId, text))
+            fun sendAudio(title: String, text: String, wav: File) = execute(SendAudio().apply {
+                setChatId(chatId)
+                setCaption(text)
+                val out = File(wav.parentFile, wav.name + ".mp3")
+                Main().run(arrayOf("-S", "--preset", "standard", "-q", "0", "-m", "s", wav.absolutePath, out.absolutePath))
+                setAudio(InputFile(out, title))
+            })
 
-            when {
-                text.startsWith("/sag") || text.startsWith("/säg") -> {
-                    val names = if (text.length <= 5) null else text.substring(5).let { if (it.isBlank()) null else it }
-                    val entries = compose(names?.split(Regex("[ +,]+"))?.toList() ?: listOf())
-                    val speed = 2 - min(100, max(0, 80)) / 100.0 * 1.7
-                    val msg = entries.joinToString(" ") { it.entry }
-                            .replace(Regex("\\s+"), " ")
-                            .replace(Regex(" ([,.!?])"), "$1")
-                            .capitalize()
-                    send(msg)
-                    SendAudio().apply {
-                        setChatId(chatId)
-                        setCaption(msg)
-                        setAudio(InputFile(Wowbagger.say(entries.joinToString(" ") { it.phonemes }, speed = speed).use {
-                            it.file.inputStream()
-                        }, "say $names"))
+            parseCommand(text)?.let { command ->
+                when {
+                    command.command == "help" || command.command.matches(Regex("h[iü][ul]f")) -> send("/schrib näme\n/sag (schnäll | langsam) näme")
+                    command.command == "schrib" -> send(textOf(compose(command.rest)))
+                    command.command.matches(Regex("s[eaä]g")) -> {
+                        val say = Regex("(?<speed>(schn[eaä](u|ll))|(langsam))?(?<rest>.*)").matchEntire(command.rest)
+                        if (say == null) {
+                            send("Hä?")
+                        } else {
+                            val speed = (when (say.groups["speed"]?.value) {
+                                null -> 70
+                                "langsam" -> 50
+                                else -> 85
+                            })
+                            val names = say.groups["rest"]?.value ?: ""
+                            val msg = compose(names)
+                            Wowbagger.say(msg.joinToString(" ") { it.phonemes }, speed = 2 - speed / 100.0 * 1.7).use {
+                                sendAudio("${msg[0].entry.capitalize()} $names", textOf(msg), it.file)
+                            }
+                        }
+                    }
+                    else -> {
                     }
                 }
             }
         }
     }
 
-    private fun compose(names: List<String>): List<Entry<String>> {
+    private fun parseCommand(text: String): Command? {
+        val res = Regex("/(?<cmd>[^@ ]+)(@${botUsername.toLowerCase()})?(?<rest> .*)?").matchEntire(text)
+        return res?.let { Command(res.groups["cmd"]!!.value, res.groups["rest"]?.value?.trim() ?: "") }
+    }
+
+    class Command(val command: String, val rest: String)
+
+    private fun textOf(entries: List<Entry<String>>): String {
+        return entries.joinToString(" ") { it.entry }
+                .replace(Regex("\\s+"), " ")
+                .replace(Regex(" ([,.!?])"), "$1")
+                .capitalize()
+    }
+
+    private fun compose(rest: String): List<Entry<String>> {
+        val names = rest.split(Regex("[ +,]+")).filter { !it.isBlank() }.toList()
         val int = Wowbagger.interjection()
         val (effNames, gender) = if (names.isEmpty()) {
             val gender = Gender.random()
