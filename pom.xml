@@ -22,6 +22,7 @@
         <module>swiss-wowbagger</module>
         <!--<module>swiss-wowbagger-jetty-server</module>-->
         <module>swiss-wowbagger-jdk-server</module>
+        <module>swiss-wowbagger-telegram</module>
     </modules>
 
     <properties>
