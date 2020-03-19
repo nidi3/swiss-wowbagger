@@ -28,13 +28,18 @@ class Bot : TelegramLongPollingBot() {
             val chatId = update.message.chatId
 
             fun send(text: String) = execute(SendMessage(chatId, text))
-            fun sendAudio(title: String, text: String, wav: File) = execute(SendAudio().apply {
-                setChatId(chatId)
-                setCaption(text)
-                val out = File(wav.parentFile, wav.name + ".mp3")
+            fun sendAudio(text: String, desc: String, wav: File) = File(wav.parentFile, wav.name + ".mp3").use { out ->
                 Main().run(arrayOf("-S", "--preset", "standard", "-q", "0", "-m", "s", wav.absolutePath, out.absolutePath))
-                setAudio(InputFile(out, title))
-            })
+                execute(SendAudio().apply {
+                    setChatId(chatId)
+                    caption = desc
+                    performer = "The Wowbagger"
+                    title = text
+                    //not working?
+                   // thumb = InputFile(Thread.currentThread().contextClassLoader.getResourceAsStream("icon.jpg"), "Sag")
+                    audio = InputFile(out, text)
+                })
+            }
 
             parseCommand(text)?.let { command ->
                 when {
@@ -62,6 +67,12 @@ class Bot : TelegramLongPollingBot() {
                 }
             }
         }
+    }
+
+    private fun <T> File.use(block: (File) -> T): T = try {
+        block(this)
+    } finally {
+        delete()
     }
 
     private fun parseCommand(text: String): Command? {
