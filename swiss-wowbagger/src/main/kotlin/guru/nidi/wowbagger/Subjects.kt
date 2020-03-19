@@ -138,7 +138,7 @@ n Grillehirni | g r I l 200 @ h I r n i
 m Grittibänz(/e) | g r I t 200 i b a n t s (/@ 150)
 m Groggermooslaferi(/ne) | g r O g 200 @ r m O 200 s l A f @ r i (/n @ 150)
 m Gränni(/ne) | g r a n 200 i (/n @ 150)
-f Grännibäbi | g r a n 200 i b a 200 b i
+n Grännibäbi | g r a n 200 i b a 200 b i
 m Grümscheler | g r Y m S @ l @ r
 m Grüs(u/le) | g r y 200 s (u/l @ 150)
 m Gschtabi(/ne) | k S t A b i (/n @ 150)
