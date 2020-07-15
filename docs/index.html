@@ -111,8 +111,7 @@
 <div class="bottom-left">
     <span id="twitter">
     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-       class="twitter-share-button" data-text="bla" data-url="http://url.com"
-       data-show-count="false">Tweet</a>
+       class="twitter-share-button" data-show-count="false">Tweet</a>
     </span>
     <script async src="https://platform.twitter.com/widgets.js"
             charset="utf-8"></script>
@@ -193,9 +192,7 @@
         t.innerHTML = '<a href="https://twitter.com/share?ref_src=twsrc%5Etfw"' +
             'class="twitter-share-button" data-text="' + theInsult.text + '" data-url="' + location.href + '"' +
             'data-show-count="false">Tweet</a>'
-        const s = document.createElement('script')
-        s.src = 'https://platform.twitter.com/widgets.js'
-        t.appendChild(s)
+        twttr.widgets.load()
     }
 
     function fbShare() {
