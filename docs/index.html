@@ -70,8 +70,6 @@
 </head>
 
 <body>
-<script async src="https://platform.twitter.com/widgets.js"
-        charset="utf-8"></script>
 <script>
     window.fbAsyncInit = function () {
         FB.init({version: 'v2.11', appId: '1682061575171528', xfbml: false})
@@ -111,9 +109,13 @@
 </div>
 
 <div class="bottom-left">
+    <span id="twitter">
     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-       class="twitter-share-button" data-show-count="false">Tweet</a>
-
+       class="twitter-share-button" data-text="bla" data-url="http://url.com"
+       data-show-count="false">Tweet</a>
+    </span>
+    <script async src="https://platform.twitter.com/widgets.js"
+            charset="utf-8"></script>
     <a style="background-image: url(fb.png); background-size: contain; width: 59px; height: 20px; display: inline-block;"
        id="facebook" onclick="fbShare()"></a>
 </div>
@@ -188,18 +190,18 @@
 
     function reloadTwitter() {
         const t = document.getElementById('twitter')
-        t.removeChild(t.firstChild)
-        const a = document.createElement('a')
-        a.className = 'twitter-share-button'
-        a.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(theInsult.text)
-        t.appendChild(a)
-        twttr.widgets.load()
+        t.innerHTML = '<a href="https://twitter.com/share?ref_src=twsrc%5Etfw"' +
+            'class="twitter-share-button" data-text="' + theInsult.text + '" data-url="' + location.href + '"' +
+            'data-show-count="false">Tweet</a>'
+        const s = document.createElement('script')
+        s.src = 'https://platform.twitter.com/widgets.js'
+        t.appendChild(s)
     }
 
     function fbShare() {
         FB.ui({
                 method: 'share',
-                href: 'https://nidi3.github.io/swiss-wowbagger/#' + theInsult.id,
+                href: location.href,
                 quote: theInsult.text
             },
             response => {
