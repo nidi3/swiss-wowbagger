@@ -6,3 +6,4 @@ Thanks to Franz Hohler's [Totemügerli](https://www.youtube.com/watch?v=DQi0lsUs
 Stiller Has' [grusig](https://www.youtube.com/watch?v=dfL_IRXVLtQ).
 
 **[Huere Siech, säg mou öppis!](https://nidi3.github.io/swiss-wowbagger)**
+
