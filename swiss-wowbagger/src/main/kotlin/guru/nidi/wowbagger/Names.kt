@@ -20,6 +20,7 @@ import guru.nidi.wowbagger.Wowbagger.trimLines
 object Names {
     val list = """
 m Ädu | a d u
+m Alä | A l a 200
 f Andle | A n d 50 l @
 m Ändu | a n d u
 f Ännele | a n 200 @ l @
@@ -29,6 +30,7 @@ m Bänz | b a n t s
 f Beetli | b e 200 t 150 l i
 m Beätu | b e a 200 t 200 u
 m Bidu | b i d u
+m Björnu | b i 2 r n u
 m Beni | b e n i
 m Bänz | b a n t s
 m Brünu | b r y n u
@@ -63,17 +65,21 @@ m Jüre | i y r @
 m Köbu | k h 50 2 b u
 m Kari | k h 50 A r i
 m Käru | k h 50 a r u
+m Keve | k h 50 e w @
+m Knütu | k h 50 n y t u  
 m Kusi | k h 50 u s i
 m Küsu | k h 50 y s u
 m Küre | k h 50 y r @
 m Lexu | l e g s u
 f Lise | l i s @
 m Lüku | l y k h 50 u
+f Lüssle | l y s 200 l @
 m Mänu | m a n u
 m Märgu | m a r k u
 m Märsu | m a r s u
 m Märu | m a r u
 m Mäthu | m a t 200 u
+m Mäuch | m a u x
 m Michu | m i x 200 u
 f Möne | m 2 n @
 m Niku | n i k 200 h 50 u
@@ -88,6 +94,7 @@ m Räffu | r a f 200 u
 f Rebe | r e b @
 m Res | r e 200 s
 m Retölu | r e 200 t 200 2 200 l 50 u
+m Richu | r i x 200 u
 m Role | r O l @
 m Rölu | r 2 l u
 m Röschu | r 2 S u
