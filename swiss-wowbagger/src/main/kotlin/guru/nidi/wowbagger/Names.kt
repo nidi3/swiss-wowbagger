@@ -66,7 +66,7 @@ m Köbu | k h 50 2 b u
 m Kari | k h 50 A r i
 m Käru | k h 50 a r u
 m Keve | k h 50 e w @
-m Knütu | k h 50 n y t u  
+m Knütu | k h 50 n y 200 t u  
 m Kusi | k h 50 u s i
 m Küsu | k h 50 y s u
 m Küre | k h 50 y r @
