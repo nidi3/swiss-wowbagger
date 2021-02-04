@@ -15,7 +15,7 @@
     <properties>
         <gen.module.infos>${project.build.directory}/generated-module-infos</gen.module.infos>
         <my.module.infos>module-infos</my.module.infos>
-        <jetty.version>9.4.27.v20200227</jetty.version>
+        <jetty.version>11.0.0</jetty.version>
     </properties>
 
     <dependencies>
