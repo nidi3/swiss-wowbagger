@@ -16,6 +16,7 @@
         <my.module.infos>module-infos</my.module.infos>
         <jmods>${env.LINUX_JMODS}</jmods>
         <jlinked>${project.build.directory}/jlink</jlinked>
+        <module.name>wowbagger.server.jdk</module.name>
     </properties>
 
     <dependencies>

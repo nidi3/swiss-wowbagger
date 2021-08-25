@@ -5,7 +5,7 @@
     <parent>
         <groupId>guru.nidi</groupId>
         <artifactId>guru-nidi-parent-pom</artifactId>
-        <version>1.1.29</version>
+        <version>1.1.37</version>
         <relativePath />
     </parent>
 
@@ -23,11 +23,11 @@
         <!--<module>swiss-wowbagger-jetty-server</module>-->
         <module>swiss-wowbagger-jdk-server</module>
         <module>swiss-wowbagger-telegram</module>
+        <module>swiss-wowbagger-twitter</module>
     </modules>
 
     <properties>
         <java.version>1.8</java.version>
-        <kotlin.version>1.4.30</kotlin.version>
         <dependency-check.fail-on-error>false</dependency-check.fail-on-error>
     </properties>
 

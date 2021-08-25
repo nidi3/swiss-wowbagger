@@ -19,14 +19,17 @@ import guru.nidi.mbrola.*
 import guru.nidi.wowbagger.Gender.*
 import guru.nidi.wowbagger.Number.SINGULAR
 import java.util.*
-import java.util.Locale.ENGLISH
 import kotlin.math.min
 
 object Wowbagger {
     fun adjective(gender: Gender, number: Number) = Adjectives.list.choose().with(gender, number)
     fun subject(gender: Gender? = null, number: Number) = Subjects.list.with(gender).choose().with(number)
     fun name(gender: Gender? = null) = Names.list.with(gender).choose().with(SINGULAR)
-    fun name(target: String) = Names.list.minBy { s -> similar(target.toLowerCase(ENGLISH), s.entry.name.toLowerCase(ENGLISH)) }!!
+    fun name(target: String): Pair<Entry<Gendered>, Int> {
+        val best = Names.list.minByOrNull { s -> different(target.lowercase(), s.entry.name.lowercase()) }!!
+        return Pair(best, different(target.lowercase(), best.entry.name.lowercase()))
+    }
+
     fun action(number: Number) = Actions.list.choose().with(number)
     fun interjection() = Interjections.list.choose()
 
@@ -43,7 +46,8 @@ object Wowbagger {
     }
 
     fun say(phonemes: String, format: Format = Format.WAV, speed: Double = .7) =
-            Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(speed).run()
+        Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(speed)
+            .run()
 
 }
 
@@ -76,6 +80,14 @@ class Entry<out T>(val entry: T, val phonemes: String) {
     }
 }
 
+fun List<Entry<String>>.toText(): String =
+    joinToString(" ") { it.entry }
+        .replace(Regex("\\s+"), " ")
+        .replace(Regex(" ([,.!?])"), "$1")
+        .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+
+fun List<Entry<String>>.toPhonemes(): String = joinToString(" ") { it.phonemes }
+
 interface Numbered {
     val name: String
 }
@@ -86,7 +98,7 @@ fun Entry<Numbered>.with(number: Number): Entry<String> {
 }
 
 data class Gendered(override val name: String, val gender: Gender) : Numbered {
-    constructor(s: String) : this(s.substring(2), valueOf(s.substring(0, 1).toUpperCase()))
+    constructor(s: String) : this(s.substring(2), valueOf(s.substring(0, 1).uppercase()))
 
     override fun toString() = name
 }
@@ -100,22 +112,26 @@ fun Entry<Adjective>.with(gender: Gender, number: Number): Entry<String> {
     return if (entry.name.contains("("))
         Entry(replaceParens(entry.name, g), replaceParens(phonemes, g))
     else
-        Entry(entry.name + when (g) {
-            M -> "e"
-            N -> "s"
-            F -> "i"
-        }, phonemes + when (g) {
-            M -> " @"
-            N -> " s 200"
-            F -> " i"
-        })
+        Entry(
+            entry.name + when (g) {
+                M -> "e"
+                N -> "s"
+                F -> "i"
+            }, phonemes + when (g) {
+                M -> " @"
+                N -> " s 200"
+                F -> " i"
+            }
+        )
 }
 
-private fun replaceParens(s: String, gender: Gender) = replaceParens3(s, when (gender) {
-    M -> 1
-    N -> 2
-    F -> 3
-})
+private fun replaceParens(s: String, gender: Gender) = replaceParens3(
+    s, when (gender) {
+        M -> 1
+        N -> 2
+        F -> 3
+    }
+)
 
 private fun replaceParens2(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)\\)"), "$$index")
 private fun replaceParens3(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.*?)/(.*?)\\)"), "$$index")
@@ -124,10 +140,10 @@ private val rnd = Random()
 fun randomSeed(seed: Long) = rnd.setSeed(seed)
 fun random(range: Int) = (rnd.nextDouble() * range).toInt()
 
-private fun similar(s1: String, s2: String): Int {
+private fun different(s1: String, s2: String): Int {
     val first = s1.first() == s2.first()
     val second = s1.length >= 2 && s2.length >= 2 && s1[1] == s2[1]
-    return levenshtein(s1, s2) - (if (first) 2 else 0) - (if (second) 1 else 0)
+    return 2 * levenshtein(s1, s2) - (if (first) 3 else 0) - (if (second) 1 else 0)
 }
 
 private fun levenshtein(s1: String, s2: String): Int {
@@ -138,8 +154,8 @@ private fun levenshtein(s1: String, s2: String): Int {
         for (j in 1..s2.length) {
             val u = if (s1[i - 1] == s2[j - 1]) 0 else 1
             edits[i][j] = min(
-                    edits[i - 1][j] + 1,
-                    min(edits[i][j - 1] + 1, edits[i - 1][j - 1] + u)
+                edits[i - 1][j] + 1,
+                min(edits[i][j - 1] + 1, edits[i - 1][j - 1] + u)
             )
         }
     }

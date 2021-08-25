@@ -11,6 +11,10 @@
     <artifactId>swiss-wowbagger</artifactId>
     <name>${project.artifactId}</name>
 
+    <properties>
+        <module.name>wowbagger</module.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
