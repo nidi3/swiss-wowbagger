@@ -38,6 +38,6 @@ fun compose(names: List<String>): List<Entry<String>> {
         else Entry(", dir", "_ 100 d I r")
     }
     return listOf(int, Entry.phonemes("_ 100")) + ns +
-            listOf(adj1, Entry.phonemes("_ 50"), adj2, subject, Entry.phonemes("_ 500"), action)
+            listOf(adj1, Entry.phonemes("_ 50"), adj2, subject, Entry(", ", "_ 500"), action)
 }
 
