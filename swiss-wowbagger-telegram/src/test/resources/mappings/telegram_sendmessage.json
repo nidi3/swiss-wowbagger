@@ -1,0 +1,19 @@
+{
+  "id": "3ccafdbf-8dca-45d6-8a92-9ea090464362",
+  "name": "sendmessage",
+  "request": {
+    "url": "/dummytoken/sendmessage",
+    "method": "POST"
+  },
+  "response": {
+    "status": 200,
+    "body": "{\"ok\":true,\"result\":{\"message_id\":58,\"from\":{\"id\":1915073189,\"is_bot\":true,\"first_name\":\"gax-wowbagger\",\"username\":\"gaxwowbaggerbot\"},\"chat\":{\"id\":-526178985,\"title\":\"Testgry\",\"type\":\"group\",\"all_members_are_administrators\":true},\"date\":1638113482,\"text\":\"/schrib n\\u00e4me\\n/sag (schn\\u00e4ll | langsam) n\\u00e4me\",\"entities\":[{\"offset\":0,\"length\":7,\"type\":\"bot_command\"},{\"offset\":13,\"length\":4,\"type\":\"bot_command\"}]}}",
+    "headers": {
+      "Date": "Sun, 28 Nov 2021 15:31:22 GMT",
+      "Content-Type": "application/json"
+    }
+  },
+  "uuid": "3ccafdbf-8dca-45d6-8a92-9ea090464362",
+  "persistent": true,
+  "insertionIndex": 1
+}

@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:JvmName("WowbaggerServer")
-
 package guru.nidi.wowbagger.server
 
 import com.sun.net.httpserver.*
 import guru.nidi.wowbagger.*
-import guru.nidi.wowbagger.voice.WowbaggerVoice
+import guru.nidi.wowbagger.WowbaggerVoice
 import java.io.PrintWriter
 import java.net.*
 import java.util.concurrent.Executors
@@ -28,7 +26,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 fun main() {
-    val httpPort = 7125
+    val httpPort = System.getenv("PORT")?.toInt() ?: 7125
     val log = PrintWriter(System.out, true)
     try {
         HttpServer.create(InetSocketAddress(httpPort), 0).apply {

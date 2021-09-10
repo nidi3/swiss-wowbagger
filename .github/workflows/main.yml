@@ -1,0 +1,124 @@
+name: CICD
+
+on:
+  push:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      docker-tag: ${{ steps.vars.outputs.sha_tag }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          project_id: swiss-wowbagger
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Configure Google Cloud Docker repo authentication
+        run: gcloud auth configure-docker europe-west6-docker.pkg.dev --quiet
+
+      - name: Build with Maven
+        run: mvn -B -Pnative-shade clean verify
+
+      - name: Define some vars
+        id: vars
+        run: echo "::set-output name=sha_tag::sha-$(git rev-parse --short HEAD)"
+
+      - name: Additionally tag Docker images with sha ref
+        if: github.ref == 'refs/heads/master'
+        run: mvn -B -Ddocker.image.tag=${{ steps.vars.outputs.sha_tag }} docker:tag
+
+      - name: Push all Docker images
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker image push --all-tags europe-west6-docker.pkg.dev/swiss-wowbagger/docker/mbrola
+          docker image push --all-tags europe-west6-docker.pkg.dev/swiss-wowbagger/docker/mbrola-jre
+          docker image push --all-tags europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-jdk-server
+          docker image push --all-tags europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-telegram
+          docker image push --all-tags europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-twitter
+
+  deploy-wowbagger:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          project_id: swiss-wowbagger
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+      - name: Deploy to Cloud Run
+        run: >
+          gcloud run deploy swiss-wowbagger
+          --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-jdk-server:${{needs.build.outputs.docker-tag}}
+          --region europe-west6 --ingress=all --allow-unauthenticated
+          --memory=256Mi
+          --args=-Xmx128m
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m"
+# Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
+# --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
+
+  deploy-wowbagger-telegram:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          project_id: swiss-wowbagger
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+      - name: Deploy to Cloud Run
+        run: >
+          gcloud run deploy swiss-wowbagger-telegram
+          --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-telegram:${{needs.build.outputs.docker-tag}}
+          --region europe-west6 --ingress=all --allow-unauthenticated
+          --set-secrets=TOKEN=telegram-token:latest,USER=telegram-user:latest
+          --memory=256Mi
+          --args=-Xmx128m
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m"
+# Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
+# --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
+
+  deploy-wowbagger-twitter:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          project_id: swiss-wowbagger
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+      - name: Deploy to Cloud Run
+        run: >
+          gcloud run deploy swiss-wowbagger-twitter
+          --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-twitter:${{needs.build.outputs.docker-tag}}
+          --region europe-west6 --ingress=all --allow-unauthenticated
+          --set-secrets=CONSUMER_KEY=twitter-consumer-key:latest,CONSUMER_SECRET=twitter-consumer-secret:latest,ACCESS_TOKEN=twitter-access-token:latest,ACCESS_SECRET=twitter-access-secret:latest
+          --memory=256Mi
+          --args=-Xmx128m
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m"
+# Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
+# --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
