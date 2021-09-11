@@ -35,7 +35,7 @@ object Wowbagger {
 
     internal fun String.trimLines() = lines().filter { it.isNotBlank() }
 
-    private fun <T> List<T>.choose() = this[random(this.size)]
+    private fun <T> List<T>.choose() = this[random(size)]
 
     private fun List<Entry<Gendered>>.with(gender: Gender?) = filter { gender == null || gender == it.entry.gender }
 
@@ -83,7 +83,8 @@ fun List<Entry<String>>.toText(): String =
 fun List<Entry<String>>.toPhonemes(): String = joinToString(" ") { it.phonemes }
 
 fun <T> List<Entry<T>>.interleave(between: Entry<T>): List<Entry<T>> =
-    zipWithNext { a, b -> listOf(a, between, b) }.flatten()
+    if (isEmpty()) this
+    else zipWithNext { a, b -> listOf(a, between) }.flatten() + last()
 
 fun <T> List<Entry<T>>.enumerate(penultimate: Entry<T>): List<Entry<T>> = when (size) {
     0 -> listOf()
@@ -141,7 +142,7 @@ private fun replaceParens3(s: String, index: Int) = s.replace(Regex("\\((.*?)/(.
 
 private val rnd = Random()
 fun randomSeed(seed: Long) = rnd.setSeed(seed)
-fun random(range: Int) = (rnd.nextDouble() * range).toInt()
+fun random(range: Int) = rnd.nextInt(range)
 
 private fun different(s1: String, s2: String): Int {
     val first = s1.first() == s2.first()

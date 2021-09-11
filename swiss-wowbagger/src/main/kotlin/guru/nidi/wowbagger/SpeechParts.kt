@@ -31,7 +31,7 @@ fun composeSpeech(names: List<String>): SpeechParts {
     return SpeechParts(
         Wowbagger.interjection(),
         effNames,
-        (0..random(3)).map { Wowbagger.adjective(gender, number) },
+        (1..random(4)).map { Wowbagger.adjective(gender, number) },
         Wowbagger.subject(gender, number),
         Wowbagger.action(number)
     )

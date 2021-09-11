@@ -29,7 +29,7 @@ fun main() {
     twitterStream.filter(FilterQuery(twitter.id)).onStatus(TwitterListener(twitter))
     thread {
         while (true) {
-//            print(tweet(listOf()))
+//            println(tweet(listOf()))
             twitter.updateStatus(tweet(listOf()))
 //            sleep((23.5 * HOUR + Random.nextInt(HOUR)).toLong())
             sleep((HOUR / 2 + Random.nextInt(HOUR / 4)).toLong())

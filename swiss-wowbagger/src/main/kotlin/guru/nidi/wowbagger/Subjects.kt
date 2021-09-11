@@ -23,7 +23,7 @@ m aargouer Outofahrer | A 200 r g o u @ r _ 50 o u t o f A 200 r @ r 200
 f Achermähre(/ne) | A x 200 @ r m a 200 r @ (/n @ 150)
 m Aff(/e) | A f 300 (/@ 150)
 m Angschthas(/e) | A N S t h A 200 s (/@ 150)
-m arrogant(e/i) Zürcher | A r o g A n t (@/i) _ 50 t s Y r x @ r
+m arrogante Zürcher | A r o g A n t @ _ 50 t s Y r x @ r
 m Armlüchter | A 200 r m l y 200 x t @ r
 m Arschchäfer(/e) | A 200 r S x a f @ r (/@ 150)
 f Arschgige(/ne) | A 200 r S g i 200 g @ (/n @ 150)
@@ -70,7 +70,7 @@ m Chiubi-Gig(u/le) | x i u b i k I k (u/l @ 150)
 f Chleech(ue/üe) | x l e 200 x (u @/y @)
 f Chlefe(/ne) | x l e f @ (/n @ 150)
 n Chlepfschit(/ter) | x l e p f S i t 200 h 50 (/@ r)
-m chlin(e/i) Appizäuer | x l i 200 n (@/i) _ A p 200 i t s a 200 u @ r
+m chline Appizäuer | x l i 200 n @ _ A p 200 i t s a 200 u @ r
 m Chnorzi(/ne) | x n O r t s i (/n @ 150)
 m Chnüblisiech(/e) | x n y 200 b l i s i e x (/@ 150)
 m Chotzchüb(u/le) | x o t s x Y b (u/l @ 150)
@@ -255,7 +255,7 @@ m Sousiech(/e) | s O u s i e x (/@ 150)
 m Spränz(u/le) | S p r a n t s (u/l @ 150)
 m Stürmi(/ne) | S t y r m i (/n @ 150)
 m Stärnesiech(/e) | S t a 200 r n @ s i e x (/@ 150)
-m stinkig(e/i) Friburger | S t I N k 200 i g (@/i) _ f r i b u r g @ r
+m stinkige Friburger | S t I N k 200 i g @ _ f r i b u r g @ r
 m Stürmisiech(/e) | S t y r m i s i e x (/@ 150)
 m Sufludi(/ne) | s u f l u d i (/n @ 150)
 m Söiferludi(/ne) | s 2 i f 200 @ r l u d i (/n @ 150)
