@@ -15,10 +15,12 @@
  */
 package guru.nidi.wowbagger
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class PhonemizerTest {
     @Test
+    @Disabled
     fun adjectives() {
         Names.list.subList(0, 50).forEachIndexed { i, adj ->
             val name = adj.entry.name.replace(Regex("""\(.*?\)"""), "")

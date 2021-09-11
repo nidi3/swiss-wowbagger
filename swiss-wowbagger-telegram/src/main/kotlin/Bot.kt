@@ -99,6 +99,6 @@ class Bot : TelegramLongPollingBot() {
 
     private fun compose(rest: String): List<Entry<String>> {
         val names = rest.split(Regex("[ +,]+")).filter { it.isNotBlank() }.toList()
-        return compose(names)
+        return composeSpeech(names).connect()
     }
 }

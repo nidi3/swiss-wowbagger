@@ -39,12 +39,6 @@ object Wowbagger {
 
     private fun List<Entry<Gendered>>.with(gender: Gender?) = filter { gender == null || gender == it.entry.gender }
 
-    fun enumerate(es: List<Entry<String>>): List<Entry<String>> = when (es.size) {
-        0 -> listOf()
-        1 -> listOf(es[0])
-        else -> es.subList(0, es.size - 1) + Entry("und", "_ u n d") + es.last()
-    }
-
     fun say(phonemes: String, format: Format = Format.WAV, speed: Double = .7) =
         Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(speed)
             .run()
@@ -87,6 +81,15 @@ fun List<Entry<String>>.toText(): String =
         .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
 
 fun List<Entry<String>>.toPhonemes(): String = joinToString(" ") { it.phonemes }
+
+fun <T> List<Entry<T>>.interleave(between: Entry<T>): List<Entry<T>> =
+    zipWithNext { a, b -> listOf(a, between, b) }.flatten()
+
+fun <T> List<Entry<T>>.enumerate(penultimate: Entry<T>): List<Entry<T>> = when (size) {
+    0 -> listOf()
+    1 -> listOf(this[0])
+    else -> subList(0, size - 1) + penultimate + last()
+}
 
 interface Numbered {
     val name: String

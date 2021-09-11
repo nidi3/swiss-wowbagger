@@ -17,7 +17,6 @@ package guru.nidi.wowbagger
 
 import guru.nidi.wowbagger.Wowbagger.action
 import guru.nidi.wowbagger.Wowbagger.adjective
-import guru.nidi.wowbagger.Wowbagger.enumerate
 import guru.nidi.wowbagger.Wowbagger.interjection
 import guru.nidi.wowbagger.Wowbagger.name
 import guru.nidi.wowbagger.Wowbagger.say
@@ -35,10 +34,10 @@ class Runner {
         val adj2 = adjective(gender, number)
         val subject = subject(gender, number)
         val action = action(number)
-        val ns = enumerate(names).let {
-            it + if (it.size == 1) Entry(", du", "_ 100 d u 200")
-            else Entry(", dir", "_ 100 d I r")
-        }
+        val ns = names.enumerate(Entry("und", "_ u n d")) +
+                if (names.size == 1) Entry(", du", "_ 100 d u 200")
+                else Entry(", dir", "_ 100 d I r")
+
 
         println("$int ${ns.joinToString(" ") { it.entry }} $adj1 $adj2 $subject, $action")
         val phs = mutableListOf(int, Entry.phonemes("_ 100"))

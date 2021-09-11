@@ -29,6 +29,7 @@ fun main() {
     twitterStream.filter(FilterQuery(twitter.id)).onStatus(TwitterListener(twitter))
     thread {
         while (true) {
+//            print(tweet(listOf()))
             twitter.updateStatus(tweet(listOf()))
 //            sleep((23.5 * HOUR + Random.nextInt(HOUR)).toLong())
             sleep((HOUR / 2 + Random.nextInt(HOUR / 4)).toLong())
@@ -39,10 +40,16 @@ fun main() {
 fun tweet(names: List<String>): String {
     val seed = Random.nextLong() and 0x000fffffffffffffL
     randomSeed(seed)
-    val text = compose(names).toText()
+    val speech = composeSpeech(names)
+    val text = speech.copy(
+        names = speech.names.map { it.hashed() },
+        subject = speech.subject.hashed()
+    ).connect().toText()
     val param = if (names.isEmpty()) "" else "?names=" + names.joinToString(",")
     return "$text https://nidi3.github.io/swiss-wowbagger/#$seed$param"
 }
+
+fun Entry<String>.hashed() = Entry("#${entry}", phonemes)
 
 class TwitterListener(val twitter: Twitter) : Consumer<Status> {
     override fun accept(status: Status) {

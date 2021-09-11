@@ -15,8 +15,7 @@
  */
 package guru.nidi.wowbagger
 
-fun compose(names: List<String>): List<Entry<String>> {
-    val int = Wowbagger.interjection()
+fun composeSpeech(names: List<String>): SpeechParts {
     val (effNames, gender) = if (names.isEmpty()) {
         val gender = Gender.random()
         Pair((0..random(3)).map { Wowbagger.name(gender) }, gender)
@@ -29,15 +28,29 @@ fun compose(names: List<String>): List<Entry<String>> {
         }
     }
     val number = Number.of(effNames.size)
-    val adj1 = Wowbagger.adjective(gender, number)
-    val adj2 = Wowbagger.adjective(gender, number)
-    val subject = Wowbagger.subject(gender, number)
-    val action = Wowbagger.action(number)
-    val ns = Wowbagger.enumerate(effNames).let {
-        it + if (it.size == 1) Entry(", du", "_ 100 d u 200")
-        else Entry(", dir", "_ 100 d I r")
-    }
-    return listOf(int, Entry.phonemes("_ 100")) + ns +
-            listOf(adj1, Entry.phonemes("_ 50"), adj2, subject, Entry(", ", "_ 500"), action)
+    return SpeechParts(
+        Wowbagger.interjection(),
+        effNames,
+        (0..random(3)).map { Wowbagger.adjective(gender, number) },
+        Wowbagger.subject(gender, number),
+        Wowbagger.action(number)
+    )
 }
 
+data class SpeechParts(
+    val interjection: Entry<String>,
+    val names: List<Entry<String>>,
+    val adjectives: List<Entry<String>>,
+    val subject: Entry<String>,
+    val action: Entry<String>
+) {
+    fun connect(): List<Entry<String>> {
+        val pronoun = if (names.size == 1) Entry(", du", "_ 100 d u 200")
+        else Entry(", dir", "_ 100 d I r")
+        return listOf(interjection) + Entry.phonemes("_ 100") +
+                names.enumerate(Entry("und", "_ u n d")) + pronoun +
+                adjectives.interleave(Entry.phonemes("_ 50")) +
+                subject + Entry(", ", "_ 500") +
+                action
+    }
+}

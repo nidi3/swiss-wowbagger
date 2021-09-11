@@ -104,6 +104,6 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
 
     private fun compose(seed: Long, names: List<String>): List<Entry<String>> {
         randomSeed(seed)
-        return compose(names)
+        return composeSpeech(names).connect()
     }
 }

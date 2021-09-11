@@ -16,10 +16,12 @@
 package guru.nidi.wowbagger;
 
 import guru.nidi.mbrola.*;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class WowbaggerTest {
     @Test
+    @Disabled
     void simple() {
         final Entry<String> name = Wowbagger.INSTANCE.action(Number.SINGULAR);
         System.out.println(name.getEntry());
