@@ -78,6 +78,7 @@ he(sch/it der) es blutts Näll? | h e (S/i t 200 @ r) @ s b l u t 200 s n a l 20
 he(sch/it der) es warms Joghurt im Sack? | h e (S/i t 200 @ r) @ s w A 200 r m s i o g u r t i m s A k 200
 he(sch/it der) id Hose gmacht? | h e (S/i t 200 @ r) i d h O s @ g m A x t
 he(sch/it der) ir Bschütti badet? | h e (S/i t 200 @ r) i r b S Y t 200 i b A d @ t
+he(sch/it der) ja Ouge wi gschwuuni Söifütz! | h e (S/i t 200 @ r) i a _ 100 O u g @ _ 100 w i @ g S w u @ n i s 2 i f y t s
 he(sch/it der) nid aui Scheieli am Hag? | h e (S/i t 200 @ r) n I d A u 200 i S e i @ l i A m h A 200 k
 he(sch/it der) nüm aui Lätsche ar Lismete? | h e (S/i t 200 @ r) n Y m A u i l a t S @ 150 _ 20 A r l I s m @ t 200 @
 he(sch/it der) s'Ohremüggeli? | h e (S/i t 200 @ r) s _ 20 O 200 r @ m Y k 200 @ l i

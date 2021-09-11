@@ -31,8 +31,8 @@ fun main() {
         while (true) {
 //            println(tweet(listOf()))
             twitter.updateStatus(tweet(listOf()))
-//            sleep((23.5 * HOUR + Random.nextInt(HOUR)).toLong())
-            sleep((HOUR / 2 + Random.nextInt(HOUR / 4)).toLong())
+            sleep((23.5 * HOUR + random(HOUR)).toLong())
+//            sleep((HOUR / 2 + random(HOUR / 4)).toLong())
         }
     }
 }

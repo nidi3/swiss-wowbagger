@@ -41,69 +41,96 @@ fun main() {
 }
 
 class RootHandler(private val log: PrintWriter) : HttpHandler {
-    override fun handle(exchange: HttpExchange) = exchange.responseBody.use { response ->
-        try {
-            val query = query(exchange.requestURI)
-            val seed = exchange.requestURI.path?.trim('/')?.let {
-                if (it.isEmpty()) null else it.toLongOrNull()
-            } ?: System.currentTimeMillis()
-            val names = query["names"]?.let { it.ifBlank { null } }
-            val entries = compose(seed, names?.split(Regex("[ +,]+"))?.toList() ?: listOf())
-            val speed = 2 - min(100, max(0, (query["v"]?.toIntOrNull()) ?: 80)) / 100.0 * 1.7
+    override fun handle(exchange: HttpExchange) = try {
+        val path = exchange.requestURI.path?.trim('/') ?: ""
+        val query = Query.parse(exchange.requestURI)
+        val response = when {
+            path.startsWith("phon/") -> sayPhonemes(path.substring(5), query)
+            else -> compose(path, query)
+        }
+        writeResponse(exchange, response)
+    } catch (e: Exception) {
+        e.printStackTrace(log)
+        exchange.sendResponseHeaders(500, 0)
+    }
 
-            val data = when (query["format"]) {
-                "json" -> {
-                    exchange.responseHeaders.add("Content-Type", "application/json")
-                    """{"id":$seed, "text":"${entries.toText()}"}""".toByteArray()
-                }
-                "wav" -> {
-                    exchange.responseHeaders.add("Content-Type", "audio/x-wav")
-                    Wowbagger.say(entries.toPhonemes(), speed = speed).use {
-                        it.file.readBytes()
-                    }
-                }
-                else -> {
-                    exchange.responseHeaders.add("Content-Type", "text/plain;charset=utf-8")
-                    entries.toText().toByteArray()
-                }
+    private fun sayPhonemes(path: String, query: Query) = Response(
+        mapOf("Content-Type" to "audio/x-wav"),
+        Wowbagger.say(path, speed = query.speed()).use { it.file.readBytes() })
+
+    private fun compose(path: String, query: Query): Response {
+        val seed = (if (path.isEmpty()) null else path.toLongOrNull()) ?: System.currentTimeMillis()
+        randomSeed(seed)
+
+        val names = query.names()?.split(Regex("[ +,]+"))?.toList() ?: listOf()
+        val entries = composeSpeech(names).connect()
+
+        return when (query.format()) {
+            "json" -> Response(
+                mapOf("Content-Type" to "application/json"),
+                """{"id":$seed, "text":"${entries.toText()}"}"""
+            )
+            "wav" -> Response(
+                mapOf("Content-Type" to "audio/x-wav"),
+                Wowbagger.say(entries.toPhonemes(), speed = query.speed()).use {
+                    it.file.readBytes()
+                })
+            else -> Response(
+                mapOf("Content-Type" to "text/plain;charset=utf-8"),
+                entries.toText()
+            )
+        }
+    }
+
+    private fun writeResponse(exchange: HttpExchange, response: Response) {
+        exchange.responseBody.use { out ->
+            response.headers.forEach { (key, value) ->
+                exchange.responseHeaders.add(key, value)
             }
-
             exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
             val range = exchange.requestHeaders["Range"]?.first()
             if (range != null) {
                 val matcher = Pattern.compile("bytes=(\\d+)-(\\d+)").matcher(range)
                 val (from, to, res) = if (!matcher.matches()) {
-                    Triple(0, data.size - 1, data)
+                    Triple(0, response.data.size - 1, response.data)
                 } else {
                     val from = matcher.group(1).toInt()
                     val to = matcher.group(2).toInt()
-                    Triple(from, to, data.sliceArray(from..to))
+                    Triple(from, to, response.data.sliceArray(from..to))
                 }
-                exchange.responseHeaders.add("Content-Range", "bytes $from-$to/${data.size}")
+                exchange.responseHeaders.add("Content-Range", "bytes $from-$to/${response.data.size}")
                 exchange.sendResponseHeaders(206, res.size.toLong())
-                response.write(res)
+                out.write(res)
             } else {
-                exchange.sendResponseHeaders(200, data.size.toLong())
-                response.write(data)
+                exchange.sendResponseHeaders(200, response.data.size.toLong())
+                out.write(response.data)
             }
-            response.flush()
-        } catch (e: Exception) {
-            e.printStackTrace(log)
-            exchange.sendResponseHeaders(500, 0)
+            out.flush()
         }
     }
+}
 
-    private fun query(uri: URI) = uri.rawQuery?.split("&")?.associate {
-        val parts = it.split("=")
-        Pair(
-            URLDecoder.decode(parts[0], "UTF-8"),
-            if (parts.size == 1) ""
-            else URLDecoder.decode(parts[1], "UTF-8")
+data class Response(val headers: Map<String, String>, val data: ByteArray) {
+    constructor(headers: Map<String, String>, data: String) : this(headers, data.toByteArray())
+}
+
+data class Query(val elems: Map<String, String>) {
+    companion object {
+        fun parse(uri: URI) = Query(
+            uri.rawQuery?.split("&")?.associate {
+                val parts = it.split("=")
+                Pair(
+                    URLDecoder.decode(parts[0], "UTF-8"),
+                    if (parts.size == 1) ""
+                    else URLDecoder.decode(parts[1], "UTF-8")
+                )
+            } ?: mapOf()
         )
-    } ?: mapOf()
-
-    private fun compose(seed: Long, names: List<String>): List<Entry<String>> {
-        randomSeed(seed)
-        return composeSpeech(names).connect()
     }
+
+    fun names() = elems["names"]?.let { it.ifBlank { null } }
+
+    fun speed() = 2 - min(100, max(0, (elems["v"]?.toIntOrNull()) ?: 80)) / 100.0 * 1.7
+
+    fun format() = elems["format"]
 }
