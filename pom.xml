@@ -5,7 +5,7 @@
     <parent>
         <groupId>guru.nidi</groupId>
         <artifactId>guru-nidi-parent-pom</artifactId>
-        <version>1.1.37</version>
+        <version>1.1.38</version>
         <relativePath />
     </parent>
 
@@ -29,7 +29,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <dependency-check.fail-on-error>false</dependency-check.fail-on-error>
+        <dependency-check.fail-on-cvss>9</dependency-check.fail-on-cvss>
     </properties>
 
     <scm>
