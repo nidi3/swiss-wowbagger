@@ -11,7 +11,7 @@
 
     <packaging>pom</packaging>
     <artifactId>swiss-wowbagger-parent</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <description>Swearing in swiss (bernese) german.</description>
@@ -36,7 +36,7 @@
         <connection>scm:git:https://github.com/nidi3/swiss-wowbagger</connection>
         <developerConnection>scm:git:https://github.com/nidi3/swiss-wowbagger</developerConnection>
         <url>https://github.com/nidi3/swiss-wowbagger</url>
-      <tag>swiss-wowbagger-parent-0.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
 </project>
