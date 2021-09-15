@@ -12,6 +12,10 @@
     <artifactId>swiss-wowbagger-telegram</artifactId>
     <name>${project.artifactId}</name>
 
+    <properties>
+        <module.name>wowbagger.telegram</module.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>guru.nidi</groupId>
