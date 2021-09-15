@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.wowbagger;
+package guru.nidi.wowbagger.voice;
 
 import guru.nidi.mbrola.*;
+import guru.nidi.wowbagger.Entry;
+import guru.nidi.wowbagger.Number;
+import guru.nidi.wowbagger.Wowbagger;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +28,7 @@ class WowbaggerTest {
     void simple() {
         final Entry<String> name = Wowbagger.INSTANCE.action(Number.SINGULAR);
         System.out.println(name.getEntry());
-        try (final Waveform wave = new Mbrola(Phonemes.fromString(name.getPhonemes() + " _ 50"), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), Format.WAV).time(.8).run()) {
+        try (final Waveform wave = new Mbrola(Phonemes.fromString(name.getPhonemes() + " _ 50"), Voice.fromClasspath("guru/nidi/wowbagger/voice/nl2/nl2"), Format.WAV).time(.8).run()) {
             wave.play(true);
         }
     }

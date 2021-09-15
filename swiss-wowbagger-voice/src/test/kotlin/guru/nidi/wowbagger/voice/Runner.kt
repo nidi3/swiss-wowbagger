@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.wowbagger
+package guru.nidi.wowbagger.voice
 
+import guru.nidi.wowbagger.*
+import guru.nidi.wowbagger.Number
 import guru.nidi.wowbagger.Wowbagger.action
 import guru.nidi.wowbagger.Wowbagger.adjective
 import guru.nidi.wowbagger.Wowbagger.interjection
 import guru.nidi.wowbagger.Wowbagger.name
-import guru.nidi.wowbagger.Wowbagger.say
 import guru.nidi.wowbagger.Wowbagger.subject
 import org.junit.jupiter.api.Test
 
@@ -44,7 +45,7 @@ class Runner {
         phs.addAll(ns)
         phs.addAll(listOf(adj1, Entry.phonemes("_ 50"), adj2, subject, Entry.phonemes("_ 500"), action))
 //    say(int.phonemes)
-        say(phs.joinToString(" ") { it.phonemes }).use {
+        WowbaggerVoice.say(phs.joinToString(" ") { it.phonemes }).use {
             it.play(true)
         }
 //  say(Subjects.list[246].with(Number.SINGULAR).phonemes).use{

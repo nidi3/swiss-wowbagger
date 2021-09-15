@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>guru.nidi</groupId>
-            <artifactId>swiss-wowbagger</artifactId>
+            <artifactId>swiss-wowbagger-voice</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

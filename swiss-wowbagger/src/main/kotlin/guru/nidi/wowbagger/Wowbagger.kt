@@ -15,7 +15,6 @@
  */
 package guru.nidi.wowbagger
 
-import guru.nidi.mbrola.*
 import guru.nidi.wowbagger.Gender.*
 import guru.nidi.wowbagger.Number.SINGULAR
 import java.util.*
@@ -38,11 +37,6 @@ object Wowbagger {
     private fun <T> List<T>.choose() = this[random(size)]
 
     private fun List<Entry<Gendered>>.with(gender: Gender?) = filter { gender == null || gender == it.entry.gender }
-
-    fun say(phonemes: String, format: Format = Format.WAV, speed: Double = .7) =
-        Mbrola(Phonemes.fromString(phonemes), Voice.fromClasspath("guru/nidi/wowbagger/nl2/nl2"), format).time(speed)
-            .run()
-
 }
 
 enum class Gender {
@@ -84,7 +78,7 @@ fun List<Entry<String>>.toPhonemes(): String = joinToString(" ") { it.phonemes }
 
 fun <T> List<Entry<T>>.interleave(between: Entry<T>): List<Entry<T>> =
     if (isEmpty()) this
-    else zipWithNext { a, b -> listOf(a, between) }.flatten() + last()
+    else zipWithNext { a, _ -> listOf(a, between) }.flatten() + last()
 
 fun <T> List<Entry<T>>.enumerate(penultimate: Entry<T>): List<Entry<T>> = when (size) {
     0 -> listOf()

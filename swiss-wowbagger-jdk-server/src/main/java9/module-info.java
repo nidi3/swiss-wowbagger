@@ -4,6 +4,6 @@ module swiss.wowbagger.server {
     requires kotlin.stdlib.jdk7;
     requires kotlin.stdlib.jdk8;
 
-    requires swiss.wowbagger;
+    requires swiss.wowbagger.voice;
     requires mbrola.jvm.common;
 }

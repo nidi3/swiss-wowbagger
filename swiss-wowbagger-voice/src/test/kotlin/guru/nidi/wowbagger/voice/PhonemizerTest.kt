@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.wowbagger
+package guru.nidi.wowbagger.voice
 
+import guru.nidi.wowbagger.Names
+import guru.nidi.wowbagger.toPhonemes
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -28,8 +30,8 @@ class PhonemizerTest {
             val given = adj.phonemes.replace(Regex("""\(.*?\)"""), "").trim()
             if (phonemes != given) {
                 println("$name $given --> $phonemes")
-                Wowbagger.say("$given _ 50").use { it.play(true) }
-                Wowbagger.say(phonemes).use { it.play(true) }
+                WowbaggerVoice.say("$given _ 50").use { it.play(true) }
+                WowbaggerVoice.say(phonemes).use { it.play(true) }
                 println(i)
             }
         }

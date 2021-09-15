@@ -1,5 +1,6 @@
 import de.sciss.jump3r.Main
 import guru.nidi.wowbagger.*
+import guru.nidi.wowbagger.voice.WowbaggerVoice
 import org.telegram.telegrambots.ApiContextInitializer
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.TelegramBotsApi
@@ -68,7 +69,7 @@ class Bot : TelegramLongPollingBot() {
                             })
                             val names = say.groups["rest"]?.value ?: ""
                             val msg = compose(names)
-                            Wowbagger.say(msg.toPhonemes(), speed = 2 - speed / 100.0 * 1.7).use {
+                            WowbaggerVoice.say(msg.toPhonemes(), speed = 2 - speed / 100.0 * 1.7).use {
                                 sendAudio(
                                     "${msg[0].entry.replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase() else c.toString() }} $names",
                                     msg.toText(),

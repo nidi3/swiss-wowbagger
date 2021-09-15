@@ -8,17 +8,27 @@
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>swiss-wowbagger</artifactId>
+    <artifactId>swiss-wowbagger-voice</artifactId>
     <name>${project.artifactId}</name>
 
     <properties>
-        <module.name>wowbagger</module.name>
+        <module.name>wowbagger.voice</module.name>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>swiss-wowbagger</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>mbrola-jvm-common</artifactId>
+            <version>0.0.7</version>
         </dependency>
     </dependencies>
 

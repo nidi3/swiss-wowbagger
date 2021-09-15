@@ -19,6 +19,7 @@ package guru.nidi.wowbagger.server
 
 import com.sun.net.httpserver.*
 import guru.nidi.wowbagger.*
+import guru.nidi.wowbagger.voice.WowbaggerVoice
 import java.io.PrintWriter
 import java.net.*
 import java.util.concurrent.Executors
@@ -56,7 +57,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
 
     private fun sayPhonemes(path: String, query: Query) = Response(
         mapOf("Content-Type" to "audio/x-wav"),
-        Wowbagger.say(path, speed = query.speed()).use { it.file.readBytes() })
+        WowbaggerVoice.say(path, speed = query.speed()).use { it.file.readBytes() })
 
     private fun compose(path: String, query: Query): Response {
         val seed = (if (path.isEmpty()) null else path.toLongOrNull()) ?: System.currentTimeMillis()
@@ -72,7 +73,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
             )
             "wav" -> Response(
                 mapOf("Content-Type" to "audio/x-wav"),
-                Wowbagger.say(entries.toPhonemes(), speed = query.speed()).use {
+                WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).use {
                     it.file.readBytes()
                 })
             else -> Response(
