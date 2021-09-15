@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>guru.nidi</groupId>
         <artifactId>swiss-wowbagger-parent</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.2</version>
     </parent>
 
     <artifactId>swiss-wowbagger-jdk-server</artifactId>
@@ -134,8 +133,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <copy file="${project.build.directory}/${project.build.finalName}.jar"
-                                    todir="${project.build.directory}/modules" />
+                                <copy file="${project.build.directory}/${project.build.finalName}.jar" todir="${project.build.directory}/modules" />
                                 <delete dir="${jlinked}" />
                             </target>
                         </configuration>
@@ -148,8 +146,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <zip basedir="${jlinked}"
-                                    destfile="${project.build.directory}/${project.build.finalName}-linux.zip" />
+                                <zip basedir="${jlinked}" destfile="${project.build.directory}/${project.build.finalName}-linux.zip" />
                             </target>
                         </configuration>
                     </execution>
@@ -215,8 +212,7 @@
                             <outputFile>${project.build.directory}/${project.build.finalName}-executable.jar
                             </outputFile>
                             <transformers>
-                                <transformer
-                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>guru.nidi.wowbagger.server.WowbaggerServer</mainClass>
                                 </transformer>
                             </transformers>
