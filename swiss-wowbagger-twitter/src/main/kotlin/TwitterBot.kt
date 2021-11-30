@@ -30,11 +30,18 @@ fun main() {
     thread {
         while (true) {
 //            println(tweet(listOf()))
-            twitter.updateStatus(tweet(listOf()))
+            val tweet = if (random(100) < 30) targetTweet(twitter) else tweet(listOf())
+            twitter.updateStatus(tweet)
             sleep((23.5 * HOUR + random(HOUR)).toLong())
 //            sleep((HOUR / 2 + random(HOUR / 4)).toLong())
         }
     }
+}
+
+fun targetTweet(twitter: Twitter): String {
+    val target = twitter.getFollowersList(twitter.id, -1, 200).random()
+    val names = target.name.split(" ")
+    return "@${target.screenName} ${tweet(names)}"
 }
 
 fun tweet(names: List<String>): String {
