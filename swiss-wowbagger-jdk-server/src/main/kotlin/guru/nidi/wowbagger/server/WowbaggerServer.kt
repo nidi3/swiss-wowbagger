@@ -15,9 +15,12 @@
  */
 package guru.nidi.wowbagger.server
 
+import com.microsoft.cognitiveservices.speech.SpeechSynthesisOutputFormat
 import com.sun.net.httpserver.*
 import guru.nidi.wowbagger.*
 import guru.nidi.wowbagger.WowbaggerVoice
+import guru.nidi.wowbagger.speak.azure.AzureSpeechSynthesizer
+import guru.nidi.wowbagger.speak.azure.AzureVoice
 import java.io.PrintWriter
 import java.net.*
 import java.util.concurrent.Executors
@@ -63,6 +66,10 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
 
         val names = query.names()?.split(Regex("[ +,]+"))?.toList() ?: listOf()
         val entries = composeSpeech(names).connect()
+        val voice = query.voice()
+            .let { if (it.isNullOrBlank()) { null } else { it } }
+            ?.let { Voices.valueOf(it) }
+            ?: Voices.roboter
 
         return when (query.format()) {
             "json" -> Response(
@@ -71,10 +78,40 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
             )
             "wav" -> Response(
                 mapOf("Content-Type" to "audio/x-wav"),
-                WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).use {
-                    it.file.readBytes()
-                })
-            else -> Response(
+                when (voice) {
+                    Voices.roboter -> {
+                        WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).use {
+                            it.file.readBytes()
+                        }
+                    }
+                    Voices.exilzuerchere,
+                    Voices.tessiner,
+                    Voices.welschi -> {
+                        AzureSpeechSynthesizer().speakToByteArray(
+                            entries.toText(),
+                            voice.azureVoice!!,
+                            SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm
+                        )
+                    }
+                }
+            )
+            "mp3" -> Response(
+                mapOf("Content-Type" to "audio/mpeg"),
+                when (voice) {
+                    Voices.exilzuerchere,
+                    Voices.tessiner,
+                    Voices.welschi -> {
+                        AzureSpeechSynthesizer().speakToByteArray(
+                            entries.toText(),
+                            voice.azureVoice!!,
+                            SpeechSynthesisOutputFormat.Audio16Khz64KBitRateMonoMp3
+                        )
+                    }
+                    else -> throw IllegalArgumentException("selected voice not supported for mp3")
+                }
+            )
+            else
+            -> Response(
                 mapOf("Content-Type" to "text/plain;charset=utf-8"),
                 entries.toText()
             )
@@ -132,4 +169,11 @@ data class Query(val elems: Map<String, String>) {
     fun speed() = 2 - min(100, max(0, (elems["v"]?.toIntOrNull()) ?: 80)) / 100.0 * 1.7
 
     fun format() = elems["format"]
+
+    fun voice() = elems["voice"]
+}
+
+@Suppress("EnumEntryName")
+private enum class Voices(val azureVoice: AzureVoice?) {
+    roboter(null), exilzuerchere(AzureVoice.DeChF), welschi(AzureVoice.FrChF), tessiner(AzureVoice.ItM)
 }

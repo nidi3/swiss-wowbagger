@@ -13,7 +13,7 @@
     <name>${project.artifactId}</name>
 
     <properties>
-        <module.name>wowbagger-speak-azure</module.name>
+        <module.name>wowbaggerspeakazure</module.name>
     </properties>
 
     <dependencies>

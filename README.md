@@ -47,6 +47,12 @@ The speech synthesis part of Swiss Wowbagger needs [MBROLA](https://github.com/n
 - Fedora Linux: MBROLA is not available in common repositories so just copy it from the base docker file using [setup-mbrola-on-fedora.sh](setup-mbrola-on-fedora.sh) 
 - Windows or MacOS: copy the binaries from [mbrola-jvm](https://github.com/nidi3/mbrola-jvm) and make them available in PATH
 
+### Auzure Speech synthesis
+
+- https://de.wikipedia.org/wiki/Liste_der_IPA-Zeichen
+- http://web.mit.edu/6.mitx/www/24.900%20IPA/IPAapp.html
+- https://speech.microsoft.com/audiocontentcreation
+
 ### How to register Telegram Bot Webhook
 
 See https://core.telegram.org/bots for instructions how to setup a developer account and get the needed credentials.

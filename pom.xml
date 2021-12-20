@@ -36,9 +36,9 @@
         <image>${docker-repo-prefix}/${project.artifactId}</image>
 
         <java.version>17</java.version>
-        <kotlin.version>1.6.0</kotlin.version>
+        <kotlin.version>1.6.10</kotlin.version>
         <native-maven-plugin.version>0.9.7.1</native-maven-plugin.version>
-        <ktor.version>1.6.5</ktor.version>
+        <ktor.version>1.6.7</ktor.version>
         <jackson.version>2.12.5</jackson.version>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
         <mbrola.version>0.0.7</mbrola.version>
@@ -152,6 +152,17 @@
                     </executions>
                     <configuration>
                         <createDependencyReducedPom>false</createDependencyReducedPom>
+                        <filters>
+                            <filter>
+                                <!-- filter out signature files from signed dependencies, else repackaging fails with security ex -->
+                                <artifact>*:*</artifact>
+                                <excludes>
+                                    <exclude>META-INF/*.SF</exclude>
+                                    <exclude>META-INF/*.DSA</exclude>
+                                    <exclude>META-INF/*.RSA</exclude>
+                                </excludes>
+                            </filter>
+                        </filters>
                     </configuration>
                 </plugin>
                 <plugin>

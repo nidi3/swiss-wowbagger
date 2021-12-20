@@ -15,6 +15,7 @@
  */
 package guru.nidi.wowbagger.server
 
+import org.junit.jupiter.api.Disabled
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -94,6 +95,20 @@ internal class WowbaggerServerIT {
         val response = httpClient.send(request, BodyHandlers.ofByteArray())
         assertEquals(200, response.statusCode())
         assertEquals("audio/x-wav", response.headers().firstValue("Content-Type").orElseGet { null })
+        assertTrue { response.body().isNotEmpty() }
+    }
+
+    @Test
+    @Disabled("Only works if AZURE_KEY env variable is set")
+    fun getMp3() {
+        val request = requestBuilderTemplate()
+            .uri(URI("http://localhost:7125/1638101736532?format=mp3&v=undefined&names=&voice=exilzuerchere"))
+            .GET()
+            .build()
+
+        val response = httpClient.send(request, BodyHandlers.ofByteArray())
+        assertEquals(200, response.statusCode())
+        assertEquals("audio/mpeg", response.headers().firstValue("Content-Type").orElseGet { null })
         assertTrue { response.body().isNotEmpty() }
     }
 

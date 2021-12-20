@@ -148,6 +148,15 @@
         <span>Wie schnäu:</span>
         <input id="speed" type="range" min="0" max="100">
     </span>
+    <span>
+        <span>Stimm:</span>
+        <select id="voice">
+          <option value="roboter">Bärner Roboter</option>
+          <option value="exilzuerchere">Exilzürchere</option>
+          <option value="welschi">Wäutschi</option>
+          <option value="tessiner">Tessiner</option>
+        </select>
+    </span>
 </div>
 
 <span id="toggle">⊕</span>
@@ -187,6 +196,7 @@
     let config = false
     const speedElem = document.getElementById('speed')
     const namesElem = document.getElementById('names')
+    const voiceElem = document.getElementById('voice')
     const toggleElem = document.getElementById('toggle')
     const configElem = document.getElementById('config')
 
@@ -202,6 +212,12 @@
         window.history.pushState({}, '', location.origin + location.pathname + '?' + queryString(q) + location.hash)
     })
 
+    voiceElem.addEventListener('change', e => {
+        const q = parseQuery()
+        q['voice'] = e.target.value
+        window.history.pushState({}, '', location.origin + location.pathname + '?' + queryString(q) + location.hash)
+    })
+
     toggleElem.addEventListener('click', e => {
         config = !config
         toggleElem.textContent = config ? '⊖' : '⊕'
@@ -214,6 +230,7 @@
         if (hash) {
             speedElem.value = q['v'] || 80
             namesElem.value = q['names'] || ''
+            voiceElem.value = q['voice'] || ''
         }
         fetch(url + id + '?format=json&' + queryString(q))
             .then(res => res.json())
@@ -239,7 +256,9 @@
     }
 
     function queryString(query) {
-        return 'v=' + encodeURIComponent(query['v']) + '&names=' + encodeURIComponent(query['names'] || '')
+        return 'v=' + encodeURIComponent(query['v'])
+            + '&names=' + encodeURIComponent(query['names'] || '')
+            + '&voice=' + encodeURIComponent(query['voice'] || '')
     }
 
     function twitterShare() {

@@ -69,6 +69,7 @@ jobs:
           gcloud run deploy swiss-wowbagger
           --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-jdk-server:${{needs.build.outputs.docker-tag}}
           --region europe-west6 --ingress=all --allow-unauthenticated
+          --set-secrets=AZURE_KEY=azure-key:latest
           --memory=256Mi
           --args=-Xmx128m
           --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m"

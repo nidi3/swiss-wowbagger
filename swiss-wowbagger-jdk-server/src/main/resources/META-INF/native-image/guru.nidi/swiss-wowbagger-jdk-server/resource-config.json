@@ -1,0 +1,27 @@
+{
+  "resources":{
+  "includes":[
+    {
+      "pattern":"\\QASSETS/linux-x64/libMicrosoft.CognitiveServices.Speech.core.so\\E"
+    }, 
+    {
+      "pattern":"\\QASSETS/linux-x64/libMicrosoft.CognitiveServices.Speech.extension.audio.sys.so\\E"
+    }, 
+    {
+      "pattern":"\\QASSETS/linux-x64/libMicrosoft.CognitiveServices.Speech.extension.codec.so\\E"
+    }, 
+    {
+      "pattern":"\\QASSETS/linux-x64/libMicrosoft.CognitiveServices.Speech.extension.kws.so\\E"
+    }, 
+    {
+      "pattern":"\\QASSETS/linux-x64/libMicrosoft.CognitiveServices.Speech.extension.lu.so\\E"
+    }, 
+    {
+      "pattern":"\\QASSETS/linux-x64/libMicrosoft.CognitiveServices.Speech.extension.mas.so\\E"
+    }, 
+    {
+      "pattern":"\\QASSETS/linux-x64/libMicrosoft.CognitiveServices.Speech.java.bindings.so\\E"
+    }
+  ]},
+  "bundles":[]
+}

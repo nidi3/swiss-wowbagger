@@ -22,6 +22,11 @@
             <artifactId>swiss-wowbagger</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>swiss-wowbagger-speak-azure</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
