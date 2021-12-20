@@ -23,6 +23,7 @@
         <module>mbrola</module>
         <module>mbrola-jre</module>
         <module>swiss-wowbagger</module>
+        <module>swiss-wowbagger-speak-azure</module>
         <module>swiss-wowbagger-jdk-server</module>
         <module>swiss-wowbagger-telegram</module>
         <module>swiss-wowbagger-twitter</module>
