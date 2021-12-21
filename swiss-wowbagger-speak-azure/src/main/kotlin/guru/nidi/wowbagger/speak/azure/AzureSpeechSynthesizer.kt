@@ -23,7 +23,19 @@ class AzureSpeechSynthesizer {
 
     private val azureKey: String = System.getenv("AZURE_KEY") ?: throw IllegalStateException("AZURE_KEY env required")
 
-    fun speakToByteArray(text: String, voice: AzureVoice, format: SpeechSynthesisOutputFormat): ByteArray = speak(text, voice, format).audioData
+    fun speakToByteArray(text: String, voice: AzureVoice, format: SpeechSynthesisOutputFormat): ByteArray {
+        val speechSynthesisResult = speak(text, voice, format)
+
+        val audioData = speechSynthesisResult.use {
+            it.audioData
+        }
+
+        if (audioData.isEmpty()) {
+            throw RuntimeException("Empty audio data. Reason: ${speechSynthesisResult.reason}")
+        }
+
+        return audioData
+    }
 
     fun speakToDeviceSpeakers(text: String, voice: AzureVoice) {
         speak(text, voice, SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm, AudioConfig.fromDefaultSpeakerOutput())
