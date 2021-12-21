@@ -248,7 +248,11 @@
 
     function play() {
         const q = parseQuery()
-        const wav = new Audio(url + theInsult.id + '?format=wav&' + queryString(q))
+
+        const voice = q['voice']
+        const format = (voice && voice !== 'roboter') ? 'mp3' : 'wav'
+
+        const wav = new Audio(url + theInsult.id + '?format=' + format + '&' + queryString(q))
         wav.play()
     }
 
