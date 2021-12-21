@@ -40,11 +40,11 @@ jobs:
         run: echo "::set-output name=sha_tag::sha-$(git rev-parse --short HEAD)"
 
       - name: Additionally tag Docker images with sha ref
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master-fork'
         run: mvn -B -Ddocker.image.tag=${{ steps.vars.outputs.sha_tag }} docker:tag
 
       - name: Push all Docker images
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master-fork'
         run: |
           docker image push --all-tags europe-west6-docker.pkg.dev/swiss-wowbagger/docker/mbrola
           docker image push --all-tags europe-west6-docker.pkg.dev/swiss-wowbagger/docker/mbrola-jre
@@ -55,7 +55,7 @@ jobs:
   deploy-wowbagger:
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master-fork'
 
     steps:
       - name: Set up Cloud SDK
@@ -79,7 +79,7 @@ jobs:
   deploy-wowbagger-telegram:
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master-fork'
 
     steps:
       - name: Set up Cloud SDK
@@ -103,7 +103,7 @@ jobs:
   deploy-wowbagger-twitter:
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master-fork'
 
     steps:
       - name: Set up Cloud SDK
