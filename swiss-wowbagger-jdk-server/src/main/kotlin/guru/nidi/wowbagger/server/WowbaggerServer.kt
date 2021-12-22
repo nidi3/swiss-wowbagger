@@ -62,7 +62,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
         writeResponse(exchange, response)
     } catch (e: Exception) {
         e.printStackTrace(log)
-        exchange.sendResponseHeaders(500, 0)
+        exchange.sendResponseHeaders(500, -1)
     }
 
     private fun sayPhonemes(path: String, query: Query) = Response(
@@ -73,7 +73,13 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
         val seed = (if (path.isEmpty()) null else path.toLongOrNull()) ?: System.currentTimeMillis()
         randomSeed(seed)
 
-        val names = query.names()?.split(Regex("[ +,]+"))?.toList() ?: listOf()
+        val names = query.names()
+            ?.split(Regex("[ +,]+"))
+            ?.map { it.trim() }
+            ?.filter { it.isNotBlank() }
+            ?.toList()
+            ?: listOf()
+
         val entries = composeSpeech(names).connect()
         val voice = query.voice()
             .let {

@@ -73,6 +73,19 @@ internal class WowbaggerServerIT {
     }
 
     @Test
+    fun getJsonWithSanitationNeeded() {
+        val request = requestBuilderTemplate()
+            .uri(URI("http://localhost:7125/?format=json&v=undefined&names=Thessa+"))
+            .GET()
+            .build()
+
+        val response = httpClient.send(request, BodyHandlers.ofString())
+        assertEquals(200, response.statusCode())
+        assertEquals("application/json", response.headers().firstValue("Content-Type").orElseGet { null })
+        assertTrue { response.body().isNotBlank() }
+    }
+
+    @Test
     fun getWav() {
         val request = requestBuilderTemplate()
             .uri(URI("http://localhost:7125/1638101736532?format=wav&v=undefined&names="))
