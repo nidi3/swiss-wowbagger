@@ -67,9 +67,11 @@ jobs:
           --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-jdk-server:${{needs.build.outputs.docker-tag}}
           --region europe-west6 --ingress=all --allow-unauthenticated
           --set-secrets=AZURE_KEY=azure-key:latest
+          --cpu=2
+          --max-instances=1
           --memory=256Mi
           --args=-Xmx128m
-          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m"
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
 # Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
 # --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
 
@@ -90,9 +92,11 @@ jobs:
           --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-telegram:${{needs.build.outputs.docker-tag}}
           --region europe-west6 --ingress=all --allow-unauthenticated
           --set-secrets=TOKEN=telegram-token:latest,USER=telegram-user:latest
+          --cpu=2
+          --max-instances=1
           --memory=256Mi
           --args=-Xmx128m
-          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m"
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
 # Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
 # --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
 
@@ -113,8 +117,10 @@ jobs:
           --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-twitter:${{needs.build.outputs.docker-tag}}
           --region europe-west6 --ingress=all --allow-unauthenticated
           --set-secrets=CONSUMER_KEY=twitter-consumer-key:latest,CONSUMER_SECRET=twitter-consumer-secret:latest,ACCESS_TOKEN=twitter-access-token:latest,ACCESS_SECRET=twitter-access-secret:latest
+          --cpu=2
+          --max-instances=1
           --memory=256Mi
           --args=-Xmx128m
-          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m"
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
 # Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
 # --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
