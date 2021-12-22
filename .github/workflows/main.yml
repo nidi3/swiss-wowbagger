@@ -31,7 +31,7 @@ jobs:
         run: gcloud auth configure-docker europe-west6-docker.pkg.dev --quiet
 
       - name: Build with Maven
-        run: mvn -B clean verify
+        run: mvn -B -Pnative-shade clean verify
 
       - name: Define var with Git commit sha ref
         id: vars

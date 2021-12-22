@@ -1,29 +1,10 @@
 [
 {
-  "name":"com.microsoft.cognitiveservices.speech.util.IntRef",
-  "methods":[{"name":"setValue","parameterTypes":["long"] }]}
-,
-{
-  "name":"com.microsoft.cognitiveservices.speech.util.SafeHandle",
-  "methods":[
-    {"name":"getValue","parameterTypes":[] }, 
-    {"name":"setValue","parameterTypes":["long"] }
-  ]}
-,
-{
-  "name":"com.microsoft.cognitiveservices.speech.util.StringRef",
-  "methods":[{"name":"setValue","parameterTypes":["java.lang.String"] }]}
-,
-{
   "name":"java.lang.ClassLoader",
   "methods":[
     {"name":"getPlatformClassLoader","parameterTypes":[] }, 
     {"name":"loadClass","parameterTypes":["java.lang.String"] }
   ]}
-,
-{
-  "name":"java.lang.String",
-  "methods":[{"name":"getBytes","parameterTypes":["java.lang.String"] }]}
 ,
 {
   "name":"jdk.internal.loader.ClassLoaders$PlatformClassLoader"}
