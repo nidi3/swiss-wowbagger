@@ -15,11 +15,56 @@
  */
 package guru.nidi.wowbagger.speak.azure
 
+import javax.sound.sampled.AudioInputStream
+import javax.sound.sampled.AudioSystem
+
+
 fun main() {
     val azureSpeechSynthesizer = AzureSpeechSynthesizer()
 
-    azureSpeechSynthesizer.speakToDeviceSpeakers("Stäcketööri Gusti, du strube chnütschblaue Chaflicheib, i tue der eini abewäsche!", AzureVoice.DeChF)
-    azureSpeechSynthesizer.speakToDeviceSpeakers("Schissdräck am Loufmeter Sile, du strubi dummi Bohnestange, bisch nid ganz bache?", AzureVoice.FrChF)
-    azureSpeechSynthesizer.speakToDeviceSpeakers("Hawasch Hene Fridu und Jüre, dir chlyne Schöggeler, hörit uf lauere!", AzureVoice.ItM)
-    azureSpeechSynthesizer.speakToDeviceSpeakers("Mitz id Chuchi Heidle Lise und Nigge, dir gfräsige Bännesöi, heit der de Gluggsi?", AzureVoice.DeChF)
+    azureSpeechSynthesizer.speakToByteArray(
+        "Stäcketööri Gusti, du strube chnütschblaue Chaflicheib, i tue der eini abewäsche!",
+        AzureVoice.DeChF,
+        AudioFormat.Wav
+    ).run {
+        speakToDeviceSpeakers(this)
+    }
+
+    azureSpeechSynthesizer.speakToByteArray(
+        "Schissdräck am Loufmeter Sile, du strubi dummi Bohnestange, bisch nid ganz bache?",
+        AzureVoice.FrChF,
+        AudioFormat.Wav
+    ).run {
+        speakToDeviceSpeakers(this)
+    }
+
+    azureSpeechSynthesizer.speakToByteArray(
+        "Hawasch Hene Fridu und Jüre, dir chlyne Schöggeler, hörit uf lauere!",
+        AzureVoice.ItM,
+        AudioFormat.Wav
+    ).run {
+        speakToDeviceSpeakers(this)
+    }
+
+    azureSpeechSynthesizer.speakToByteArray(
+        "Mitz id Chuchi Heidle Lise und Nigge, dir gfräsige Bännesöi, heit der de Gluggsi?",
+        AzureVoice.DeChF,
+        AudioFormat.Wav
+    ).run {
+        speakToDeviceSpeakers(this)
+    }
+}
+
+private fun speakToDeviceSpeakers(audio: ByteArray) {
+
+    AudioSystem.getAudioInputStream(audio.inputStream()).use { audioInputStream: AudioInputStream ->
+        AudioSystem.getClip().use {
+            it.open(audioInputStream)
+            it.start()
+            Thread.sleep(1000)
+
+            while (it.isRunning) Thread.sleep(100)
+        }
+    }
+
 }

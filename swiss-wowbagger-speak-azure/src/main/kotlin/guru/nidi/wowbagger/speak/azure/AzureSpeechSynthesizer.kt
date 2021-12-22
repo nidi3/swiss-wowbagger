@@ -15,46 +15,68 @@
  */
 package guru.nidi.wowbagger.speak.azure
 
-import com.microsoft.cognitiveservices.speech.*
-import com.microsoft.cognitiveservices.speech.audio.AudioConfig
+import com.github.benmanes.caffeine.cache.AsyncLoadingCache
+import com.github.benmanes.caffeine.cache.Caffeine
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.request.*
+import kotlinx.coroutines.runBlocking
+import java.time.Duration
+import java.time.Instant
 
+private const val CACHE_KEY_AUTH_TOKEN = "authToken"
 
+/**
+ * Not using Azure SDK as it has strange performance behaviour and most of it is native
+ * code which is not debuggable.
+ */
 class AzureSpeechSynthesizer {
 
     private val azureKey: String = System.getenv("AZURE_KEY") ?: throw IllegalStateException("AZURE_KEY env required")
 
-    fun speakToByteArray(text: String, voice: AzureVoice, format: SpeechSynthesisOutputFormat): ByteArray {
-        val speechSynthesisResult = speak(text, voice, format)
+    private val client = HttpClient(CIO)
 
-        val audioData = speechSynthesisResult.use {
-            it.audioData
+    private val cache: AsyncLoadingCache<String, String> = Caffeine.newBuilder()
+        .expireAfterWrite(Duration.ofMinutes(9)) // make sure token is never used after 10 minutes
+        .refreshAfterWrite(Duration.ofMinutes(8)) // start to fetch fresh token in background after 8 minutes
+        .initialCapacity(1)
+        .buildAsync { _ ->
+            runBlocking {
+                fetchToken()
+            }
         }
 
-        if (audioData.isEmpty()) {
-            throw RuntimeException("Empty audio data. Reason: ${speechSynthesisResult.reason}")
-        }
-
-        return audioData
+    init {
+        // Warmup cache asynchronously
+        cache[CACHE_KEY_AUTH_TOKEN]
     }
 
-    fun speakToDeviceSpeakers(text: String, voice: AzureVoice) {
-        speak(text, voice, SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm, AudioConfig.fromDefaultSpeakerOutput())
-    }
-
-    private fun speak(
-        text: String,
-        voice: AzureVoice,
-        format: SpeechSynthesisOutputFormat,
-        audioConfig: AudioConfig? = null
-    ): SpeechSynthesisResult {
-        val synthesizer = SpeechSynthesizer(SpeechConfig.fromSubscription(azureKey, "switzerlandnorth").apply {
-            speechSynthesisLanguage = "de-CH"
-            speechSynthesisLanguage = voice.azureKey
-            setSpeechSynthesisOutputFormat(format)
-        }, audioConfig)
-
+    fun speakToByteArray(text: String, voice: AzureVoice, format: AudioFormat): ByteArray {
         val ssml = createSsml(text, voice)
-        return synthesizer.SpeakSsml(ssml)
+        val audio = runBlocking<ByteArray> {
+
+            measureTimeAndPrint("Azure: fetch audio") {
+                client.post("https://westeurope.tts.speech.microsoft.com/cognitiveservices/v1") {
+                    header("Authorization", "Bearer: ${cache[CACHE_KEY_AUTH_TOKEN].get()}")
+                    header("X-Microsoft-OutputFormat", format.azureHeader)
+                    header("Content-Type", "application/ssml+xml")
+                    body = ssml
+                }
+            }
+        }
+        return audio
+    }
+
+    /**
+     * https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/rest-text-to-speech#authentication
+     */
+    private suspend fun fetchToken(): String {
+        return measureTimeAndPrint("Azure: fetch token") {
+            client.post("https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken") {
+                header("Ocp-Apim-Subscription-Key", azureKey)
+                header("Content-type", "application/x-www-form-urlencoded")
+            }
+        }
     }
 
     private fun createSsml(text: String, voice: AzureVoice): String =
@@ -68,6 +90,19 @@ class AzureSpeechSynthesizer {
         </speak>
         """.trimIndent()
 
+}
+
+private inline fun <T> measureTimeAndPrint(label: String, block: () -> T): T {
+    val before = Instant.now()
+    val returnValue = block()
+
+    println("$label ${Duration.between(before, Instant.now())}")
+
+    return returnValue
+}
+
+enum class AudioFormat(val azureHeader: String) {
+    Wav("riff-16khz-16bit-mono-pcm"), Mp3("audio-16khz-64kbitrate-mono-mp3")
 }
 
 enum class AzureVoice(val azureKey: String) {

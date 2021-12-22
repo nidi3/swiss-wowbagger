@@ -15,10 +15,10 @@
  */
 package guru.nidi.wowbagger.server
 
-import com.microsoft.cognitiveservices.speech.SpeechSynthesisOutputFormat
 import com.sun.net.httpserver.*
 import guru.nidi.wowbagger.*
 import guru.nidi.wowbagger.WowbaggerVoice
+import guru.nidi.wowbagger.speak.azure.AudioFormat
 import guru.nidi.wowbagger.speak.azure.AzureSpeechSynthesizer
 import guru.nidi.wowbagger.speak.azure.AzureVoice
 import java.io.PrintWriter
@@ -90,7 +90,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                         AzureSpeechSynthesizer().speakToByteArray(
                             entries.toText(),
                             voice.azureVoice!!,
-                            SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm
+                            AudioFormat.Wav
                         )
                     }
                 }
@@ -104,7 +104,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                         AzureSpeechSynthesizer().speakToByteArray(
                             entries.toText(),
                             voice.azureVoice!!,
-                            SpeechSynthesisOutputFormat.Audio16Khz64KBitRateMonoMp3
+                            AudioFormat.Mp3
                         )
                     }
                     else -> throw IllegalArgumentException("selected voice not supported for mp3")
