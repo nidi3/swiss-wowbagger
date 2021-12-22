@@ -81,7 +81,15 @@ fun main() {
                 log.info("creating random tweet")
 
                 // Creates a random tweet. Called by Google Cloud Scheduler (Cron Job).
-                val tweet = if (random(100) < 30) targetTweet(twitter) else tweet(listOf())
+                val tweet = if (random(100) < 30) {
+                    twitter.getFollowersList(twitter.id, -1, 200).let {
+                        if (it.isNotEmpty()) {
+                            targetTweet(it.random())
+                        } else {
+                            tweet(listOf())
+                        }
+                    }
+                } else tweet(listOf())
                 twitter.updateStatus(tweet)
 
                 call.respond(HttpStatusCode.NoContent)
@@ -146,8 +154,7 @@ fun main() {
     }.start(wait = true)
 }
 
-fun targetTweet(twitter: Twitter): String {
-    val target = twitter.getFollowersList(twitter.id, -1, 200).random()
+fun targetTweet(target: User): String {
     val names = target.name.split(" ")
     return "@${target.screenName} ${tweet(names)}"
 }

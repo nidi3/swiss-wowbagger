@@ -1,0 +1,21 @@
+{
+  "id" : "40d82661-daf2-4e2c-9762-ea23780b9955",
+  "name" : "11_followers_listjson",
+  "request" : {
+    "urlPattern" : "/1.1/followers/list.json.*",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\n  \"users\": [],\n  \"next_cursor\": 1489467234237774933,\n  \"next_cursor_str\": \"1489467234237774933\",\n  \"previous_cursor\": 0,\n  \"previous_cursor_str\": \"0\"\n}",
+    "headers" : {
+      "date" : "Mon, 29 Nov 2021 08:41:40 GMT",
+      "status" : "200 OK",
+      "content-type" : "application/json;charset=utf-8",
+      "last-modified" : "Mon, 29 Nov 2021 08:41:40 GMT"
+    }
+  },
+  "uuid" : "40d82661-daf2-4e2c-9762-ea23780b9955",
+  "persistent" : true,
+  "insertionIndex" : 4
+}

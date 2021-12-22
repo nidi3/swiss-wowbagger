@@ -21,6 +21,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.intellij.lang.annotations.Language
+import org.junit.jupiter.api.RepeatedTest
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -52,7 +53,10 @@ internal class TwitterBotIT {
         assertTrue { responseData["response_token"]?.jsonPrimitive?.content?.isNotBlank() == true }
     }
 
-    @Test
+    /**
+     * As the resulting Twitter API calls vary randomly this test is repeated to be almost sure all branches are triggered.
+     */
+    @RepeatedTest(20)
     fun random() {
         val request = requestBuilderTemplate().uri(URI("http://localhost:8080/random"))
             .POST(HttpRequest.BodyPublishers.noBody())
