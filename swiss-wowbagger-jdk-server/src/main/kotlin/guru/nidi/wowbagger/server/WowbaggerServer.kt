@@ -42,6 +42,8 @@ fun main() {
     }
 }
 
+private val azureSpeechSynthesizer = AzureSpeechSynthesizer()
+
 class RootHandler(private val log: PrintWriter) : HttpHandler {
     override fun handle(exchange: HttpExchange) = try {
         val path = exchange.requestURI.path?.trim('/') ?: ""
@@ -87,7 +89,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                     Voices.exilzuerchere,
                     Voices.tessiner,
                     Voices.welschi -> {
-                        AzureSpeechSynthesizer().speakToByteArray(
+                        azureSpeechSynthesizer.speakToByteArray(
                             entries.toText(),
                             voice.azureVoice!!,
                             AudioFormat.Wav
@@ -101,7 +103,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                     Voices.exilzuerchere,
                     Voices.tessiner,
                     Voices.welschi -> {
-                        AzureSpeechSynthesizer().speakToByteArray(
+                        azureSpeechSynthesizer.speakToByteArray(
                             entries.toText(),
                             voice.azureVoice!!,
                             AudioFormat.Mp3
