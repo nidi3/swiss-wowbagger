@@ -71,7 +71,7 @@ jobs:
           --max-instances=1
           --memory=256Mi
           --args=-Xmx128m
-          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=2 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
 # Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
 # --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
 
@@ -96,7 +96,7 @@ jobs:
           --max-instances=1
           --memory=256Mi
           --args=-Xmx128m
-          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=2 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
 # Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
 # --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
 
@@ -121,6 +121,6 @@ jobs:
           --max-instances=1
           --memory=256Mi
           --args=-Xmx128m
-          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=1 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
+          --set-env-vars=JAVA_TOOL_OPTIONS="-XX:ActiveProcessorCount=2 -XX:MaxRAM=200m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xss256k"
 # Cloud Run First Generation instances don't support JVMs auto container mode detection thus we have to define settings manually
 # --args=-Xmx128m is for GraalVM native images only while JAVA_TOOL_OPTIONS is for OpenJDK only
