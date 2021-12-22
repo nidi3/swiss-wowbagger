@@ -42,7 +42,14 @@ fun main() {
     }
 }
 
-private val azureSpeechSynthesizer = AzureSpeechSynthesizer(System.getenv("AZURE_KEY") ?: "noazurekey")
+private val azureSpeechSynthesizer = AzureSpeechSynthesizer(System.getenv("AZURE_KEY").let {
+    if (it == null) {
+        println("Warning: no AZURE_KEY env variable found")
+        ""
+    } else {
+        it
+    }
+})
 
 class RootHandler(private val log: PrintWriter) : HttpHandler {
     override fun handle(exchange: HttpExchange) = try {
@@ -69,7 +76,13 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
         val names = query.names()?.split(Regex("[ +,]+"))?.toList() ?: listOf()
         val entries = composeSpeech(names).connect()
         val voice = query.voice()
-            .let { if (it.isNullOrBlank()) { null } else { it } }
+            .let {
+                if (it.isNullOrBlank()) {
+                    null
+                } else {
+                    it
+                }
+            }
             ?.let { Voices.valueOf(it) }
             ?: Voices.roboter
 
@@ -78,40 +91,28 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                 mapOf("Content-Type" to "application/json"),
                 """{"id":$seed, "text":"${entries.toText()}"}"""
             )
-            "wav" -> Response(
-                mapOf("Content-Type" to "audio/x-wav"),
+            "wav" ->
                 when (voice) {
                     Voices.roboter -> {
-                        WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).use {
-                            it.file.readBytes()
-                        }
+                        Response(
+                            mapOf("Content-Type" to "audio/x-wav"),
+                            WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).use {
+                                it.file.readBytes()
+                            })
                     }
                     Voices.exilzuerchere,
                     Voices.tessiner,
                     Voices.welschi -> {
-                        azureSpeechSynthesizer.speakToByteArray(
-                            entries.toText(),
-                            voice.azureVoice!!,
-                            AudioFormat.Wav
+                        Response(
+                            mapOf("Content-Type" to "audio/mpeg"),
+                            azureSpeechSynthesizer.speakToByteArray(
+                                entries.toText(),
+                                voice.azureVoice!!,
+                                AudioFormat.Mp3
+                            )
                         )
                     }
                 }
-            )
-            "mp3" -> Response(
-                mapOf("Content-Type" to "audio/mpeg"),
-                when (voice) {
-                    Voices.exilzuerchere,
-                    Voices.tessiner,
-                    Voices.welschi -> {
-                        azureSpeechSynthesizer.speakToByteArray(
-                            entries.toText(),
-                            voice.azureVoice!!,
-                            AudioFormat.Mp3
-                        )
-                    }
-                    else -> throw IllegalArgumentException("selected voice not supported for mp3")
-                }
-            )
             else
             -> Response(
                 mapOf("Content-Type" to "text/plain;charset=utf-8"),
