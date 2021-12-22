@@ -20,7 +20,7 @@ import javax.sound.sampled.AudioSystem
 
 
 fun main() {
-    val azureSpeechSynthesizer = AzureSpeechSynthesizer()
+    val azureSpeechSynthesizer = AzureSpeechSynthesizer(System.getenv("AZURE_KEY"))
 
     azureSpeechSynthesizer.speakToByteArray(
         "Stäcketööri Gusti, du strube chnütschblaue Chaflicheib, i tue der eini abewäsche!",

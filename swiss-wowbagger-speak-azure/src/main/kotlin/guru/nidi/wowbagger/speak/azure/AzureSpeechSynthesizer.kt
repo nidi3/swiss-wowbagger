@@ -30,9 +30,7 @@ private const val CACHE_KEY_AUTH_TOKEN = "authToken"
  * Not using Azure SDK as it has strange performance behaviour and most of it is native
  * code which is not debuggable.
  */
-class AzureSpeechSynthesizer {
-
-    private val azureKey: String = System.getenv("AZURE_KEY") ?: throw IllegalStateException("AZURE_KEY env required")
+class AzureSpeechSynthesizer(private val azureKey: String) {
 
     private val client = HttpClient(CIO)
 

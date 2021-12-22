@@ -42,7 +42,7 @@ fun main() {
     }
 }
 
-private val azureSpeechSynthesizer = AzureSpeechSynthesizer()
+private val azureSpeechSynthesizer = AzureSpeechSynthesizer(System.getenv("AZURE_KEY") ?: "noazurekey")
 
 class RootHandler(private val log: PrintWriter) : HttpHandler {
     override fun handle(exchange: HttpExchange) = try {
