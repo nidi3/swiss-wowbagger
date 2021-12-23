@@ -22,36 +22,36 @@ import javax.sound.sampled.AudioSystem
 fun main() {
     val azureSpeechSynthesizer = AzureSpeechSynthesizer(System.getenv("AZURE_KEY"))
 
-    azureSpeechSynthesizer.speakToByteArray(
+    azureSpeechSynthesizer.speakToInputStream(
         "Stäcketööri Gusti, du strube chnütschblaue Chaflicheib, i tue der eini abewäsche!",
         AzureVoice.DeChF,
         AudioFormat.Wav
     ).run {
-        speakToDeviceSpeakers(this)
+        speakToDeviceSpeakers(readAllBytes())
     }
 
-    azureSpeechSynthesizer.speakToByteArray(
+    azureSpeechSynthesizer.speakToInputStream(
         "Schissdräck am Loufmeter Sile, du strubi dummi Bohnestange, bisch nid ganz bache?",
         AzureVoice.FrChF,
         AudioFormat.Wav
     ).run {
-        speakToDeviceSpeakers(this)
+        speakToDeviceSpeakers(readAllBytes())
     }
 
-    azureSpeechSynthesizer.speakToByteArray(
+    azureSpeechSynthesizer.speakToInputStream(
         "Hawasch Hene Fridu und Jüre, dir chlyne Schöggeler, hörit uf lauere!",
         AzureVoice.ItM,
         AudioFormat.Wav
     ).run {
-        speakToDeviceSpeakers(this)
+        speakToDeviceSpeakers(readAllBytes())
     }
 
-    azureSpeechSynthesizer.speakToByteArray(
+    azureSpeechSynthesizer.speakToInputStream(
         "Mitz id Chuchi Heidle Lise und Nigge, dir gfräsige Bännesöi, heit der de Gluggsi?",
         AzureVoice.DeChF,
         AudioFormat.Wav
     ).run {
-        speakToDeviceSpeakers(this)
+        speakToDeviceSpeakers(readAllBytes())
     }
 }
 

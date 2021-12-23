@@ -115,7 +115,7 @@ internal class WowbaggerServerIT {
     @Disabled("Only works if AZURE_KEY env variable is set")
     fun getWavFromAzure() {
         val request = requestBuilderTemplate()
-            .uri(URI("http://localhost:7125/1638101736532?format=mp3&v=undefined&names=&voice=exilzuerchere"))
+            .uri(URI("http://localhost:7125/1638101736532?format=wav&v=undefined&names=&voice=exilzuerchere"))
             .GET()
             .build()
 

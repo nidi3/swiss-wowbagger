@@ -21,6 +21,7 @@ import guru.nidi.wowbagger.WowbaggerVoice
 import guru.nidi.wowbagger.speak.azure.AudioFormat
 import guru.nidi.wowbagger.speak.azure.AzureSpeechSynthesizer
 import guru.nidi.wowbagger.speak.azure.AzureVoice
+import java.io.InputStream
 import java.io.PrintWriter
 import java.net.*
 import java.util.concurrent.Executors
@@ -110,8 +111,9 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                     Voices.tessiner,
                     Voices.welschi -> {
                         Response(
-                            mapOf("Content-Type" to "audio/mpeg"),
-                            azureSpeechSynthesizer.speakToByteArray(
+                            headers = mapOf("Content-Type" to "audio/mpeg"),
+                            data = null,
+                            inputStream = azureSpeechSynthesizer.speakToInputStream(
                                 entries.toText(),
                                 voice.azureVoice!!,
                                 AudioFormat.Mp3
@@ -134,7 +136,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
             }
             exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
             val range = exchange.requestHeaders["Range"]?.first()
-            if (range != null) {
+            if (range != null && response.data != null) {
                 val matcher = Pattern.compile("bytes=(\\d+)-(\\d+)").matcher(range)
                 val (from, to, res) = if (!matcher.matches()) {
                     Triple(0, response.data.size - 1, response.data)
@@ -147,15 +149,24 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                 exchange.sendResponseHeaders(206, res.size.toLong())
                 out.write(res)
             } else {
-                exchange.sendResponseHeaders(200, response.data.size.toLong())
-                out.write(response.data)
+                if (response.inputStream != null) {
+                    response.inputStream.use {
+                        exchange.sendResponseHeaders(200, 0)
+                        it.copyTo(out)
+                    }
+                } else if (response.data != null) {
+                    exchange.sendResponseHeaders(200, response.data.size.toLong())
+                    out.write(response.data)
+                } else {
+                    throw IllegalStateException("either data or inputStream must be defined")
+                }
             }
             out.flush()
         }
     }
 }
 
-data class Response(val headers: Map<String, String>, val data: ByteArray) {
+data class Response(val headers: Map<String, String>, val data: ByteArray?, val inputStream: InputStream? = null) {
     constructor(headers: Map<String, String>, data: String) : this(headers, data.toByteArray())
 }
 

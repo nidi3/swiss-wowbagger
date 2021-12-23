@@ -21,6 +21,7 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.runBlocking
+import java.io.InputStream
 import java.time.Duration
 import java.time.Instant
 
@@ -49,9 +50,9 @@ class AzureSpeechSynthesizer(private val azureKey: String) {
         cache[CACHE_KEY_AUTH_TOKEN]
     }
 
-    fun speakToByteArray(text: String, voice: AzureVoice, format: AudioFormat): ByteArray {
+    fun speakToInputStream(text: String, voice: AzureVoice, format: AudioFormat): InputStream {
         val ssml = createSsml(text, voice)
-        val audio = runBlocking<ByteArray> {
+        val audio = runBlocking<InputStream> {
 
             measureTimeAndPrint("Azure: fetch audio") {
                 client.post("https://westeurope.tts.speech.microsoft.com/cognitiveservices/v1") {
