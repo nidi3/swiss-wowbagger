@@ -25,4 +25,6 @@ fun main() {
     Actions.list.forEach { println(it.entry.name) }
     println("--- Adjectives:")
     Adjectives.list.forEach { println(it.entry.name) }
+    println("--- Interjections:")
+    Interjections.list.forEach { println(it.entry) }
 }
