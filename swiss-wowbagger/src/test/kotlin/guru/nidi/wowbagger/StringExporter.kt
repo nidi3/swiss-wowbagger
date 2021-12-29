@@ -23,4 +23,6 @@ fun main() {
     Names.list.forEach { println(it) }
     println("--- Actions:")
     Actions.list.forEach { println(it.entry.name) }
+    println("--- Adjectives:")
+    Adjectives.list.forEach { println(it.entry.name) }
 }
