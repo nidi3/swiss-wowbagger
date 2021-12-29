@@ -51,7 +51,20 @@ The speech synthesis part of Swiss Wowbagger needs [MBROLA](https://github.com/n
 
 - https://de.wikipedia.org/wiki/Liste_der_IPA-Zeichen
 - http://web.mit.edu/6.mitx/www/24.900%20IPA/IPAapp.html
-- https://speech.microsoft.com/audiocontentcreation
+- https://speech.microsoft.com/portal/af9f421b07ad40c4ac493125e0e1dfdc/audiocontentcreation
+
+Commonly used phonemes:
+æ
+ɘ
+ɪ
+œ
+øː
+ʏ
+
+χ
+ʃ
+ɡ
+ŋ
 
 ### How to register Telegram Bot Webhook
 
