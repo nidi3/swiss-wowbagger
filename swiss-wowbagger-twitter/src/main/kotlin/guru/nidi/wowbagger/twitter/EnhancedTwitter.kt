@@ -16,12 +16,10 @@
 package guru.nidi.wowbagger.twitter
 
 import io.ktor.client.*
-import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
-import io.ktor.client.statement.HttpResponse
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
@@ -62,24 +60,24 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
             )
         )
         runBlocking {
-            val service=System.getenv("K_SERVICE")
+            val service = System.getenv("K_SERVICE")
             if (service != null) {
-//                val res = client.get<String>("http://google.com") {
-//                    header("Metadata-Flavor", "Google")
-//                }
-                val projectId = client.get<String>("http://metadata.google.internal/computeMetadata/v1/project/project-id") {
-                    header("Metadata-Flavor", "Google")
-                }
+                val projectId =
+                    client.get<String>("http://metadata.google.internal/computeMetadata/v1/project/project-id") {
+                        header("Metadata-Flavor", "Google")
+                    }
                 val region = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance/region") {
                     header("Metadata-Flavor", "Google")
-                }
-                val token = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token") {
-                    header("Metadata-Flavor", "Google")
-                }
-                println(service+" "+projectId+" "+region+" "+token)
-                val url = client.get<String>("https://${region}-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/${projectId}/services/${service}") {
-                    header("Authorization", "Bearer $token")
-                }
+                }.split("/").last()
+                val token =
+                    client.get<Token>("http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token") {
+                        header("Metadata-Flavor", "Google")
+                    }
+                println(service + " " + projectId + " " + region + " " + token)
+                val url =
+                    client.get<String>("https://${region}-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/${projectId}/services/${service}") {
+                        header("Authorization", "Bearer ${token.access_token}")
+                    }
                 println(url)
             }
         }
@@ -111,3 +109,6 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
 
 @Serializable
 data class Webhook(val id: Int, val url: String, val valid: Boolean)
+
+@Serializable
+data class Token(val access_token: String)
