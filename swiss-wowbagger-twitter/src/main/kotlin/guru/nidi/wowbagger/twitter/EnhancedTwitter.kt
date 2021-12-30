@@ -67,7 +67,7 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
 //                val res = client.get<String>("http://google.com") {
 //                    header("Metadata-Flavor", "Google")
 //                }
-                val res = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance") {
+                val res = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance/hostname") {
                     header("Metadata-Flavor", "Google")
                 }
                 println(res)
