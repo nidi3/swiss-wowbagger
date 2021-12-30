@@ -117,7 +117,7 @@ For this to work make sure that the integration tests (classes ending in `*IT`) 
 where reflection is involved. This is the case in the Twitter and Telegram API libraries.
 
 Instructions for re-recording:
-1. Set JAVA_HOME: `export JAVA_HOME=/home/notizklotz/.jdks/graalvm-ce-java17-21.3.0`
+1. Set JAVA_HOME: `export JAVA_HOME=/<path-to>/graalvm-ce-java17-21.3.0`
 2. Cd into the app's directory.
 3. `mvn -Pnative -Dagent=true -DskipTests=true -DskipNativeBuild=true package exec:exec@java-agent`
 4. Run the integration tests.
