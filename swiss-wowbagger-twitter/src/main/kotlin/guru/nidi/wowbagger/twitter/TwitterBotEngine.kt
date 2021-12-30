@@ -67,6 +67,7 @@ object TwitterBotEngine {
             post("/webhook") {
                 // Callback from Twitter if something happens
                 twitter.handleUpdate(call.receive(TwitterUpdates::class))
+                call.respond(HttpStatusCode.NoContent)
             }
 
             get("/webhook") {
