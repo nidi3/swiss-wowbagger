@@ -113,6 +113,9 @@
                                     </http>
                                     <time>5000</time>
                                 </wait>
+                                <ports>
+                                    <port>8080:8080</port>
+                                </ports>
                                 <env>
                                     <CONSUMER_KEY>ck</CONSUMER_KEY>
                                     <CONSUMER_SECRET>cs</CONSUMER_SECRET>
@@ -123,9 +126,6 @@
                                 <log>
                                     <enabled>true</enabled>
                                 </log>
-                                <network>
-                                    <mode>host</mode>
-                                </network>
                             </run>
                         </image>
                     </images>
@@ -212,7 +212,7 @@
                                     <arguments>
                                         <argument>-classpath</argument>
                                         <classpath />
-                                        <argument>guru.nidi.wowbagger.twitter.TwitterBotoldKt</argument>
+                                        <argument>guru.nidi.wowbagger.twitter.TwitterBotKt</argument>
                                     </arguments>
                                     <environmentVariables>
                                         <CONSUMER_KEY>ck</CONSUMER_KEY>
