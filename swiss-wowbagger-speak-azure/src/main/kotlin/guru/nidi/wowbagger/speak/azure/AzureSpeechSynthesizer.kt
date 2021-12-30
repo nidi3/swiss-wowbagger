@@ -83,7 +83,7 @@ class AzureSpeechSynthesizer(private val azureKey: String) {
         """
         <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="de-CH">
             <voice name="${voice.azureKey}">
-                <lexicon uri="https://raw.githubusercontent.com/notizklotz/swiss-wowbagger/master-fork/swiss-wowbagger-speak-azure/mundart-lexicon.xml"/>
+                <lexicon uri="https://raw.githubusercontent.com/nidi3/swiss-wowbagger/master/swiss-wowbagger-speak-azure/mundart-lexicon.xml"/>
                 <prosody rate="-10%">$text</prosody>
             </voice>
         </speak>
