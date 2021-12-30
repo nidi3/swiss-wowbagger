@@ -17,9 +17,11 @@ package guru.nidi.wowbagger;
 
 import guru.nidi.mbrola.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 
 class WowbaggerTest {
     @Test
+    @DisabledIfEnvironmentVariable(named = "CI", matches = "true")
     void simple() {
         final Entry<String> name = Wowbagger.INSTANCE.action(Number.SINGULAR);
         System.out.println(name.getEntry());
