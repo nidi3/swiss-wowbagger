@@ -62,15 +62,25 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
             )
         )
         runBlocking {
-            println("service: " + System.getenv("K_SERVICE"))
-            if (System.getenv("K_SERVICE") != null) {
+            val service=System.getenv("K_SERVICE")
+            if (service != null) {
 //                val res = client.get<String>("http://google.com") {
 //                    header("Metadata-Flavor", "Google")
 //                }
-                val res = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance?alt=json") {
+                val projectId = client.get<String>("http://metadata.google.internal/computeMetadata/v1/project/project-id") {
                     header("Metadata-Flavor", "Google")
                 }
-                println(res)
+                val region = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance/region") {
+                    header("Metadata-Flavor", "Google")
+                }
+                val token = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token") {
+                    header("Metadata-Flavor", "Google")
+                }
+                println(service+" "+projectId+" "+region+" "+token)
+                val url = client.get<String>("https://${region}-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/${projectId}/services/${service}") {
+                    header("Authorization", "Bearer $token")
+                }
+                println(url)
             }
         }
 
