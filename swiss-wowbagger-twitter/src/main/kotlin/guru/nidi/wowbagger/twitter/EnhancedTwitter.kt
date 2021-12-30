@@ -21,6 +21,7 @@ import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
 import twitter4j.*
@@ -45,6 +46,11 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
     }
     private val oauth1 = OAuthAuthorization(config)
 
+
+    private val client = HttpClient(CIO) {
+        install(JsonFeature)
+    }
+
     init {
         val y = oauth1.getAuthorizationHeader(
             HttpRequest(
@@ -53,10 +59,16 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
                 arrayOf(HttpParameter("url", "http://wowbagger.schaltstelle.ch:8080/webhook")), oauth1, mapOf()
             )
         )
-    }
+        runBlocking {
+            println("service: " + System.getenv("K_SERVICE"))
+            if (System.getenv("K_SERVICE") != null) {
+                val s = client.get<Any>("http://metadata.google.internal/computeMetadata/v1/instance") {
+                    header("Metadata-Flavor", "Google")
+                }
+                println(s)
+            }
+        }
 
-    private val client = HttpClient(CIO) {
-        install(JsonFeature)
     }
 
     suspend fun getWebhooks(env: String): List<Webhook> {

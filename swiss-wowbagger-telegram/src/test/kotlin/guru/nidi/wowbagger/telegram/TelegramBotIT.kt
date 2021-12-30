@@ -30,7 +30,7 @@ import kotlin.test.assertEquals
 @WireMockTest(httpPort = 8081)
 internal class TelegramBotIT {
 
-    private val botToken: String = System.getenv("WOWBAGGER_BOT_TOKEN") ?: System.getenv("TOKEN") ?: "dummytoken"
+    private val botToken: String = "dummytoken"
 
     private val httpClient = HttpClient.newHttpClient()
 
