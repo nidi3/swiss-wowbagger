@@ -16,10 +16,12 @@
 package guru.nidi.wowbagger.twitter
 
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
@@ -62,9 +64,14 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
         runBlocking {
             println("service: " + System.getenv("K_SERVICE"))
             if (System.getenv("K_SERVICE") != null) {
-                val s = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance") {
+                val res: HttpResponse = client.get("http://google.com") {
                     header("Metadata-Flavor", "Google")
                 }
+                println(res)
+//                val res:HttpResponse = client.get("http://metadata.google.internal/computeMetadata/v1/instance") {
+//                    header("Metadata-Flavor", "Google")
+//                }
+                val s: String = res.receive()
                 println(s)
             }
         }
