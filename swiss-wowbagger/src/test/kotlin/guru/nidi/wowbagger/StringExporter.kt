@@ -16,15 +16,27 @@
 package guru.nidi.wowbagger
 
 /**
- * Exports all strings. Particularly usefull for copying and processing them in Azure Speech Studio.
+ * Exports all strings. Particularly useful for copying and processing them in Azure Speech Studio.
  */
 fun main() {
     println("--- Names:")
     Names.list.forEach { println(it) }
-    println("--- Actions:")
-    Actions.list.forEach { println(it.entry.name) }
-    println("--- Adjectives:")
-    Adjectives.list.forEach { println(it.entry.name) }
-    println("--- Interjections:")
-    Interjections.list.forEach { println(it.entry) }
+
+    println("\n--- Actions:")
+    Actions.list.flatMap { setOf(it.with(Number.SINGULAR), it.with(Number.PLURAL)) }.map { it.entry }.distinct().forEach { println(it) }
+
+    println("\n--- Adjectives:")
+    Adjectives.list.flatMap { adjectiveEntry: Entry<Adjective> ->
+        Number.values().map { number: Number ->
+            Gender.values().map { gender: Gender ->
+                adjectiveEntry.with(gender, number)
+            }
+        }
+    }.distinct().forEach { println(it) }
+
+    println("\n--- Interjections:")
+    Interjections.list.map { it.entry }.forEach { println(it) }
+
+    println("\n--- Subjects:")
+    Subjects.list.flatMap { setOf(it.with(Number.SINGULAR), it.with(Number.PLURAL)) }.map { it.entry }.distinct().forEach { println(it) }
 }

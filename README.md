@@ -50,6 +50,7 @@ The speech synthesis part of Swiss Wowbagger needs [MBROLA](https://github.com/n
 ### Auzure Speech synthesis
 
 - https://de.wikipedia.org/wiki/Liste_der_IPA-Zeichen
+- https://en.wikipedia.org/wiki/Pronunciation_Lexicon_Specification
 - http://web.mit.edu/6.mitx/www/24.900%20IPA/IPAapp.html
 - https://speech.microsoft.com/portal/af9f421b07ad40c4ac493125e0e1dfdc/audiocontentcreation
 
