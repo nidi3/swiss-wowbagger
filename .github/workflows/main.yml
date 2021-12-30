@@ -91,7 +91,7 @@ jobs:
           gcloud run deploy swiss-wowbagger-telegram
           --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-telegram:${{needs.build.outputs.docker-tag}}
           --region europe-west6 --ingress=all --allow-unauthenticated
-          --set-secrets=TOKEN=telegram-token:latest,USER=telegram-user:latest
+          --set-secrets=TOKEN=stni-telegram-token:latest,USER=stni-telegram-user:latest
           --cpu=2
           --max-instances=1
           --memory=256Mi
@@ -116,7 +116,7 @@ jobs:
           gcloud run deploy swiss-wowbagger-twitter
           --image europe-west6-docker.pkg.dev/swiss-wowbagger/docker/swiss-wowbagger-twitter:${{needs.build.outputs.docker-tag}}
           --region europe-west6 --ingress=all --allow-unauthenticated
-          --set-secrets=CONSUMER_KEY=twitter-consumer-key:latest,CONSUMER_SECRET=twitter-consumer-secret:latest,ACCESS_TOKEN=twitter-access-token:latest,ACCESS_SECRET=twitter-access-secret:latest
+          --set-secrets=CONSUMER_KEY=stni-twitter-consumer-key:latest,CONSUMER_SECRET=stni-twitter-consumer-secret:latest,ACCESS_TOKEN=stni-twitter-access-token:latest,ACCESS_SECRET=stni-twitter-access-secret:latest
           --cpu=2
           --max-instances=1
           --memory=256Mi
