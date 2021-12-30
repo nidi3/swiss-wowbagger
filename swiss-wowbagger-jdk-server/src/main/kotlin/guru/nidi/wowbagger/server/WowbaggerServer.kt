@@ -17,10 +17,7 @@ package guru.nidi.wowbagger.server
 
 import com.sun.net.httpserver.*
 import guru.nidi.wowbagger.*
-import guru.nidi.wowbagger.WowbaggerVoice
-import guru.nidi.wowbagger.speak.azure.AudioFormat
-import guru.nidi.wowbagger.speak.azure.AzureSpeechSynthesizer
-import guru.nidi.wowbagger.speak.azure.AzureVoice
+import guru.nidi.wowbagger.speak.azure.*
 import java.io.InputStream
 import java.io.PrintWriter
 import java.net.*
@@ -43,13 +40,8 @@ fun main() {
     }
 }
 
-private val azureSpeechSynthesizer = AzureSpeechSynthesizer(System.getenv("AZURE_KEY").let {
-    if (it == null) {
-        println("Warning: no AZURE_KEY env variable found")
-        ""
-    } else {
-        it
-    }
+private val azureSpeechSynthesizer = AzureSpeechSynthesizer(System.getenv("AZURE_KEY").also {
+    if (it == null) println("Warning: no AZURE_KEY env variable found")
 })
 
 class RootHandler(private val log: PrintWriter) : HttpHandler {
@@ -68,7 +60,8 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
 
     private fun sayPhonemes(path: String, query: Query) = Response(
         mapOf("Content-Type" to "audio/x-wav"),
-        WowbaggerVoice.say(path, speed = query.speed()).use { it.file.readBytes() })
+        WowbaggerVoice.say(path, speed = query.speed()).bytes
+    )
 
     private fun compose(path: String, query: Query): Response {
         val seed = (if (path.isEmpty()) null else path.toLongOrNull()) ?: System.currentTimeMillis()
@@ -83,13 +76,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
 
         val entries = composeSpeech(names).connect()
         val voice = query.voice()
-            .let {
-                if (it.isNullOrBlank()) {
-                    null
-                } else {
-                    it
-                }
-            }
+            .let { if (it.isNullOrBlank()) null else it }
             ?.let { Voices.valueOf(it) }
             ?: Voices.roboter
 
@@ -98,31 +85,24 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                 mapOf("Content-Type" to "application/json"),
                 """{"id":$seed, "text":"${entries.toText()}"}"""
             )
-            "wav" ->
-                when (voice) {
-                    Voices.roboter -> {
-                        Response(
-                            mapOf("Content-Type" to "audio/x-wav"),
-                            WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).use {
-                                it.file.readBytes()
-                            })
-                    }
-                    Voices.exilzuerchere,
-                    Voices.tessiner,
-                    Voices.welschi -> {
-                        Response(
-                            headers = mapOf("Content-Type" to "audio/mpeg"),
-                            data = null,
-                            inputStream = azureSpeechSynthesizer.speakToInputStream(
-                                entries.toText(),
-                                voice.azureVoice!!,
-                                AudioFormat.Mp3
-                            )
-                        )
-                    }
-                }
-            else
-            -> Response(
+            "wav" -> when (voice) {
+                Voices.roboter -> Response(
+                    mapOf("Content-Type" to "audio/x-wav"),
+                    WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).bytes
+                )
+                Voices.exilzuerchere,
+                Voices.tessiner,
+                Voices.welschi -> Response(
+                    headers = mapOf("Content-Type" to "audio/mpeg"),
+                    data = null,
+                    inputStream = azureSpeechSynthesizer.speakToInputStream(
+                        entries.toText(),
+                        voice.azureVoice!!,
+                        AudioFormat.Mp3
+                    )
+                )
+            }
+            else -> Response(
                 mapOf("Content-Type" to "text/plain;charset=utf-8"),
                 entries.toText()
             )

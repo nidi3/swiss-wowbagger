@@ -21,10 +21,7 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
 import java.time.Duration
-import kotlin.test.Test
-import kotlin.test.assertContains
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 internal class WowbaggerServerIT {
 

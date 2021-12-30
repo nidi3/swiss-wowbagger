@@ -17,19 +17,14 @@ package guru.nidi.wowbagger.twitter
 
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import io.ktor.http.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import io.ktor.http.HttpHeaders
+import kotlinx.serialization.json.*
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.RepeatedTest
 import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
+import java.net.http.*
 import java.time.Duration
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 @WireMockTest(httpPort = 8081)
 internal class TwitterBotIT {

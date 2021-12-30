@@ -19,8 +19,7 @@ import org.telegram.telegrambots.bots.DefaultAbsSender
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.ApiConstants
 
-class TelegramApiClient(private val botToken: String, val telegramBaseUrl: String?) : DefaultAbsSender(DefaultBotOptions()
-    .apply { baseUrl = telegramBaseUrl ?: ApiConstants.BASE_URL }
-) {
+class TelegramApiClient(private val botToken: String, val telegramBaseUrl: String?) :
+    DefaultAbsSender(DefaultBotOptions().apply { baseUrl = telegramBaseUrl ?: ApiConstants.BASE_URL }) {
     override fun getBotToken(): String = botToken
 }

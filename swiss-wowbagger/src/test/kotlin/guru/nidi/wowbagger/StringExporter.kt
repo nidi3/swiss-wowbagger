@@ -23,7 +23,11 @@ fun main() {
     Names.list.forEach { println(it) }
 
     println("\n--- Actions:")
-    Actions.list.flatMap { setOf(it.with(Number.SINGULAR), it.with(Number.PLURAL)) }.map { it.entry }.distinct().forEach { println(it) }
+    Actions.list
+        .flatMap { setOf(it.with(Number.SINGULAR), it.with(Number.PLURAL)) }
+        .map { it.entry }
+        .distinct()
+        .forEach { println(it) }
 
     println("\n--- Adjectives:")
     Adjectives.list.flatMap { adjectiveEntry: Entry<Adjective> ->
@@ -38,5 +42,9 @@ fun main() {
     Interjections.list.map { it.entry }.forEach { println(it) }
 
     println("\n--- Subjects:")
-    Subjects.list.flatMap { setOf(it.with(Number.SINGULAR), it.with(Number.PLURAL)) }.map { it.entry }.distinct().forEach { println(it) }
+    Subjects.list
+        .flatMap { setOf(it.with(Number.SINGULAR), it.with(Number.PLURAL)) }
+        .map { it.entry }
+        .distinct()
+        .forEach { println(it) }
 }

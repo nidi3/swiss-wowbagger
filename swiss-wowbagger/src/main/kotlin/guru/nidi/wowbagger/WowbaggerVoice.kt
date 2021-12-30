@@ -23,22 +23,20 @@ object WowbaggerVoice {
 
     private fun findVoiceFile(): File {
         val paths = listOf(
+            System.getProperty("WOWBAGGER_VOICE_FILE_PATH"),
             System.getenv("WOWBAGGER_VOICE_FILE_PATH"),
             "/usr/share/mbrola/nl2/nl2",
             "./voices/nl2/nl2"
         )
-        paths.filterNotNull().forEach {
-            val file = File(it)
-            if (file.exists()) {
-                return file
-            }
-        }
-
-        throw IllegalStateException("Voice /nl2/nl2 not found. Use env variable WOWBAGGER_VOICE_FILE_PATH to set")
+        return paths.filterNotNull().map { File(it) }.find { it.exists() }
+            ?: throw IllegalStateException("Voice /nl2/nl2 not found. Use system property/env variable WOWBAGGER_VOICE_FILE_PATH to set")
     }
 
-    // TODO Voice always copies voice files to tmpdir which is bad on Docker (uses RAM)
     fun say(phonemes: String, format: Format = Format.WAV, speed: Double = .7) =
-        Mbrola(Phonemes.fromString(phonemes), Voice.fromFile(voiceFile), format).time(speed)
-            .run()
+        Mbrola(Voice.fromFile(voiceFile), format = format, time = speed)
+            .run(Phonemes.fromString(phonemes))
+
+    fun say(phonemes: String, format: Format = Format.WAV, speed: Double = .7, consumer: (File) -> Unit) =
+        Mbrola(Voice.fromFile(voiceFile), format = format, time = speed)
+            .run(Phonemes.fromString(phonemes), consumer)
 }

@@ -16,11 +16,7 @@
 package guru.nidi.wowbagger.telegram
 
 import de.sciss.jump3r.Main
-import guru.nidi.wowbagger.Entry
-import guru.nidi.wowbagger.composeSpeech
-import guru.nidi.wowbagger.toPhonemes
-import guru.nidi.wowbagger.toText
-import guru.nidi.wowbagger.WowbaggerVoice
+import guru.nidi.wowbagger.*
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -80,11 +76,11 @@ class TelegramMessageHandler(private val telegramApiClient: AbsSender, private v
                             })
                             val names = say.groups["rest"]?.value ?: ""
                             val msg = compose(names)
-                            WowbaggerVoice.say(msg.toPhonemes(), speed = 2 - speed / 100.0 * 1.7).use {
+                            WowbaggerVoice.say(msg.toPhonemes(), speed = 2 - speed / 100.0 * 1.7) {
                                 sendAudio(
                                     "${msg[0].entry.replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase() else c.toString() }} $names",
                                     msg.toText(),
-                                    it.file
+                                    it
                                 )
                             }
                         }

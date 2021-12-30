@@ -31,7 +31,7 @@ private const val CACHE_KEY_AUTH_TOKEN = "authToken"
  * Not using Azure SDK as it has strange performance behaviour and most of it is native
  * code which is not debuggable.
  */
-class AzureSpeechSynthesizer(private val azureKey: String) {
+class AzureSpeechSynthesizer(azureKey: String?) {
 
     private val client = HttpClient(CIO)
 
@@ -41,7 +41,7 @@ class AzureSpeechSynthesizer(private val azureKey: String) {
         .initialCapacity(1)
         .buildAsync { _ ->
             runBlocking {
-                fetchToken()
+                azureKey?.let { fetchToken(it) }
             }
         }
 
@@ -69,7 +69,7 @@ class AzureSpeechSynthesizer(private val azureKey: String) {
     /**
      * https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/rest-text-to-speech#authentication
      */
-    private suspend fun fetchToken(): String {
+    private suspend fun fetchToken(azureKey: String): String {
         return measureTimeAndPrint("Azure: fetch token") {
             client.post("https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken") {
                 header("Ocp-Apim-Subscription-Key", azureKey)

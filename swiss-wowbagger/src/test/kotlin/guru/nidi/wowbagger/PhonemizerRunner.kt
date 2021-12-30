@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.wowbagger;
+package guru.nidi.wowbagger
 
-import guru.nidi.mbrola.*;
-import org.junit.jupiter.api.Test;
-
-class WowbaggerTest {
-    @Test
-    void simple() {
-        final Entry<String> name = Wowbagger.INSTANCE.action(Number.SINGULAR);
-        System.out.println(name.getEntry());
-        new Mbrola(Voice.fromClasspath("guru/nidi/wowbagger/voice/nl2/nl2")).time(.8)
-                .run(Phonemes.fromString(name.getPhonemes() + " _ 50")).playAndWait();
+fun main() {
+    System.setProperty("WOWBAGGER_VOICE_FILE_PATH", "../voices/nl2/nl2")
+    Names.list.subList(0, 50).forEachIndexed { i, adj ->
+        val name = adj.entry.name.replace(Regex("""\(.*?\)"""), "")
+        val phonemes = name.toPhonemes()
+        val given = adj.phonemes.replace(Regex("""\(.*?\)"""), "").trim()
+        if (phonemes != given) {
+            println("$name $given --> $phonemes")
+            WowbaggerVoice.say("$given _ 50").playAndWait()
+            WowbaggerVoice.say(phonemes).playAndWait()
+            println(i)
+        }
     }
 }

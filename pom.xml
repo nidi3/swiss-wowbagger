@@ -41,7 +41,7 @@
         <ktor.version>1.6.7</ktor.version>
         <jackson.version>2.12.5</jackson.version>
         <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
-        <mbrola.version>0.0.7</mbrola.version>
+        <mbrola.version>0.1.2</mbrola.version>
         <jump3r.version>1.0.5</jump3r.version>
         <telegrambots.version>5.4.0.1</telegrambots.version>
         <mockk.version>1.12.0</mockk.version>

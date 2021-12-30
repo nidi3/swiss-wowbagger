@@ -11,7 +11,7 @@ Stiller Has' [grusig](https://www.youtube.com/watch?v=dfL_IRXVLtQ).
 
 Prerequisites:
 1. JDK 17
-2. MBROLA (see [Install MBROLA] for instructions)
+2. Optional: MBROLA (see [Install MBROLA] for instructions)
 3. Optional: [GraalVM CE 21.3+ based on Java 17](https://www.graalvm.org/downloads/) (If you need to re-record native-image config files)
 
 The apps and the docker containers are hosted at Google Cloud. [Schaltstelle](https://www.schaltstelle.ch) Members can add
@@ -42,6 +42,9 @@ See [Record native-image config files] for instructions. If you are in panic you
 
 ### How to install MBROLA
 The speech synthesis part of Swiss Wowbagger needs [MBROLA](https://github.com/numediart/MBROLA) to be available on your machine.
+If MBROLA is not installed locally, it tries to use the [MBROLA docker image](mbrola/Dockerfile).
+
+To install MBROLA on your machine:
 
 - Debian/Ubuntu Linux: you can install everything using `apt`. See [MBROLA Dockerfile](mbrola/Dockerfile) for instructions.
 - Fedora Linux: MBROLA is not available in common repositories so just copy it from the base docker file using [setup-mbrola-on-fedora.sh](setup-mbrola-on-fedora.sh) 

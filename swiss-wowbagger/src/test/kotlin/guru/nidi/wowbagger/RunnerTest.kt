@@ -15,8 +15,6 @@
  */
 package guru.nidi.wowbagger
 
-import guru.nidi.wowbagger.*
-import guru.nidi.wowbagger.Number
 import guru.nidi.wowbagger.Wowbagger.action
 import guru.nidi.wowbagger.Wowbagger.adjective
 import guru.nidi.wowbagger.Wowbagger.interjection
@@ -24,9 +22,10 @@ import guru.nidi.wowbagger.Wowbagger.name
 import guru.nidi.wowbagger.Wowbagger.subject
 import org.junit.jupiter.api.Test
 
-class Runner {
+class RunnerTest {
     @Test
     fun simple() {
+        System.setProperty("WOWBAGGER_VOICE_FILE_PATH", "../voices/nl2/nl2")
         val int = interjection()
         val gender = Gender.random()
         val names = (0..random(3)).map { name(gender) }
@@ -45,12 +44,8 @@ class Runner {
         phs.addAll(ns)
         phs.addAll(listOf(adj1, Entry.phonemes("_ 50"), adj2, subject, Entry.phonemes("_ 500"), action))
 //    say(int.phonemes)
-        WowbaggerVoice.say(phs.joinToString(" ") { it.phonemes }).use {
-            it.play(true)
-        }
-//  say(Subjects.list[246].with(Number.SINGULAR).phonemes).use{
-//      it.play(true)
-//  }
+        WowbaggerVoice.say(phs.joinToString(" ") { it.phonemes }).playAndWait()
+//  say(Subjects.list[246].with(Number.SINGULAR).phonemes).playAndWait()
     }
 
 
