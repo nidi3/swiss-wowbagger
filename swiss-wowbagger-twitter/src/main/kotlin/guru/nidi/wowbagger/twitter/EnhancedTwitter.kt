@@ -64,15 +64,13 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
         runBlocking {
             println("service: " + System.getenv("K_SERVICE"))
             if (System.getenv("K_SERVICE") != null) {
-                val res: HttpResponse = client.get("http://google.com") {
+//                val res = client.get<String>("http://google.com") {
+//                    header("Metadata-Flavor", "Google")
+//                }
+                val res = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance") {
                     header("Metadata-Flavor", "Google")
                 }
                 println(res)
-//                val res:HttpResponse = client.get("http://metadata.google.internal/computeMetadata/v1/instance") {
-//                    header("Metadata-Flavor", "Google")
-//                }
-                val s: String = res.receive()
-                println(s)
             }
         }
 
