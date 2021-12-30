@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -12,18 +13,38 @@
     <name>${project.artifactId}</name>
 
     <properties>
-        <gen.module.infos>${project.build.directory}/generated-module-infos</gen.module.infos>
-        <my.module.infos>module-infos</my.module.infos>
-        <jmods>${env.LINUX_JMODS}</jmods>
-        <jlinked>${project.build.directory}/jlink</jlinked>
         <module.name>wowbagger.server.jdk</module.name>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>guru.nidi</groupId>
-            <artifactId>swiss-wowbagger-voice</artifactId>
+            <artifactId>swiss-wowbagger</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>swiss-wowbagger-speak-azure</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>mbrola</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>mbrola-jre</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 
@@ -31,196 +52,119 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>enforce-environment-variable-is-set</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireEnvironmentVariable>
-                                    <variableName>LINUX_JMODS</variableName>
-                                </requireEnvironmentVariable>
-                            </rules>
-                            <fail>true</fail>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${image}</name>
+                            <run>
+                                <ports>
+                                    <port>7125:7125</port>
+                                </ports>
+                                <wait>
+                                    <http>
+                                        <url>http://localhost:7125/</url>
+                                    </http>
+                                    <time>10000</time>
+                                </wait>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
                 <executions>
                     <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attach-artifact</goal>
-                        </goals>
-                        <configuration>
-                            <artifacts>
-                                <artifact>
-                                    <file>${project.build.directory}/${project.build.finalName}-linux.zip</file>
-                                    <type>zip</type>
-                                    <classifier>linux-standalone</classifier>
-                                </artifact>
-                                <artifact>
-                                    <file>${project.build.directory}/${project.build.finalName}-executable.jar</file>
-                                    <type>jar</type>
-                                    <classifier>executable</classifier>
-                                </artifact>
-                            </artifacts>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <includeScope>compile</includeScope>
-                            <excludeTransitive>false</excludeTransitive>
-                            <excludeGroupIds>org.jetbrains.kotlin</excludeGroupIds>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy kotlin-modular</id>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.jetbrains.kotlin</groupId>
-                                    <artifactId>kotlin-stdlib</artifactId>
-                                    <classifier>modular</classifier>
-                                    <version>${kotlin.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jetbrains.kotlin</groupId>
-                                    <artifactId>kotlin-stdlib-jdk7</artifactId>
-                                    <classifier>modular</classifier>
-                                    <version>${kotlin.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.jetbrains.kotlin</groupId>
-                                    <artifactId>kotlin-stdlib-jdk8</artifactId>
-                                    <classifier>modular</classifier>
-                                    <version>${kotlin.version}</version>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>prepare jlink</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <copy file="${project.build.directory}/${project.build.finalName}.jar" todir="${project.build.directory}/modules" />
-                                <delete dir="${jlinked}" />
-                            </target>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>zip jlink</id>
+                        <id>start-server</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>start</goal>
                         </goals>
-                        <configuration>
-                            <target>
-                                <zip basedir="${jlinked}" destfile="${project.build.directory}/${project.build.finalName}-linux.zip" />
-                            </target>
-                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-server</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>${env.JAVA_HOME}/bin/jlink</executable>
-                            <!-- due to https://github.com/mojohaus/exec-maven-plugin/issues/75 -->
-                            <longModulepath>false</longModulepath>
-                            <arguments>
-                                <argument>--module-path</argument>
-                                <argument>target/modules:target/dependency:${jmods}</argument>
-                                <argument>--add-modules</argument>
-                                <argument>swiss.wowbagger.server</argument>
-                                <argument>--launcher</argument>
-                                <argument>wowbagger=swiss.wowbagger.server/guru.nidi.wowbagger.server.WowbaggerServer
-                                </argument>
-                                <argument>--output</argument>
-                                <argument>${jlinked}</argument>
-                                <argument>--strip-debug</argument>
-                                <argument>--compress</argument>
-                                <argument>2</argument>
-                                <argument>--no-header-files</argument>
-                                <argument>--no-man-pages</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>build</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>docker</executable>
-                            <commandlineArgs>build . -t schaltstelle/wowbagger:${project.version}
-                            </commandlineArgs>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>${project.build.directory}/${project.build.finalName}-executable.jar
-                            </outputFile>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>guru.nidi.wowbagger.server.WowbaggerServer</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>non-native</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>native-shade</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-docker</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>java-agent</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>java</executable>
+                                    <workingDirectory>${project.build.directory}</workingDirectory>
+                                    <arguments>
+                                        <argument>-classpath</argument>
+                                        <classpath/>
+                                        <argument>guru.nidi.wowbagger.server.WowbaggerServerKt</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

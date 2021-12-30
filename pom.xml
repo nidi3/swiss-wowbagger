@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>guru.nidi</groupId>
         <artifactId>guru-nidi-parent-pom</artifactId>
         <version>1.1.38</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <packaging>pom</packaging>
@@ -19,24 +20,189 @@
     <inceptionYear>2018</inceptionYear>
 
     <modules>
+        <module>mbrola</module>
+        <module>mbrola-jre</module>
         <module>swiss-wowbagger</module>
-        <module>swiss-wowbagger-voice</module>
-        <!--<module>swiss-wowbagger-jetty-server</module>-->
+        <module>swiss-wowbagger-speak-azure</module>
         <module>swiss-wowbagger-jdk-server</module>
         <module>swiss-wowbagger-telegram</module>
         <module>swiss-wowbagger-twitter</module>
     </modules>
 
     <properties>
-        <java.version>11</java.version>
         <dependency-check.fail-on-cvss>9</dependency-check.fail-on-cvss>
+        <docker-repo-prefix>europe-west6-docker.pkg.dev/swiss-wowbagger/docker</docker-repo-prefix>
+        <docker.base.image.tag>${docker-repo-prefix}/mbrola-jre</docker.base.image.tag>
+        <image>${docker-repo-prefix}/${project.artifactId}</image>
+
+        <java.version>17</java.version>
+        <kotlin.version>1.6.10</kotlin.version>
+        <native-maven-plugin.version>0.9.7.1</native-maven-plugin.version>
+        <ktor.version>1.6.7</ktor.version>
+        <jackson.version>2.12.5</jackson.version>
+        <jib-maven-plugin.version>3.1.4</jib-maven-plugin.version>
+        <mbrola.version>0.0.7</mbrola.version>
+        <jump3r.version>1.0.5</jump3r.version>
+        <telegrambots.version>5.4.0.1</telegrambots.version>
+        <mockk.version>1.12.0</mockk.version>
+        <wiremock.version>2.31.0</wiremock.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-bom</artifactId>
+                <version>${kotlin.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-bom</artifactId>
+                <version>${ktor.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-test-junit5</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.mockk</groupId>
+                <artifactId>mockk</artifactId>
+                <version>${mockk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock-jre8</artifactId>
+                <version>${wiremock.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>guru.nidi</groupId>
+                <artifactId>code-assert-maven-plugin</artifactId>
+                <executions>
+                    <!--
+                        Disable plugin defined in parent POM because it doesn't do anything (?) and is not compatible
+                        with Java 17. Additionally it is run for all modules even if they don't contain code.
+                    -->
+                    <execution>
+                        <goals>
+                            <goal>prepare</goal>
+                        </goals>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.22.2</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.graalvm.buildtools</groupId>
+                    <artifactId>native-maven-plugin</artifactId>
+                    <version>${native-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <executions>
+                        <execution>
+                            <id>build-native</id>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                            <phase>package</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <createDependencyReducedPom>false</createDependencyReducedPom>
+                        <filters>
+                            <filter>
+                                <!-- filter out signature files from signed dependencies, else repackaging fails with security ex -->
+                                <artifact>*:*</artifact>
+                                <excludes>
+                                    <exclude>META-INF/*.SF</exclude>
+                                    <exclude>META-INF/*.DSA</exclude>
+                                    <exclude>META-INF/*.RSA</exclude>
+                                </excludes>
+                            </filter>
+                        </filters>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>dockerBuild</goal>
+                            </goals>
+                            <configuration>
+                                <to>
+                                    <image>${image}</image>
+                                </to>
+                                <from>
+                                    <image>${docker.base.image.tag}</image>
+                                </from>
+                                <container>
+                                    <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                                </container>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.38.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <scm>
         <connection>scm:git:https://github.com/nidi3/swiss-wowbagger</connection>
         <developerConnection>scm:git:https://github.com/nidi3/swiss-wowbagger</developerConnection>
         <url>https://github.com/nidi3/swiss-wowbagger</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
 </project>

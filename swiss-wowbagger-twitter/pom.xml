@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>swiss-wowbagger-parent</artifactId>
@@ -20,78 +21,211 @@
             <artifactId>swiss-wowbagger</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-cio</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-serialization</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
             <version>4.0.7</version>
         </dependency>
+
         <dependency>
-            <groupId>org.twitter4j</groupId>
-            <artifactId>twitter4j-stream</artifactId>
-            <version>4.0.7</version>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test-junit5</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>mbrola</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>mbrola-jre</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>compile</id>
+                        <phase>compile</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <finalName>${project.build.finalName}-fat</finalName>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>TwitterBotKt</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <compilerPlugins>
+                        <plugin>kotlinx-serialization</plugin>
+                    </compilerPlugins>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-serialization</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${image}</name>
+                            <run>
+                                <wait>
+                                    <http>
+                                        <url>http://localhost:8080/ping</url>
+                                    </http>
+                                    <time>5000</time>
+                                </wait>
+                                <env>
+                                    <CONSUMER_KEY>ck</CONSUMER_KEY>
+                                    <CONSUMER_SECRET>cs</CONSUMER_SECRET>
+                                    <ACCESS_TOKEN>at</ACCESS_TOKEN>
+                                    <ACCESS_SECRET>as</ACCESS_SECRET>
+                                    <TWITTER_BASE_URL>http://localhost:8081/1.1/</TWITTER_BASE_URL>
+                                </env>
+                                <log>
+                                    <enabled>true</enabled>
+                                </log>
+                                <network>
+                                    <mode>host</mode>
+                                </network>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>update docker file</id>
-                        <phase>package</phase>
+                        <id>start-server</id>
+                        <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>start</goal>
                         </goals>
-                        <configuration>
-                            <executable>sed</executable>
-                            <commandlineArgs>-i -e 's|target/.* |target/${project.build.finalName}-fat.jar |'
-                                Dockerfile
-                            </commandlineArgs>
-                        </configuration>
                     </execution>
                     <execution>
-                        <id>build</id>
-                        <phase>package</phase>
+                        <id>stop-server</id>
+                        <phase>post-integration-test</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>stop</goal>
                         </goals>
-                        <configuration>
-                            <executable>docker</executable>
-                            <commandlineArgs>build . -t schaltstelle/wowbagger-twitter:${project.version}
-                            </commandlineArgs>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>non-native</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>native-shade</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-docker</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>java-agent</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>java</executable>
+                                    <workingDirectory>${project.build.directory}</workingDirectory>
+                                    <arguments>
+                                        <argument>-classpath</argument>
+                                        <classpath/>
+                                        <argument>guru.nidi.wowbagger.twitter.TwitterBotKt</argument>
+                                    </arguments>
+                                    <environmentVariables>
+                                        <CONSUMER_KEY>ck</CONSUMER_KEY>
+                                        <CONSUMER_SECRET>cs</CONSUMER_SECRET>
+                                        <ACCESS_TOKEN>at</ACCESS_TOKEN>
+                                        <ACCESS_SECRET>as</ACCESS_SECRET>
+                                        <TWITTER_BASE_URL>http://localhost:8081/1.1/</TWITTER_BASE_URL>
+                                    </environmentVariables>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

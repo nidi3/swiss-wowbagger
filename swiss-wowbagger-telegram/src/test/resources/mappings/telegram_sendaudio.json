@@ -1,0 +1,20 @@
+{
+  "id" : "299f5fa0-259e-4a68-9d21-cfb246cbb7c4",
+  "name" : "sendaudio",
+  "request" : {
+    "url" : "/dummytoken/sendaudio",
+    "method" : "POST"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":true,\"result\":{\"message_id\":69,\"from\":{\"id\":1915073189,\"is_bot\":true,\"first_name\":\"gax-wowbagger\",\"username\":\"gaxwowbaggerbot\"},\"chat\":{\"id\":-526178985,\"title\":\"Testgry\",\"type\":\"group\",\"all_members_are_administrators\":true},\"date\":1638113783,\"audio\":{\"duration\":5,\"file_name\":\"Donnergueg \\u00e4du\",\"mime_type\":\"audio/mpeg\",\"title\":\"Donnergueg \\u00e4du\",\"performer\":\"The Wowbagger\",\"file_id\":\"CQACAgQAAxkDAANFYaOh99kdwA4kcG5EeAbJf3fuMqcAAkENAAKa4yFR7UdvGkpEjY0iBA\",\"file_unique_id\":\"AgADQQ0AAprjIVE\",\"file_size\":33372},\"caption\":\"Donnergueg \\u00c4du, du verhudlete verbrunzete Soucheib, lah ne la bambele!\"}}",
+    "headers" : {
+      "Server" : "nginx/1.18.0",
+      "Date" : "Sun, 28 Nov 2021 15:36:23 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "299f5fa0-259e-4a68-9d21-cfb246cbb7c4",
+  "persistent" : true,
+  "insertionIndex" : 2
+}

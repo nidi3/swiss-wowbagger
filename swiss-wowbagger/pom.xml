@@ -20,6 +20,11 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
         </dependency>
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>mbrola-jvm-common</artifactId>
+            <version>${mbrola.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:JvmName("WowbaggerServer")
-
 package guru.nidi.wowbagger.server
 
 import com.sun.net.httpserver.*
 import guru.nidi.wowbagger.*
-import guru.nidi.wowbagger.voice.WowbaggerVoice
+import guru.nidi.wowbagger.WowbaggerVoice
+import guru.nidi.wowbagger.speak.azure.AudioFormat
+import guru.nidi.wowbagger.speak.azure.AzureSpeechSynthesizer
+import guru.nidi.wowbagger.speak.azure.AzureVoice
+import java.io.InputStream
 import java.io.PrintWriter
 import java.net.*
 import java.util.concurrent.Executors
@@ -28,7 +30,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 fun main() {
-    val httpPort = 7125
+    val httpPort = System.getenv("PORT")?.toInt() ?: 7125
     val log = PrintWriter(System.out, true)
     try {
         HttpServer.create(InetSocketAddress(httpPort), 0).apply {
@@ -41,6 +43,15 @@ fun main() {
     }
 }
 
+private val azureSpeechSynthesizer = AzureSpeechSynthesizer(System.getenv("AZURE_KEY").let {
+    if (it == null) {
+        println("Warning: no AZURE_KEY env variable found")
+        ""
+    } else {
+        it
+    }
+})
+
 class RootHandler(private val log: PrintWriter) : HttpHandler {
     override fun handle(exchange: HttpExchange) = try {
         val path = exchange.requestURI.path?.trim('/') ?: ""
@@ -52,7 +63,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
         writeResponse(exchange, response)
     } catch (e: Exception) {
         e.printStackTrace(log)
-        exchange.sendResponseHeaders(500, 0)
+        exchange.sendResponseHeaders(500, -1)
     }
 
     private fun sayPhonemes(path: String, query: Query) = Response(
@@ -63,20 +74,55 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
         val seed = (if (path.isEmpty()) null else path.toLongOrNull()) ?: System.currentTimeMillis()
         randomSeed(seed)
 
-        val names = query.names()?.split(Regex("[ +,]+"))?.toList() ?: listOf()
+        val names = query.names()
+            ?.split(Regex("[ +,]+"))
+            ?.map { it.trim() }
+            ?.filter { it.isNotBlank() }
+            ?.toList()
+            ?: listOf()
+
         val entries = composeSpeech(names).connect()
+        val voice = query.voice()
+            .let {
+                if (it.isNullOrBlank()) {
+                    null
+                } else {
+                    it
+                }
+            }
+            ?.let { Voices.valueOf(it) }
+            ?: Voices.roboter
 
         return when (query.format()) {
             "json" -> Response(
                 mapOf("Content-Type" to "application/json"),
                 """{"id":$seed, "text":"${entries.toText()}"}"""
             )
-            "wav" -> Response(
-                mapOf("Content-Type" to "audio/x-wav"),
-                WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).use {
-                    it.file.readBytes()
-                })
-            else -> Response(
+            "wav" ->
+                when (voice) {
+                    Voices.roboter -> {
+                        Response(
+                            mapOf("Content-Type" to "audio/x-wav"),
+                            WowbaggerVoice.say(entries.toPhonemes(), speed = query.speed()).use {
+                                it.file.readBytes()
+                            })
+                    }
+                    Voices.exilzuerchere,
+                    Voices.tessiner,
+                    Voices.welschi -> {
+                        Response(
+                            headers = mapOf("Content-Type" to "audio/mpeg"),
+                            data = null,
+                            inputStream = azureSpeechSynthesizer.speakToInputStream(
+                                entries.toText(),
+                                voice.azureVoice!!,
+                                AudioFormat.Mp3
+                            )
+                        )
+                    }
+                }
+            else
+            -> Response(
                 mapOf("Content-Type" to "text/plain;charset=utf-8"),
                 entries.toText()
             )
@@ -90,7 +136,7 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
             }
             exchange.responseHeaders.add("Access-Control-Allow-Origin", "*")
             val range = exchange.requestHeaders["Range"]?.first()
-            if (range != null) {
+            if (range != null && response.data != null) {
                 val matcher = Pattern.compile("bytes=(\\d+)-(\\d+)").matcher(range)
                 val (from, to, res) = if (!matcher.matches()) {
                     Triple(0, response.data.size - 1, response.data)
@@ -103,15 +149,24 @@ class RootHandler(private val log: PrintWriter) : HttpHandler {
                 exchange.sendResponseHeaders(206, res.size.toLong())
                 out.write(res)
             } else {
-                exchange.sendResponseHeaders(200, response.data.size.toLong())
-                out.write(response.data)
+                if (response.inputStream != null) {
+                    response.inputStream.use {
+                        exchange.sendResponseHeaders(200, 0)
+                        it.copyTo(out)
+                    }
+                } else if (response.data != null) {
+                    exchange.sendResponseHeaders(200, response.data.size.toLong())
+                    out.write(response.data)
+                } else {
+                    throw IllegalStateException("either data or inputStream must be defined")
+                }
             }
             out.flush()
         }
     }
 }
 
-data class Response(val headers: Map<String, String>, val data: ByteArray) {
+data class Response(val headers: Map<String, String>, val data: ByteArray?, val inputStream: InputStream? = null) {
     constructor(headers: Map<String, String>, data: String) : this(headers, data.toByteArray())
 }
 
@@ -134,4 +189,11 @@ data class Query(val elems: Map<String, String>) {
     fun speed() = 2 - min(100, max(0, (elems["v"]?.toIntOrNull()) ?: 80)) / 100.0 * 1.7
 
     fun format() = elems["format"]
+
+    fun voice() = elems["voice"]
+}
+
+@Suppress("EnumEntryName")
+private enum class Voices(val azureVoice: AzureVoice?) {
+    roboter(null), exilzuerchere(AzureVoice.DeChF), welschi(AzureVoice.FrChF), tessiner(AzureVoice.ItM)
 }
