@@ -79,28 +79,32 @@ class TwitterBotService(
             body.tweet_create_events.forEach { status: TwitterStatus ->
                 val isReply = status.in_reply_to_status_id != null
                 val isWrittenByOtherUser = status.user.id != twitter.id
-
-                if (isReply && isWrittenByOtherUser) {
-                    log.info("creating reply for {}", status)
-
-                    val words = status.text.split(Regex("\\W+")).filter { it.length in 3..8 }
-                    val nearEntries = words.map { name(it) }.filter { it.second <= 1 }
-                    val nearNames =
-                        nearEntries.sortedBy { it.second }.map { it.first.entry.name }.toSet().toList()
-
-                    val tweetAuthorScreenName = status.user.screen_name
-
-                    StatusUpdate("@$tweetAuthorScreenName " + tweet(nearNames)).let {
-                        it.inReplyToStatusId = status.id
-                        twitter.updateStatus(it)
-                    }
-                } else {
-                    log.info(
-                        "Conditions not met (isReply: $isReply isWrittenByOtherUser: $isWrittenByOtherUser), ignoring creating reply for {}",
-                        status
-                    )
-                }
+                val isMentioned = status.entities.user_mentions.any { it.id == twitter.id }
+                if (isWrittenByOtherUser && (isReply || isMentioned)) reply(status)
+                else log.info(
+                    """Conditions not met (
+                            |isReply: $isReply 
+                            |isWrittenByOtherUser: $isWrittenByOtherUser 
+                            |isMentioned: $isMentioned), 
+                            |ignoring creating reply for {}""".trimMargin(),
+                    status
+                )
             }
+        }
+    }
+
+    private fun reply(status: TwitterStatus) {
+        log.info("creating reply for {}", status)
+        val mentionUsers = setOf(status.user) + status.entities.user_mentions.filter { it.id != twitter.id }
+        val words = (mentionUsers.flatMap { it.name.split(" ") } + status.text.split(Regex("\\W+")))
+            .filter { it.length in 3..8 }
+        log.info("mentioning {}, words {}", mentionUsers, words)
+        val nearEntries = words.map { name(it) }.filter { it.second <= 1 }
+        val nearNames = nearEntries.sortedBy { it.second }.map { it.first.entry.name }.toSet().toList()
+        val mentions = mentionUsers.joinToString(separator = " ") { "@" + it.screen_name }
+        StatusUpdate(mentions + " " + tweet(nearNames)).let {
+            it.inReplyToStatusId = status.id
+            twitter.updateStatus(it)
         }
     }
 
@@ -139,8 +143,12 @@ data class TwitterStatus(
     val id: Long,
     val in_reply_to_status_id: Long?,
     val user: TwitterUser,
-    val text: String
+    val text: String,
+    val entities: TwitterEntities
 )
 
 @Serializable
-data class TwitterUser(val id: Long, val screen_name: String)
+data class TwitterUser(val id: Long, val screen_name: String, val name: String)
+
+@Serializable
+data class TwitterEntities(val user_mentions: List<TwitterUser>)
