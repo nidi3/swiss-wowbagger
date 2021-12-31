@@ -35,7 +35,7 @@ internal class TwitterBotIT {
 
     @Test
     fun crcCheck() {
-        val request = requestBuilderTemplate().uri(URI("http://localhost:8080/webhook?crc_token=asdfasdf"))
+        val request = requestBuilderTemplate().uri(URI("http://localhost:8080/dummyuser/webhook?crc_token=asdfasdf"))
             .header(HttpHeaders.Accept, "application/json")
             .GET()
             .build()
@@ -81,7 +81,7 @@ internal class TwitterBotIT {
             }
         """.trimIndent()
 
-        val request = requestBuilderTemplate().uri(URI("http://localhost:8080/webhook"))
+        val request = requestBuilderTemplate().uri(URI("http://localhost:8080/dummyuser/webhook"))
             .POST(HttpRequest.BodyPublishers.ofString(requestBody))
             .header(HttpHeaders.ContentType, "application/json")
             .build()
