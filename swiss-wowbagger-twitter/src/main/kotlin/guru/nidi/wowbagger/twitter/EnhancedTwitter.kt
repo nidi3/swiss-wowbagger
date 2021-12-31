@@ -20,8 +20,6 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
-import io.ktor.client.request.forms.*
-import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
@@ -65,7 +63,9 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
             )
         )
         runBlocking {
-            println(GoogleCloud.serviceUrl())
+//            println(getWebhooks("prod"))
+//            addWebhook("prod")
+//            println(GoogleCloud.serviceUrl())
         }
     }
 
@@ -75,20 +75,24 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
         }
     }
 
-    suspend fun addWebhook(env: String, url: String): List<Webhook> {
+    suspend fun addWebhook(env: String) {
         val req = HttpRequest(
             RequestMethod.POST,
             config.restBaseURL + "account_activity/all/$env/webhooks.json",
-            arrayOf(), oauth1, mapOf("url" to url)
+            arrayOf(
+                HttpParameter(
+                    "url",
+                    "https://swiss-wowbagger-twitter-ultgi7by3q-oa.a.run.app/${twitter.id}/webhook"
+                )
+            ),
+            oauth1,
+            mapOf()
         )
-        return client.submitForm(
-            url = req.url,
-//            req.parameters.forEach { parameter(it.name, it.value) }
-            formParameters = Parameters.build {
-                append("url", url)
-            }) {
+        val s = client.post<String>(req.url) {
+            req.parameters.forEach { parameter(it.name, it.value) }
             header("authorization", oauth1.getAuthorizationHeader(req))
         }
+        println(s)
     }
 }
 

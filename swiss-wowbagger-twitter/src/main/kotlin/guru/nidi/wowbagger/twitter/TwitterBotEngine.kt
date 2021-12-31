@@ -64,13 +64,13 @@ object TwitterBotEngine {
                 call.respond(HttpStatusCode.NoContent)
             }
 
-            post("/webhook") {
+            post("/{user}/webhook") {
                 // Callback from Twitter if something happens
                 twitter.handleUpdate(call.receive(TwitterUpdates::class))
                 call.respond(HttpStatusCode.NoContent)
             }
 
-            get("/webhook") {
+            get("/{user}/webhook") {
                 // Allows Twitter to verify our webhook.
                 // https://developer.twitter.com/en/docs/twitter-api/premium/account-activity-api/guides/securing-webhooks
                 val crcToken = call.parameters["crc_token"]
