@@ -82,7 +82,7 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
                     }
                 println(service + " " + projectId + " " + region + " " + token)
                 val url =
-                    client.get<String>("https://${region}-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/${projectId}/services/${service}") {
+                    client.get<Service>("https://${region}-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/${projectId}/services/${service}") {
                         header("Authorization", "Bearer ${token.access_token}")
                     }
                 println(url)
@@ -122,3 +122,9 @@ data class Token(val access_token: String)
 
 @Serializable
 data class Fact(val _id: String)
+
+@Serializable
+data class Service(val status: ServiceStatus)
+
+@Serializable
+data class ServiceStatus(val url: String)
