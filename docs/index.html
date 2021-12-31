@@ -1,4 +1,4 @@
-<html prefix="og: http://ogp.me/ns#">
+<html lang="de-CH" prefix="og: http://ogp.me/ns#">
 <head>
     <title>Dir dumme Souhüng</title>
     <meta charset="utf-8"/>
@@ -35,7 +35,7 @@
             margin-bottom: 1em;
         }
 
-        #config > span > span {
+        #config > span > label {
             display: inline-block;
             width: 10em;
         }
@@ -146,15 +146,15 @@
 
 <div id="config">
     <span>
-        <span>Wär:</span>
+        <label for="names">Wär:</label>
         <input id="names">
     </span>
     <span>
-        <span>Wie schnäu:</span>
+        <label for="speed">Wie schnäu:</label>
         <input id="speed" type="range" min="0" max="100">
     </span>
     <span>
-        <span>Stimm:</span>
+        <label for="voice">Stimm:</label>
         <select id="voice">
           <option value="roboter">Bärner Roboter</option>
           <option value="exilzuerchere">Exilzürchere</option>
@@ -223,7 +223,7 @@
         window.history.pushState({}, '', location.origin + location.pathname + '?' + queryString(q) + location.hash)
     })
 
-    toggleElem.addEventListener('click', e => {
+    toggleElem.addEventListener('click', _ => {
         config = !config
         toggleElem.textContent = config ? '⊖' : '⊕'
         configElem.style.display = config ? 'flex' : 'none'

@@ -42,7 +42,7 @@ object TwitterBotEngine {
         }
     })
 
-    fun Application.mod(twitter: TwitterBotService) {
+    private fun Application.mod(twitter: TwitterBotService) {
         install(CallLogging) {
             level = Level.INFO
             filter { call -> call.request.path().startsWith("/") }

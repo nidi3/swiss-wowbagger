@@ -65,30 +65,8 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
             )
         )
         runBlocking {
-//            val projectId = client.get<List<Fact>>("https://cat-fact.herokuapp.com/facts")
-//            println(projectId)
-            val service = System.getenv("K_SERVICE")
-            if (service != null) {
-                val projectId =
-                    client.get<String>("http://metadata.google.internal/computeMetadata/v1/project/project-id") {
-                        header("Metadata-Flavor", "Google")
-                    }
-                val region = client.get<String>("http://metadata.google.internal/computeMetadata/v1/instance/region") {
-                    header("Metadata-Flavor", "Google")
-                }.split("/").last()
-                val token =
-                    client.get<Token>("http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token") {
-                        header("Metadata-Flavor", "Google")
-                    }
-                println(service + " " + projectId + " " + region + " " + token)
-                val url =
-                    client.get<Service>("https://${region}-run.googleapis.com/apis/serving.knative.dev/v1/namespaces/${projectId}/services/${service}") {
-                        header("Authorization", "Bearer ${token.access_token}")
-                    }
-                println(url)
-            }
+            println(GoogleCloud.serviceUrl())
         }
-
     }
 
     suspend fun getWebhooks(env: String): List<Webhook> {
@@ -116,15 +94,3 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
 
 @Serializable
 data class Webhook(val id: Int, val url: String, val valid: Boolean)
-
-@Serializable
-data class Token(val access_token: String)
-
-@Serializable
-data class Fact(val _id: String)
-
-@Serializable
-data class Service(val status: ServiceStatus)
-
-@Serializable
-data class ServiceStatus(val url: String)
