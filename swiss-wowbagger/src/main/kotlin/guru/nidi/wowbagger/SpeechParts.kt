@@ -18,7 +18,7 @@ package guru.nidi.wowbagger
 fun composeSpeech(names: List<String>): SpeechParts {
     val (effNames, gender) = if (names.isEmpty()) {
         val gender = Gender.random()
-        Pair((0..random(3)).map { Wowbagger.name(gender) }, gender)
+        Pair((0..random(3)).map { Wowbagger.name(gender) }.toSet().toList(), gender)
     } else {
         names.map { Wowbagger.name(it) }.let { genderedNames ->
             val nameEntry = genderedNames.map { it.first.with(Number.SINGULAR) }

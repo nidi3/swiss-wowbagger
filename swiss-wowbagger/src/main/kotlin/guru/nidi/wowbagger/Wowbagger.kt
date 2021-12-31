@@ -80,10 +80,11 @@ fun <T> List<Entry<T>>.interleave(between: Entry<T>): List<Entry<T>> =
     if (isEmpty()) this
     else zipWithNext { a, _ -> listOf(a, between) }.flatten() + last()
 
-fun <T> List<Entry<T>>.enumerate(penultimate: Entry<T>): List<Entry<T>> = when (size) {
+fun List<Entry<String>>.enumerate(penultimate: Entry<String>): List<Entry<String>> = when (size) {
     0 -> listOf()
-    1 -> listOf(this[0])
-    else -> subList(0, size - 1) + penultimate + last()
+    1 -> this
+    2 -> take(1) + penultimate + last()
+    else -> take(size - 2).map { Entry(it.entry + ",", it.phonemes) } + this[size - 2] + penultimate + this[size - 1]
 }
 
 interface Numbered {
