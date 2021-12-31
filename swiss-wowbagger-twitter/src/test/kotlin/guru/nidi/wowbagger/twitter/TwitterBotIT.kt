@@ -74,8 +74,16 @@ internal class TwitterBotIT {
                   "in_reply_to_status_id": 4334,
                   "user": {
                     "id": 4242,
-                    "screen_name": "Hektor"
-                  }
+                    "screen_name": "Hektor",
+                    "name": "Pesche Heck"
+                  },
+                  "entities": [
+                    {
+                      "id": 4243,
+                      "screen_name": "Huktor",
+                      "name": "Frieda Huck"
+                    }
+                  ]           
                 }
               ]             
             }
