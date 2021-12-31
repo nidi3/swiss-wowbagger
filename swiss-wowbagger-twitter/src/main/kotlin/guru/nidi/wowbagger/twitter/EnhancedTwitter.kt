@@ -15,6 +15,9 @@
  */
 package guru.nidi.wowbagger.twitter
 
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.DeserializationFeature.*
+import com.fasterxml.jackson.module.kotlin.jsonMapper
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
@@ -49,6 +52,9 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
 
     private val client = HttpClient(CIO) {
         install(JsonFeature)
+        jsonMapper {
+            disable(FAIL_ON_UNKNOWN_PROPERTIES)
+        }
     }
 
     init {
