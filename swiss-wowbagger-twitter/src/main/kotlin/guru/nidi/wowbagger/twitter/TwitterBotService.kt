@@ -20,7 +20,7 @@ import guru.nidi.wowbagger.Wowbagger.name
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
-import twitter4j.StatusUpdate
+import twitter4j.*
 import twitter4j.User
 import twitter4j.conf.ConfigurationBuilder
 import java.util.*
@@ -51,12 +51,11 @@ class TwitterBotService(
         build()
     }
 
-    private val twitter = enhancedTwitter(config)
+    private val twitter = TwitterFactory(config).instance
 
     init {
         runBlocking {
-//            twitter.getWebhooks("prod")
-//            twitter.addWebhook("prod", "http://wowbagger.schaltstelle.ch:8080/webhook")
+            WebhookHandler(config, twitter.id, "prod").ensureWebhook()
         }
     }
 

@@ -66,7 +66,9 @@ object TwitterBotEngine {
 
             post("/{user}/webhook") {
                 // Callback from Twitter if something happens
-                twitter.handleUpdate(call.receive(TwitterUpdates::class))
+                val body = call.receive(TwitterUpdates::class)
+                log.debug("Received update $body")
+                twitter.handleUpdate(body)
                 call.respond(HttpStatusCode.NoContent)
             }
 
