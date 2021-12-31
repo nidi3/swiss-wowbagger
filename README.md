@@ -88,17 +88,6 @@ You need to have a Developer account with free Premium Account Activity API subs
 Caveats:
 - After creating the app in the Developer Portal make sure that "App permission" are set to "Read and write and Direct message" before creating the access tokens. 
 You have to recreate them after changing this setting.
-- Twitter sports the most complicated API authentication setup I've ever seen combined with very poor documentation and samples.
-Use [twurl](https://github.com/twitter/twurl) to ease the pain.
-- But _twurl_ also has its problems: Setting the HTTP Method using `-X POST` didn't work for me as it still used _GET_.
-I used `-d 'dummy=dummy'` to make it use POST requests as a workaround.
-
-For local testing:
-1. Run `TwitterBot` using the various environment variables
-2. Run `ngrok http 8080`
-3. Run `twurl -d 'url=https://a9da-2a02-168-a9fe-0-73ba-8f2b-996a-a99f.ngrok.io/webhook' /1.1/account_activity/all/test/webhooks.json`. 
-Replacing the ngrok url with your proper one. I couldn't find a way to remove an existing webhook so I just deleted and recreated environments.
-4. Run `twurl -d 'dummy=dummy' /1.1/account_activity/all/env1/subscriptions.json`.
 
 ### Wiremock
 

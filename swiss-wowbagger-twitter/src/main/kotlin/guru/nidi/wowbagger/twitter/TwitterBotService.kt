@@ -55,7 +55,11 @@ class TwitterBotService(
 
     init {
         runBlocking {
-            WebhookHandler(config, twitter.id, "prod").ensureWebhook()
+            try {
+                WebhookHandler(config, twitter.id, "prod").ensureWebhook()
+            } catch (e: TwitterException) {
+                log.warn("Could not ensure twitter webhooks")
+            }
         }
     }
 
