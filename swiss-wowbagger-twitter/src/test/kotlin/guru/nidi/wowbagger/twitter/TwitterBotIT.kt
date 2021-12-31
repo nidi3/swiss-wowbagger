@@ -77,13 +77,15 @@ internal class TwitterBotIT {
                     "screen_name": "Hektor",
                     "name": "Pesche Heck"
                   },
-                  "entities": [
-                    {
-                      "id": 4243,
-                      "screen_name": "Huktor",
-                      "name": "Frieda Huck"
-                    }
-                  ]           
+                  "entities": {
+                    "user_mentions": [
+                      {
+                        "id": 4243,
+                        "screen_name": "Huktor",
+                        "name": "Frieda Huck"
+                      }
+                    ]
+                  }
                 }
               ]             
             }
