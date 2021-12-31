@@ -16,8 +16,6 @@
 package guru.nidi.wowbagger.twitter
 
 import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.DeserializationFeature.*
-import com.fasterxml.jackson.module.kotlin.jsonMapper
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
@@ -47,13 +45,14 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
             }
         }
     }
+
     private val oauth1 = OAuthAuthorization(config)
 
-
     private val client = HttpClient(CIO) {
-        install(JsonFeature)
-        jsonMapper {
-            disable(FAIL_ON_UNKNOWN_PROPERTIES)
+        install(JsonFeature) {
+            serializer = JacksonSerializer {
+                disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            }
         }
     }
 
@@ -66,6 +65,8 @@ class EnhancedTwitter(private val config: Configuration, private val twitter: Tw
             )
         )
         runBlocking {
+//            val projectId = client.get<List<Fact>>("https://cat-fact.herokuapp.com/facts")
+//            println(projectId)
             val service = System.getenv("K_SERVICE")
             if (service != null) {
                 val projectId =
@@ -118,3 +119,6 @@ data class Webhook(val id: Int, val url: String, val valid: Boolean)
 
 @Serializable
 data class Token(val access_token: String)
+
+@Serializable
+data class Fact(val _id: String)
