@@ -175,7 +175,7 @@ i verminggle (der/nech) s'Bätzi dass (/der) d'Osterpföteler ghör(sch/it) zawa
 i vermöckle (der/nech) de Schtirps mit em Flarzise! | I f @ r m 2 k 200 h 50 l @ (d @ r/n @ x) d e S t I r p s m I t @ m f l A r t s i s @
 i verschwarte (di/nech)! | I f @ r S w A 200 r t @ (d i/n @ x)
 i zeige (der/nech) wo de Bartli de Most hout! | I _ 20 t s e i k 200 @ (d @ r/n @ x) w O d @ b A 200 r t l i d @ m O S t h o u t 200
-i zeih (der/nech) d'Gängeretalpli läng! | I _ 20 t s i e (d @ r/n @ x) _ 20 d g a N 200 @ r @ t A l p l i l a N g
+i zieh (der/nech) d'Gängeretalpli läng! | I _ 20 t s i e (d @ r/n @ x) _ 20 d g a N 200 @ r @ t A l p l i l a N g
 i zwurgle (di/nech) mit em Gürchu! | I _ 20 t s w u r g l @ (d i/n @ x) m I t 200 @ m g Y 200 r x u _ 20
 jetz fähl(sch/it der) de grad! | i e t s f a 200 l (S/i t t 200 @ r) d e g r A t 200
 jetz git's ufs Dach! | i e t s g I t s u f s d A 200 x 200
