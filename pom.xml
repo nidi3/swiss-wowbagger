@@ -45,7 +45,7 @@
         <jump3r.version>1.0.5</jump3r.version>
         <telegrambots.version>5.4.0.1</telegrambots.version>
         <mockk.version>1.12.0</mockk.version>
-        <wiremock.version>2.31.0</wiremock.version>
+        <wiremock.version>2.35.1</wiremock.version>
     </properties>
 
     <dependencyManagement>
